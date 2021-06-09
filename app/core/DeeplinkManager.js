@@ -99,7 +99,7 @@ class DeeplinkManager {
         this.handleBrowserUrl(urlObj.href, browserCallBack);
         break;
 
-      // Specific to the MetaMask app
+      // Specific to the Mises Browser app
       // For ex. go to settings
       case 'mises':
         handled();

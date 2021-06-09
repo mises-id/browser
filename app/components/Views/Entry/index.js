@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  metamaskName: {
+  appName: {
     marginTop: 10,
     height: 25,
     width: 170,
@@ -177,7 +177,7 @@ const Entry = props => {
         />
         <LottieView
           ref={animationName}
-          style={styles.metamaskName}
+          style={styles.appName}
           loop={false}
           source={require('app/animations/wordmark.json')}
         />

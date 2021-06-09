@@ -101,7 +101,7 @@ export default class Logger {
     // Check if user passed accepted opt-in to metrics
     const metricsOptIn = await AsyncStorage.getItem(METRICS_OPT_IN);
     if (__DEV__) {
-      args.unshift('[MetaMask DEBUG]:');
+      args.unshift('[Mises DEBUG]:');
       // console.log.apply(null, args); // eslint-disable-line no-console
     } else if (metricsOptIn === 'agreed') {
       //captureMessage(JSON.stringify(args));

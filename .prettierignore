@@ -1,5 +1,5 @@
-/android/app/src/main/assets/InpageBridgeWeb3.js
-/app/core/InpageBridgeWeb3.js
+/android/app/src/main/assets/MisesBridge.js
+/app/core/MisesBridge.js
 __snapshots__
 android
 coverage
@@ -12,4 +12,3 @@ app/util/blockies.js
 babel.config.js
 metro.config.js
 jest.preprocessor.js
-scripts/metamask-bot-build-announce.js
