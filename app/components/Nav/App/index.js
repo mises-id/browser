@@ -10,9 +10,49 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import Branch from 'react-native-branch';
 import Entry from 'app/components/Views/Entry';
 import Logger from 'app/util/Logger';
-import AppConstants from 'app/constants/core';
+import {AppConstants} from 'app/constants/core';
 import trackErrorAsAnalytics from 'app/util/analyticsV2';
 import SharedDeeplinkManager from 'app/core/DeeplinkManager';
+
+import Main from '../Main';
+import DrawerView from 'app/components/UI/DrawerView';
+import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
+/**
+ * Main app navigator which handles all the screens
+ * after the user is already onboarded
+ */
+const HomeNav = createDrawerNavigator(
+  {
+    Main: {
+      screen: Main,
+    },
+  },
+  {
+    contentComponent: DrawerView,
+    drawerWidth: 315,
+    overlayColor: 'rgba(0, 0, 0, 0.5)',
+  },
+);
+
+/**
+ * Drawer status tracking
+ */
+const defaultGetStateForAction = HomeNav.router.getStateForAction;
+SharedDrawerStatusTracker.init();
+HomeNav.router.getStateForAction = (action, state) => {
+  if (action) {
+    if (action.type === 'Navigation/MARK_DRAWER_SETTLING' && action.willShow) {
+      SharedDrawerStatusTracker.setStatus('open');
+    } else if (
+      action.type === 'Navigation/MARK_DRAWER_SETTLING' &&
+      !action.willShow
+    ) {
+      SharedDrawerStatusTracker.setStatus('closed');
+    }
+  }
+
+  return defaultGetStateForAction(action, state);
+};
 
 /**
  * Top level switch navigator which decides
@@ -21,6 +61,7 @@ import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 const AppNavigator = createSwitchNavigator(
   {
     Entry,
+    HomeNav,
   },
   {
     initialRouteName: 'Entry',

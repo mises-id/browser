@@ -88,6 +88,7 @@ const Entry = props => {
       } else {
         props.navigation.navigate('HomeNav');
       }
+      Logger.log('animation finish', viewToGo);
     });
   }, [opacity, viewToGo, props.navigation]);
 
@@ -146,7 +147,7 @@ const Entry = props => {
       if (existingUser !== null) {
         unlockKeychain();
       } else {
-        animateAndGoTo('OnboardingRootNav');
+        animateAndGoTo('HomeNav');
       }
     }
 

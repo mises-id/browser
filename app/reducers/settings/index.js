@@ -1,8 +1,8 @@
 import {REHYDRATE} from 'redux-persist';
-import AppConstants from 'app/constants/core';
+import {AppConstants} from 'app/constants/core';
 
 const initialState = {
-  searchEngine: 'AppConstants.DEFAULT_SEARCH_ENGINE',
+  searchEngine: AppConstants.DEFAULT_SEARCH_ENGINE,
   primaryCurrency: 'MIS',
   lockTime: -1, // Disabled by default
   useBlockieIcon: true,

@@ -3,7 +3,7 @@
 import URL from 'url-parse';
 import qs from 'qs';
 import {InteractionManager, Alert} from 'react-native';
-import AppConstants from 'app/constants/core';
+import {AppConstants} from 'app/constants/core';
 import {strings} from 'app/locales/i18n';
 
 class DeeplinkManager {
