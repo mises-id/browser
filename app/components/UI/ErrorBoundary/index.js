@@ -118,44 +118,6 @@ const Fallback = props => (
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>
-          <Text>{strings('error_screen.submit_ticket_1')}</Text>
-        </Text>
-        <View style={styles.reportTextContainer}>
-          <Text style={styles.text}>
-            <Icon name="mobile-phone" size={20} />
-            {'  '}
-            {strings('error_screen.submit_ticket_2')}
-          </Text>
-
-          <Text style={[styles.reportStep, styles.text]}>
-            <Icon name="copy" size={14} />
-            {'  '}
-            <Text onPress={props.copyErrorToClipboard} style={styles.link}>
-              {strings('error_screen.submit_ticket_3')}
-            </Text>{' '}
-            {strings('error_screen.submit_ticket_4')}
-          </Text>
-
-          <Text style={[styles.reportStep, styles.text]}>
-            <Icon name="send-o" size={14} />
-            {'  '}
-            {strings('error_screen.submit_ticket_5')}{' '}
-            <Text onPress={props.openTicket} style={styles.link}>
-              {strings('error_screen.submit_ticket_6')}
-            </Text>{' '}
-            {strings('error_screen.submit_ticket_7')}
-          </Text>
-        </View>
-        <Text style={styles.text}>
-          {strings('error_screen.save_seedphrase_1')}{' '}
-          <Text onPress={props.showExportSeedphrase} style={styles.link}>
-            {strings('error_screen.save_seedphrase_2')}
-          </Text>{' '}
-          {strings('error_screen.save_seedphrase_3')}
-        </Text>
-      </View>
     </ScrollView>
   </SafeAreaView>
 );
@@ -184,6 +146,7 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
+    console.log('componentDidCatch');
     Logger.error(error, {View: this.props.view, ...errorInfo});
   }
 

@@ -29,7 +29,7 @@ export default createStackNavigator(
             BrowserView: {
               screen: Browser,
               navigationOptions: {
-                gesturesEnabled: false,
+                gestureEnabled: false,
               },
             },
           }),
