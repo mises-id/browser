@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddBookmark should render correctly 1`] = `
+<ForwardRef(SafeAreaView)
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+  testID="add-bookmark-screen"
+>
+  <ActionView
+    cancelTestID="add-bookmark-cancel-button"
+    cancelText="[missing \\"en.add_favorite.cancel_button\\" translation]"
+    confirmButtonMode="normal"
+    confirmTestID="add-bookmark-confirm-button"
+    confirmText="[missing \\"en.add_favorite.add_button\\" translation]"
+    confirmed={false}
+    onCancelPress={[Function]}
+    onConfirmPress={[Function]}
+    showCancelButton={true}
+    showConfirmButton={true}
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+            }
+          }
+        >
+          [missing "en.add_favorite.title_label" translation]
+        </Text>
+        <TextInput
+          onChangeText={[Function]}
+          onSubmitEditing={[Function]}
+          placeholder=""
+          placeholderTextColor="#d6d9dc"
+          returnKeyType="next"
+          style={
+            Object {
+              "borderColor": "#d6d9dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+              "padding": 16,
+            }
+          }
+          testID="add-bookmark-title"
+          value={null}
+        />
+        <Text
+          style={
+            Object {
+              "color": "#D73A49",
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+            }
+          }
+        />
+      </View>
+      <View
+        style={
+          Object {
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+            }
+          }
+        >
+          [missing "en.add_favorite.url_label" translation]
+        </Text>
+        <TextInput
+          onChangeText={[Function]}
+          placeholder=""
+          returnKeyType="done"
+          style={
+            Object {
+              "borderColor": "#d6d9dc",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+              "padding": 16,
+            }
+          }
+          testID="add-bookmark-url"
+          value={null}
+        />
+        <Text
+          style={
+            Object {
+              "color": "#D73A49",
+              "fontFamily": "EuclidCircularB-Regular",
+              "fontWeight": "400",
+            }
+          }
+        />
+      </View>
+    </View>
+  </ActionView>
+</ForwardRef(SafeAreaView)>
+`;

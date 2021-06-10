@@ -17,6 +17,8 @@ import SplashScreen from 'react-native-splash-screen';
 import App from 'app/components/Nav/App';
 import Logger from 'app/util/Logger';
 
+import ErrorBoundary from 'app/components/UI/ErrorBoundary';
+
 /**
  * Top level of the component hierarchy
  * App component is wrapped by the provider from react-redux
@@ -43,7 +45,9 @@ export default class Root extends PureComponent {
   render = () => (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <App />
+        <ErrorBoundary onError={this.errorHandler} view="Root">
+          <App />
+        </ErrorBoundary>
       </PersistGate>
     </Provider>
   );
