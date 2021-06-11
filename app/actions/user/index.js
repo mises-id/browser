@@ -64,3 +64,10 @@ export function setGasEducationCarouselSeen() {
     type: 'SET_GAS_EDUCATION_CAROUSEL_SEEN',
   };
 }
+
+
+export function randomUser() {
+  return {
+    type: 'GENERATE_RANDOM_USER',
+  };
+}

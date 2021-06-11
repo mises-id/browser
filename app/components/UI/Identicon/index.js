@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 
 import {colors} from 'app/styles/common.js';
 import {toDataUrl} from 'app/util/blockies.js';
+import Logger from '../../../util/Logger';
 
 /**
  * UI component that renders an Identicon
@@ -20,7 +21,6 @@ const Identicon = React.memo(props => {
     return null;
   }
   const uri = useBlockieIcon && toDataUrl(address);
-
   const image = useBlockieIcon ? (
     <Image
       source={{uri}}

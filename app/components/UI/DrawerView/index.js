@@ -21,6 +21,8 @@ import Modal from 'react-native-modal';
 import {colors, fontStyles} from 'app/styles/common';
 import {strings} from 'app/locales/i18n';
 import {showAlert} from 'app/actions/alert';
+import {toggleAccountsModal} from '../../../actions/modals';
+
 import Device from 'app/util/Device';
 import {ANALYTICS_EVENT_OPTS} from 'app/util/analytics';
 import {
@@ -752,6 +754,10 @@ class DrawerView extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  selectedAddress: state.user.selectedAddress,
+  accounts: state.user.accounts,
+  identities: state.user.identities,
+  keyrings: state.user.keyrings,
   networkModalVisible: state.modals.networkModalVisible,
   accountsModalVisible: state.modals.accountsModalVisible,
   receiveModalVisible: state.modals.receiveModalVisible,
@@ -761,7 +767,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleAccountsModal: () => dispatch(this.toggleAccountsModal()),
+  toggleAccountsModal: () => dispatch(toggleAccountsModal()),
   showAlert: config => dispatch(showAlert(config)),
 });
 

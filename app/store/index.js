@@ -1,10 +1,10 @@
-import { createStore } from 'redux';
-import { persistStore, persistReducer, createMigrate } from 'redux-persist';
+import {createStore} from 'redux';
+import {persistStore, persistReducer, createMigrate} from 'redux-persist';
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 import FilesystemStorage from 'redux-persist-filesystem-storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import rootReducer from '../reducers';
-import { migrations, version } from './migrations';
+import {migrations, version} from './migrations';
 import Logger from '../util/Logger';
 
 // const MigratedStorage = {
@@ -44,12 +44,13 @@ import Logger from '../util/Logger';
 // };
 
 const persistConfig = {
-	key: 'root',
-	version,
-	storage: FilesystemStorage,
-	stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
-	migrate: createMigrate(migrations, { debug: false }),
-	writeFailHandler: error => Logger.error(error, { message: 'Error persisting data' }) // Log error if saving state fails
+  key: 'root',
+  version,
+  storage: FilesystemStorage,
+  stateReconciler: autoMergeLevel2, // see "Merge Process" section for details.
+  migrate: createMigrate(migrations, {debug: true}),
+  writeFailHandler: error =>
+    Logger.error(error, {message: 'Error persisting data'}), // Log error if saving state fails
 };
 
 const pReducer = persistReducer(persistConfig, rootReducer);

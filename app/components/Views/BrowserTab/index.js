@@ -283,21 +283,6 @@ export const BrowserTab = props => {
   );
 
   /**
-   * Checks if it is a ENS website
-   */
-  const isENSUrl = u => {
-    const {hostname} = new URL(u);
-    const tld = hostname.split('.').pop();
-    if (AppConstants.supportedTLDs.indexOf(tld.toLowerCase()) !== -1) {
-      // Make sure it's not in the ignore list
-      if (ensIgnoreList.indexOf(hostname) === -1) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  /**
    * Checks if a given url or the current url is the homepage
    */
   const isHomepage = useCallback((checkUrl = null) => {
@@ -386,7 +371,7 @@ export const BrowserTab = props => {
    */
   const isAllowedUrl = useCallback(
     hostname => {
-      return props.whitelist && props.whitelist.includes(hostname);
+      return (props.whitelist && props.whitelist.includes(hostname)) || true;
     },
     [props.whitelist],
   );
@@ -437,7 +422,6 @@ export const BrowserTab = props => {
 
       let urlToGo = sanitizedURL;
       const {current} = webviewRef;
-
       if (isAllowedUrl(hostname)) {
         if (initialCall) {
           setInitialUrl(urlToGo);
@@ -528,6 +512,19 @@ export const BrowserTab = props => {
     dismissTextSelectionIfNeeded();
   }, [dismissTextSelectionIfNeeded]);
 
+  /**
+   * Set initial url, dapp scripts and engine. Similar to componentDidMount
+   */
+  useEffect(() => {
+    const init_url = props.initialUrl || HOMEPAGE_URL;
+    go(init_url, true);
+
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   /**
    * Enable the header to toggle the url modal and update other header data
    */
@@ -627,11 +624,7 @@ export const BrowserTab = props => {
   /**
    * Stops normal loading when it's ens, instead call go to be properly set up
    */
-  const onShouldStartLoadWithRequest = ({url}) => {
-    if (isENSUrl(url)) {
-      go(url.replace(/^http:\/\//, 'https://'));
-      return false;
-    }
+  const onShouldStartLoadWithRequest = ({u}) => {
     return true;
   };
 

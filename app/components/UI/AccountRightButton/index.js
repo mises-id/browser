@@ -61,6 +61,7 @@ class AccountRightButton extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  address: state.user.selectedAddress,
 });
 const mapDispatchToProps = dispatch => ({
   toggleAccountsModal: () => dispatch(toggleAccountsModal()),

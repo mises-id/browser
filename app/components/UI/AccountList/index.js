@@ -19,6 +19,7 @@ import {strings} from 'app/locales/i18n';
 import Logger from 'app/util/Logger';
 import Analytics from 'app/core/Analytics';
 import {ANALYTICS_EVENT_OPTS} from 'app/util/analytics';
+import {randomUser} from 'app/actions/user';
 
 import AccountElement from './AccountElement';
 
@@ -114,6 +115,8 @@ class AccountList extends PureComponent {
      * Indicates whether third party API mode is enabled
      */
     thirdPartyApiMode: PropTypes.bool,
+
+    randomUser: PropTypes.func,
   };
 
   state = {
@@ -215,6 +218,7 @@ class AccountList extends PureComponent {
     this.mounted && this.setState({loading: true});
     requestAnimationFrame(async () => {
       try {
+        this.props.randomUser();
         const newIndex = Object.keys(this.props.identities).length - 1;
         this.mounted && this.setState({selectedAccountIndex: newIndex});
         setTimeout(() => {
@@ -378,6 +382,11 @@ class AccountList extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  accounts: state.user.accounts,
+  keyrings: state.user.keyrings,
 });
 
-export default connect(mapStateToProps)(AccountList);
+const mapDispatchToProps = dispatch => ({
+  randomUser: () => dispatch(randomUser()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(AccountList);
