@@ -124,8 +124,7 @@ class NavbarTitle extends PureComponent {
   };
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
   toggleNetworkModal: () => dispatch(toggleNetworkModal()),
 });

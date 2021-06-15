@@ -42,6 +42,5 @@ class NavbarLeftButton extends PureComponent {
   };
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 export default connect(mapStateToProps)(NavbarLeftButton);

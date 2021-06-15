@@ -10,10 +10,12 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { exit } = require('process');
+const {exit} = require('process');
 
 function getGlobalCacheKey(files, values) {
-  const presetVersion = require('fbjs-scripts/package').dependencies['babel-preset-fbjs'];
+  const presetVersion = require('fbjs-scripts/package').dependencies[
+    'babel-preset-fbjs'
+  ];
 
   const chunks = [
     process.env.NODE_ENV,
@@ -26,7 +28,7 @@ function getGlobalCacheKey(files, values) {
   return chunks
     .reduce(
       (hash, chunk) => hash.update('\0', 'utf-8').update(chunk || ''),
-      crypto.createHash('md5')
+      crypto.createHash('md5'),
     )
     .digest('hex');
 }

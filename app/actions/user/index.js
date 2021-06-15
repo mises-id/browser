@@ -65,7 +65,6 @@ export function setGasEducationCarouselSeen() {
   };
 }
 
-
 export function randomUser() {
   return {
     type: 'GENERATE_RANDOM_USER',

@@ -4,12 +4,12 @@ export function dismissAlert() {
   };
 }
 
-export function showAlert({ isVisible, autodismiss, content, data }) {
+export function showAlert({isVisible, autodismiss, content, data}) {
   return {
     type: 'SHOW_ALERT',
     isVisible,
     autodismiss,
     content,
-    data
+    data,
   };
 }
