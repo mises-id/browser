@@ -520,8 +520,7 @@ export const BrowserTab = props => {
     go(init_url, true);
 
     // Specify how to clean up after this effect:
-    return function cleanup() {
-    };
+    return function cleanup() {};
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

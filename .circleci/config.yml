@@ -1,0 +1,91 @@
+version: 2.1
+aliases:
+  - &restore-node-cache
+    keys:
+      - v1.1.0-node-{{ .Branch }}-{{ checksum "package.json" }}
+      - v1.1.0-node-{{ .Branch }}
+  - &save-node-cache
+    key: v1.1.0-node-{{ .Branch }}-{{ checksum "package.json" }}
+    paths:
+      - node_modules
+
+  - &install-node-dependencies
+      |
+        rm -rf node_modules/websocket/.git && yarn install --network-timeout 300000 --frozen-lockfile --network-concurrency 1
+
+defaults: &defaults
+  working_directory: ~/browser
+
+jobs:
+  prep-deps:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run:
+          command: *install-node-dependencies
+          no_output_timeout: "15m"
+      - persist_to_workspace:
+          root: .
+          paths:
+          - node_modules
+  prep-node-deps:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - restore_cache: *restore-node-cache
+      - run:
+          command: *install-node-dependencies
+          no_output_timeout: "15m"
+      - persist_to_workspace:
+          root: .
+          paths:
+          - node_modules
+      - save_cache: *save-node-cache
+
+  lint:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint
+
+  test-unit:
+    <<: *defaults
+    parallelism: 3
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn test:unit -- -w 3
+    #   - persist_to_workspace:
+    #       root: .
+    #       paths:
+    #         - coverage
+  upload-coverage:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn install codecov
+      - run: ./node_modules/bin/codecov
+
+  all-tests-pass:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+    steps:
+      - run:
+          name:  All Tests Passed
+          command: echo 'weew - everything passed!'

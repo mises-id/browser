@@ -120,9 +120,9 @@ jest.mock('react-native/Libraries/Interaction/InteractionManager', () => ({
   setDeadline: jest.fn(),
 }));
 
-jest.mock('react-native/Libraries/Utilities/Platform', (): object => ({
+jest.mock('react-native/Libraries/Utilities/Platform', () => ({
   ...jest.requireActual('react-native/Libraries/Utilities/Platform'),
-  isTesting: (): boolean => true,
+  isTesting: () => true,
 }));
 
 jest.mock(
