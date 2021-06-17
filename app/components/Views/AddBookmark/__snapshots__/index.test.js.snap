@@ -12,10 +12,10 @@ exports[`AddBookmark should render correctly 1`] = `
 >
   <ActionView
     cancelTestID="add-bookmark-cancel-button"
-    cancelText="[missing \\"en.add_favorite.cancel_button\\" translation]"
+    cancelText="Cancel"
     confirmButtonMode="normal"
     confirmTestID="add-bookmark-confirm-button"
-    confirmText="[missing \\"en.add_favorite.add_button\\" translation]"
+    confirmText="Add"
     confirmed={false}
     onCancelPress={[Function]}
     onConfirmPress={[Function]}
@@ -38,7 +38,7 @@ exports[`AddBookmark should render correctly 1`] = `
             }
           }
         >
-          [missing "en.add_favorite.title_label" translation]
+          Name
         </Text>
         <TextInput
           onChangeText={[Function]}
@@ -84,7 +84,7 @@ exports[`AddBookmark should render correctly 1`] = `
             }
           }
         >
-          [missing "en.add_favorite.url_label" translation]
+          Url
         </Text>
         <TextInput
           onChangeText={[Function]}

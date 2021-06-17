@@ -144,7 +144,7 @@ exports[`Browser should render correctly 1`] = `
               }
             }
           >
-            [missing "en.browser.cancel" translation]
+            Cancel
           </Text>
         </TouchableOpacity>
       </View>

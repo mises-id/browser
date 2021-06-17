@@ -88,7 +88,7 @@ exports[`Tabs should render correctly 1`] = `
           ]
         }
       >
-        [missing "en.browser.tabs_close_all" translation]
+        Close All
       </Text>
     </TouchableOpacity>
     <View
@@ -166,7 +166,7 @@ exports[`Tabs should render correctly 1`] = `
           ]
         }
       >
-        [missing "en.browser.tabs_done" translation]
+        Done
       </Text>
     </TouchableOpacity>
   </View>
