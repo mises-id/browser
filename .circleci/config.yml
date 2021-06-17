@@ -72,14 +72,27 @@ jobs:
 
   test-unit:
     <<: *defaults
-    parallelism: 3
     docker:
       - image: circleci/node:14
     steps:
       - checkout
       - attach_workspace:
           at: .
-      - run: yarn test:unit -- -w 3
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+      - run:
+          name: Unit Test
+          command: yarn test:unit -- -w 1
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
     #   - persist_to_workspace:
     #       root: .
     #       paths:
