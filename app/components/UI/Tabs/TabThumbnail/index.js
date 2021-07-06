@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   closeTabButton: {
     backgroundColor: colors.transparent,
-    width: Device.isIos() ? 30 : 35,
+    width: Device.isIos() ? 30 : 45,
     height: 24,
     marginRight: -5,
   },
