@@ -40,7 +40,7 @@
     "react-native-reanimated": "1.13.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.3.0",
-    "react-native-sdk-bridge": "https://baogechen@github.com/mises-id/react-native-sdk-bridge#develop",
+    "react-native-sdk-bridge": "https://github.com/mises-id/react-native-sdk-bridge",
     "react-native-search-api": "^1.2.0",
     "react-native-sensors": "^7.2.0",
     "react-native-share": "^6.2.1",
