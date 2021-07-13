@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
+import { createAppContainer } from 'react-navigation';
 
 import Browser from '../../Views/Browser';
 import AddBookmark from '../../Views/AddBookmark';
@@ -20,60 +20,25 @@ const styles = StyleSheet.create({
  * the 2 main sections: Browser, Wallet
  */
 
-export default createStackNavigator(
-  {
-    Home: {
-      screen: createBottomTabNavigator(
-        {
-          BrowserTabHome: createStackNavigator({
-            BrowserView: {
-              screen: Browser,
-              navigationOptions: {
-                gestureEnabled: false,
-              },
-            },
-          }),
-        },
-        {
-          defaultNavigationOptions: () => ({
-            tabBarVisible: false,
-          }),
-        },
-      ),
-    },
-    Webview: {
-      screen: createStackNavigator(
-        {
-          SimpleWebview: {
-            screen: SimpleWebview,
-          },
-        },
-        {
-          mode: 'modal',
-        },
-      ),
-    },
-    SettingsView: {
-      screen: createStackNavigator({
-        Settings: {
-          screen: Settings,
-        },
-        GeneralSettings: {
-          screen: GeneralSettings,
-        },
-      }),
-    },
-    AddBookmarkView: {
-      screen: createStackNavigator({
-        AddBookmark: {
-          screen: AddBookmark,
-        },
-      }),
-    },
+const AppStack = createStackNavigator({
+  BrowserView: {
+    screen:Browser,
   },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-    lazy: true,
+  Webview: {
+    screen: SimpleWebview
   },
-);
+  SettingsView: {
+    screen: Settings
+  },
+  GeneralSettings: {
+    screen: GeneralSettings
+  },
+  AddBookmarkView: {
+    screen: AddBookmark
+  }
+},
+{
+  mode: 'modal',
+  lazy: true
+})
+export default AppStack
