@@ -9,13 +9,13 @@ import Device from 'app/util/Device';
 const styles = StyleSheet.create({
   tabIcon: {
     borderWidth: 2,
-    borderColor: colors.grey500,
+    borderColor: "#333",
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
   },
   tabCount: {
-    color: colors.grey500,
+    color: '#333',
     flex: 0,
     lineHeight: Device.isAndroid() ? 3 : 15,
     fontSize: Device.isAndroid() ? 3 : 15,

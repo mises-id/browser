@@ -370,5 +370,11 @@
 		"message": "We weren't able to load that page.",
 		"reason": "Reason",
 		"try_again": "Try again"
+	},
+	"menu":{
+		"create":"Create mises id",
+		"restore":"Restore mises id",
+		"forward":"Forward",
+		"new":"New post"
 	}
 }

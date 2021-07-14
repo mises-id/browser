@@ -11,6 +11,7 @@ import {
   Keyboard,
   BackHandler,
   InteractionManager,
+  Image,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {WebView} from 'react-native-webview';
@@ -44,9 +45,10 @@ import WebviewProgressBar from '../../UI/WebviewProgressBar';
 import Button from '../../UI/Button';
 import UrlAutocomplete from '../../UI/UrlAutocomplete';
 import WebviewError from '../../UI/WebviewError';
-import SharedDrawerStatusTracker from '../../UI/DrawerView/DrawerStatusTracker';
+// import SharedDrawerStatusTracker from '../../UI/DrawerView/DrawerStatusTracker';
 
 import ErrorBoundary from '../../UI/ErrorBoundary';
+import { BoxShadow } from 'react-native-shadow';
 
 const {HOMEPAGE_URL, USER_AGENT} = AppConstants;
 const HOMEPAGE_HOST = 'home.mises.site';
@@ -84,31 +86,20 @@ const styles = StyleSheet.create({
     right: 0,
   },
   optionsWrapper: {
+    width: 150,
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    paddingBottom: 13,
+    paddingTop: 12,
+    paddingLeft:15,
+    paddingRight:15,
+   
+  },
+  optionsWrapperBox:{
     position: 'absolute',
     zIndex: 99999999,
-    width: 200,
-    borderWidth: 1,
-    borderColor: colors.grey100,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    paddingBottom: 5,
-    paddingTop: 10,
-  },
-  optionsWrapperAndroid: {
-    shadowColor: colors.grey400,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    bottom: 65,
-    right: 5,
-  },
-  optionsWrapperIos: {
-    shadowColor: colors.grey400,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    bottom: 90,
-    right: 5,
+    bottom: 75,
+    right: 5
   },
   option: {
     paddingVertical: 10,
@@ -205,6 +196,34 @@ const styles = StyleSheet.create({
   fullScreenModal: {
     flex: 1,
   },
+	icon:{
+		width:20,
+		height:20
+	},
+	labelBox:{
+		flexDirection:'row',
+		alignItems:'center',
+		marginTop:12,
+		marginBottom:12
+	},
+	label:{
+		marginLeft:15,
+		fontSize:16
+	},
+
+	arrow:{
+		width:0,
+		height:0,
+		borderTopColor:'transparent',
+		borderWidth:6,
+		borderTopColor:'white',
+		borderLeftColor:'transparent',
+		borderRightColor:'transparent',
+		borderBottomColor:'transparent',
+		position:'absolute',
+		bottom:-11,
+		right:24
+	},
 });
 
 const sessionENSNames = {};
@@ -540,22 +559,22 @@ export const BrowserTab = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, props.activeTab, props.id, toggleUrlModal]);
 
-  useEffect(() => {
-    if (Device.isAndroid()) {
-      SharedDrawerStatusTracker.hub.on('drawer::open', drawerOpenHandler);
-    }
+  // useEffect(() => {
+  //   if (Device.isAndroid()) {
+  //     SharedDrawerStatusTracker.hub.on('drawer::open', drawerOpenHandler);
+  //   }
 
-    return function cleanup() {
-      if (Device.isAndroid()) {
-        SharedDrawerStatusTracker &&
-          SharedDrawerStatusTracker.hub &&
-          SharedDrawerStatusTracker.hub.removeListener(
-            'drawer::open',
-            drawerOpenHandler,
-          );
-      }
-    };
-  }, [drawerOpenHandler]);
+  //   return function cleanup() {
+  //     if (Device.isAndroid()) {
+  //       SharedDrawerStatusTracker &&
+  //         SharedDrawerStatusTracker.hub &&
+  //         SharedDrawerStatusTracker.hub.removeListener(
+  //           'drawer::open',
+  //           drawerOpenHandler,
+  //         );
+  //     }
+  //   };
+  // }, [drawerOpenHandler]);
 
   /**
    * Set navigation listeners
@@ -677,6 +696,9 @@ export const BrowserTab = props => {
         changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
       }
     });
+    props.navigation.setParams({
+      webviewRef
+    })
   };
 
   /**
@@ -978,43 +1000,49 @@ export const BrowserTab = props => {
   /**
    * Render options menu
    */
+   const optionsMenuList = [{
+		label:strings('menu.forward'),
+		icon:require('@/images/forward.png'),
+		fn:()=>{ //call page function
+      toggleOptions()
+		}
+	},{
+		label:strings('menu.new'),
+		icon:require('@/images/new.png'),
+		fn:()=>{
+      toggleOptions()
+		}
+	}]
+  const setting = {
+    inset: false,
+    style: { marginVertical: 5 },
+    side: 'top',
+    opacity: 0.5,
+    x: 0,
+    color: "#ECECEC",
+    width:150,
+    height: 115,
+    border: 15,
+    radius: 15,
+    y: 20,
+  }
   const renderOptions = () => {
     if (showOptions) {
       return (
         <TouchableWithoutFeedback onPress={toggleOptions}>
           <View style={styles.optionsOverlay}>
-            <View
-              style={[
-                styles.optionsWrapper,
-                Device.isAndroid()
-                  ? styles.optionsWrapperAndroid
-                  : styles.optionsWrapperIos,
-              ]}>
-              <Button onPress={onNewTabPress} style={styles.option}>
-                <View style={styles.optionIconWrapper}>
-                  <MaterialCommunityIcon
-                    name="plus"
-                    size={18}
-                    style={styles.optionIcon}
-                  />
+            <View style={styles.optionsWrapperBox}>
+              <BoxShadow setting={setting}>
+                <View style={styles.optionsWrapper}>
+                  {optionsMenuList.map((val,index)=>{
+                    return <TouchableOpacity onPress={val.fn} key={index} style={styles.labelBox}>
+                      <Image source={val.icon} style={styles.icon}></Image>
+                      <Text style={styles.label}>{val.label}</Text>
+                    </TouchableOpacity>
+                  })}
+                  <View style={styles.arrow}></View>
                 </View>
-                <Text style={styles.optionText} numberOfLines={1}>
-                  {strings('browser.new_tab')}
-                </Text>
-              </Button>
-              {renderNonHomeOptions()}
-              <Button onPress={switchNetwork} style={styles.option}>
-                <View style={styles.optionIconWrapper}>
-                  <MaterialCommunityIcon
-                    name="earth"
-                    size={18}
-                    style={styles.optionIcon}
-                  />
-                </View>
-                <Text style={styles.optionText} numberOfLines={2}>
-                  {strings('browser.switch_network')}
-                </Text>
-              </Button>
+              </BoxShadow>
             </View>
           </View>
         </TouchableWithoutFeedback>

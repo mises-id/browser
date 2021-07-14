@@ -16,55 +16,76 @@ import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 
 import Main from '../Main';
 import DrawerView from 'app/components/UI/DrawerView';
-import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
+import MenuToolTips from 'app/components/UI/MenuToolTips';
+// import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
 /**
  * Main app navigator which handles all the screens
  * after the user is already onboarded
  */
-const HomeNav = createDrawerNavigator(
-  {
-    Main: {
-      screen: Main,
-    },
-  },
-  {
-    contentComponent: DrawerView,
-    drawerWidth: 315,
-    overlayColor: 'rgba(0, 0, 0, 0.5)',
-  },
-);
+// const HomeNav = createDrawerNavigator(
+//   {
+//     Main: {
+//       screen: Main,
+//     },
+//   },
+//   {
+//     contentComponent: DrawerView,
+//     drawerWidth: 315,
+//     overlayColor: 'rgba(0, 0, 0, 0.5)',
+//   },
+// );
 
-/**
- * Drawer status tracking
- */
-const defaultGetStateForAction = HomeNav.router.getStateForAction;
-SharedDrawerStatusTracker.init();
-HomeNav.router.getStateForAction = (action, state) => {
-  if (action) {
-    if (action.type === 'Navigation/MARK_DRAWER_SETTLING' && action.willShow) {
-      SharedDrawerStatusTracker.setStatus('open');
-    } else if (
-      action.type === 'Navigation/MARK_DRAWER_SETTLING' &&
-      !action.willShow
-    ) {
-      SharedDrawerStatusTracker.setStatus('closed');
-    }
-  }
+// /**
+//  * Drawer status tracking
+//  */
+// const defaultGetStateForAction = HomeNav.router.getStateForAction;
+// SharedDrawerStatusTracker.init();
+// HomeNav.router.getStateForAction = (action, state) => {
+//   if (action) {
+//     if (action.type === 'Navigation/MARK_DRAWER_SETTLING' && action.willShow) {
+//       SharedDrawerStatusTracker.setStatus('open');
+//     } else if (
+//       action.type === 'Navigation/MARK_DRAWER_SETTLING' &&
+//       !action.willShow
+//     ) {
+//       SharedDrawerStatusTracker.setStatus('closed');
+//     }
+//   }
 
-  return defaultGetStateForAction(action, state);
-};
+//   return defaultGetStateForAction(action, state);
+// };
 
 /**
  * Top level switch navigator which decides
  * which top level view to show
  */
-const AppNavigator = createSwitchNavigator(
+const AppNavigator = createStackNavigator(
   {
     Entry,
-    HomeNav,
+    Main,
+    MenuToolTips:{
+      screen:MenuToolTips,
+      navigationOptions:(current)=>{
+        return {
+          opacity: current.progress,
+          cardStyleInterpolator:()=>{
+            return {
+              cardStyle:{
+                backgroundColor: 'rgba(0,0,0,0)' 
+              },
+              containerStyle:{
+                backgroundColor: 'rgba(0,0,0,0)' ,
+              }
+            }
+          }
+        }
+      }
+    }
   },
   {
-    initialRouteName: 'Entry',
+    initialRouteName: 'Main',
+    headerMode:"none",
+    mode:'modal'
   },
 );
 

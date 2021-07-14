@@ -32,20 +32,17 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     }
     testID="go-back-button"
   >
-    <Icon
-      allowFontScaling={false}
-      name="angle-left"
-      size={24}
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/images/left.png",
+        }
+      }
       style={
-        Array [
-          Object {
-            "color": "#6a737d",
-            "height": 24,
-            "textAlign": "center",
-            "width": 24,
-          },
-          Object {},
-        ]
+        Object {
+          "height": 24,
+          "width": 24,
+        }
       }
     />
   </TouchableOpacity>
@@ -66,22 +63,17 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     }
     testID="go-forward-button"
   >
-    <Icon
-      allowFontScaling={false}
-      name="angle-right"
-      size={24}
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/images/right_no.png",
+        }
+      }
       style={
-        Array [
-          Object {
-            "color": "#6a737d",
-            "height": 24,
-            "textAlign": "center",
-            "width": 24,
-          },
-          Object {
-            "color": "#d6d9dc",
-          },
-        ]
+        Object {
+          "height": 24,
+          "width": 24,
+        }
       }
     />
   </TouchableOpacity>
@@ -101,15 +93,15 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     }
     testID="search-button"
   >
-    <Icon
-      allowFontScaling={false}
-      name="search"
-      size={24}
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/images/search.png",
+        }
+      }
       style={
         Object {
-          "color": "#6a737d",
           "height": 24,
-          "textAlign": "center",
           "width": 24,
         }
       }
@@ -156,15 +148,15 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     }
     testID="home-button"
   >
-    <Icon
-      allowFontScaling={false}
-      name="home"
-      size={22}
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/images/home.png",
+        }
+      }
       style={
         Object {
-          "color": "#6a737d",
           "height": 24,
-          "textAlign": "center",
           "width": 24,
         }
       }
@@ -186,15 +178,15 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     }
     testID="options-button"
   >
-    <Icon
-      allowFontScaling={false}
-      name="more-horiz"
-      size={22}
+    <Image
+      source={
+        Object {
+          "testUri": "../../../app/images/more.png",
+        }
+      }
       style={
         Object {
-          "color": "#6a737d",
           "height": 24,
-          "textAlign": "center",
           "width": 24,
         }
       }

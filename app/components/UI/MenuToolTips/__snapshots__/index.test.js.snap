@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BrowserBottomBar should render correctly 1`] = `
+<View>
+  <BoxShadow
+    setting={
+      Object {
+        "border": 15,
+        "color": "#ECECEC",
+        "height": 115,
+        "inset": false,
+        "opacity": 0.5,
+        "radius": 15,
+        "side": "top",
+        "style": Object {
+          "marginVertical": 5,
+        },
+        "width": 190,
+        "x": 0,
+        "y": 20,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginLeft": 5,
+          "marginTop": 45,
+          "position": "relative",
+          "zIndex": 9999,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "borderBottomColor": "white",
+            "borderLeftColor": "transparent",
+            "borderRightColor": "transparent",
+            "borderTopColor": "transparent",
+            "borderWidth": 6,
+            "height": 0,
+            "left": 18,
+            "position": "absolute",
+            "top": -12,
+            "width": 0,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 15,
+            "height": 115,
+            "paddingBottom": 10,
+            "paddingLeft": 15,
+            "paddingRight": 15,
+            "paddingTop": 10,
+            "width": 190,
+          }
+        }
+      >
+        <View>
+          <TouchableOpacity
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginBottom": 12,
+                "marginTop": 12,
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../app/images/create.png",
+                }
+              }
+              style={
+                Object {
+                  "height": 20,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "fontSize": 16,
+                  "marginLeft": 15,
+                }
+              }
+            >
+              Create mises id
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "marginBottom": 12,
+                "marginTop": 12,
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../app/images/restore.png",
+                }
+              }
+              style={
+                Object {
+                  "height": 20,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "fontSize": 16,
+                  "marginLeft": 15,
+                }
+              }
+            >
+              Restore mises id
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  </BoxShadow>
+  <TouchableOpacity
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "rgba(0,0,0,0)",
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": 1334,
+          "width": 750,
+        },
+      ]
+    }
+  />
+</View>
+`;

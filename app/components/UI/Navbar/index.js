@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
+  menuIcon:{
+    width:20,
+    height:16
+  }
 });
 
 const app_name = require('app/images/app-name.png');
@@ -477,6 +481,7 @@ export function getSendFlowTitle(title, navigation, screenProps) {
  */
 export function getBrowserViewNavbarOptions(navigation) {
   const url = navigation.getParam('url', '');
+  const webviewRef = navigation.getParam('webviewRef',{})
   let hostname = null;
   let isHttps = false;
 
@@ -491,10 +496,10 @@ export function getBrowserViewNavbarOptions(navigation) {
   } else {
     hostname = strings('browser.title');
   }
-
   function onPress() {
     Keyboard.dismiss();
-    navigation.openDrawer();
+    // navigation.openDrawer();
+    navigation.navigate({routeName:'MenuToolTips'})
     trackEvent(ANALYTICS_EVENT_OPTS.COMMON_TAPS_HAMBURGER_MENU);
   }
 
@@ -504,11 +509,13 @@ export function getBrowserViewNavbarOptions(navigation) {
         onPress={onPress}
         style={styles.hamburgerButton}
         testID={'hamburger-menu-button-browser'}>
-        <IonicIcon
+        {/* <IonicIcon
           name={Device.isAndroid() ? 'md-menu' : 'ios-menu'}
           size={Device.isAndroid() ? 24 : 28}
           style={styles.backIcon}
-        />
+        /> */}
+
+        <Image source={require('app/images/menu.png')} style={styles.menuIcon}></Image>
       </TouchableOpacity>
     ),
     headerTitle: () => (
@@ -520,13 +527,14 @@ export function getBrowserViewNavbarOptions(navigation) {
         url={url}
         hostname={hostname}
         https={isHttps}
+        webviewRef={webviewRef}
       />
     ),
-    headerRight: () => (
-      <View style={styles.browserRightButton}>
-        <AccountRightButton />
-      </View>
-    ),
+    // headerRight: () => (
+    //   <View style={styles.browserRightButton}>
+    //     <AccountRightButton />
+    //   </View>
+    // ),
   };
 }
 

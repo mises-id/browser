@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     flex: 1,
+    backgroundColor:'#EEEEEE',
+    height:40,
+    position:'relative',
+    borderRadius:20,
+    flexDirection:'row'
   },
   network: {
     flexDirection: 'row',
@@ -30,19 +35,25 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   currentUrlWrapper: {
-    flexDirection: 'row',
     alignItems: 'center',
+    position:'relative',
     justifyContent: 'center',
-    flex: 1,
+    flex: 1
   },
-  lockIcon: {
-    marginTop: 2,
-    marginLeft: 10,
+  refreshIcon: {
+    width:16,
+    height:18,
+  },
+  refresh:{
+    position:'absolute',
+    right:15,
+    top:11
   },
   currentUrl: {
     ...fontStyles.normal,
-    fontSize: 14,
+    fontSize: 17,
     textAlign: 'center',
+    color:'#333'
   },
   currentUrlAndroid: {
     maxWidth: '60%',
@@ -88,6 +99,10 @@ class NavbarBrowserTitle extends PureComponent {
      * Website icon
      */
     icon: PropTypes.string,
+    /**
+     * Website webviewRef
+     */
+    webviewRef: PropTypes.object
   };
 
   onTitlePress = () => {
@@ -110,37 +125,46 @@ class NavbarBrowserTitle extends PureComponent {
 
     return name;
   }
-
+  //onload webviewpage
+  reloadWebview = ()=>{
+    const {current} = this.props.webviewRef;
+    current && current.reload();
+  }
   render = () => {
     const {https, network, hostname, error, icon} = this.props;
     const color = null;
     const name = this.getNetworkName(network);
     return (
-      <TouchableOpacity onPress={this.onTitlePress} style={styles.wrapper}>
-        <View style={styles.currentUrlWrapper}>
-          {icon && <Image style={styles.siteIcon} source={{uri: icon}} />}
-          <Text
-            numberOfLines={1}
-            ellipsizeMode={'head'}
-            style={[
-              styles.currentUrl,
-              Device.isAndroid() ? styles.currentUrlAndroid : {},
-            ]}>
-            {hostname}
-          </Text>
-          {https && !error ? (
-            <Icon name="lock" size={14} style={styles.lockIcon} />
-          ) : null}
-        </View>
-        <View style={styles.network}>
+      <View style={styles.wrapper}>
+        <TouchableOpacity onPress={this.onTitlePress} style={{flex:1}}>
+          <View style={styles.currentUrlWrapper}>
+            {/* {icon && <Image style={styles.siteIcon} source={{uri: icon}} />} */}
+            <Text
+              numberOfLines={1}
+              ellipsizeMode={'head'}
+              style={[
+                styles.currentUrl,
+                Device.isAndroid() ? styles.currentUrlAndroid : {},
+              ]}>
+              {hostname}
+            </Text>
+            {/* {https && !error ? (
+              <Icon name="lock" size={14} style={styles.lockIcon} />
+            ) : null} */}
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.reloadWebview} style={styles.refresh}>
+          <Image  source={require('app/images/refresh.png')} style={styles.refreshIcon}></Image>
+        </TouchableOpacity>
+        {/* <View style={styles.network}>
           <View
             style={[styles.networkIcon, {backgroundColor: color || colors.red}]}
           />
           <Text style={styles.networkName} testID={'navbar-title-network'}>
             {name}
           </Text>
-        </View>
-      </TouchableOpacity>
+        </View> */}
+      </View>
     );
   };
 }
