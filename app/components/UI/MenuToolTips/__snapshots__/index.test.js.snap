@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BrowserBottomBar should render correctly 1`] = `
+exports[`MenuToolTips should render correctly 1`] = `
 <View>
   <BoxShadow
     setting={
@@ -61,7 +61,9 @@ exports[`BrowserBottomBar should render correctly 1`] = `
           }
         }
       >
-        <View>
+        <View
+          key="0"
+        >
           <TouchableOpacity
             onPress={[Function]}
             style={
@@ -98,7 +100,9 @@ exports[`BrowserBottomBar should render correctly 1`] = `
             </Text>
           </TouchableOpacity>
         </View>
-        <View>
+        <View
+          key="1"
+        >
           <TouchableOpacity
             onPress={[Function]}
             style={

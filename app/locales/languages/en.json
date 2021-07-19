@@ -115,7 +115,6 @@
 		"new_password": "New Password",
 		"confirm_password": "Confirm password",
 		"import_button": "IMPORT",
-		"cancel_button": "Cancel",
 		"password_length_error": "The password needs to be at least 8 characters long",
 		"password_dont_match": "Passwords don't match",
 		"seed_phrase_requirements": "Secret Recovery Phrases contain 12, 15, 18, 21, or 24 words",
@@ -353,8 +352,7 @@
 		"title": "Add Favorite",
 		"title_label": "Name",
 		"url_label": "Url",
-		"add_button": "Add",
-		"cancel_button": "Cancel"
+		"add_button": "Add"
 	},
 	"accounts": {
 		"create_new_account": "Create New Account",
@@ -371,10 +369,36 @@
 		"reason": "Reason",
 		"try_again": "Try again"
 	},
+	"common":{
+		"cancel_button": "Cancel",
+		"placeholder":"Please enter the contents"
+	},
 	"menu":{
 		"create":"Create mises id",
 		"restore":"Restore mises id",
 		"forward":"Forward",
 		"new":"New post"
+	},
+	"forward":{
+		"add_button": "Forward"
+	},
+	"restore":{
+		"title":"Enter the mnemonic words in order",
+		"success_button":"Restore success"
+	},
+	"create":{
+		"Step1Title":"The mnemonic word",
+		"desc":"This is the introduction. This is the introduction. This  is the introduction. This is the introduction. This is the introduction. This is the introduction. ",
+		"step_btn":"Next step",
+		"success_button":"Creating a successful",
+		"back":"Back to previous step"
+	},
+	"password":{
+		"title":"Browser local password",
+		"inputTxt":"Password",
+		"inputTxtConfirm":"Confirm password",
+		"success_button":"Confirm",
+		"stay":"Stay logged in",
+		"forgot":"Forgot password?"
 	}
 }

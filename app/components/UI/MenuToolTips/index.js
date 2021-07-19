@@ -24,12 +24,14 @@ const MenuTips = ({navigation})=>{
 		icon:require('@/images/create.png'),
 		fn:()=>{
 			closePop()
+			navigation.push('Create')
 		}
 	},{
 		label:strings('menu.restore'),
 		icon:require('@/images/restore.png'),
 		fn:()=>{
 			closePop()
+			navigation.push('Restore')
 		}
 	}]
   return <View>
@@ -38,7 +40,7 @@ const MenuTips = ({navigation})=>{
 				<View style={styles.arrow}></View>
 				<View style={styles.toolTips}>
 					{list.map((val,index)=>{
-						return <View>
+						return <View key={index}>
 							<TouchableOpacity onPress={val.fn} style={styles.labelBox}>
 								<Image source={val.icon} style={styles.icon}></Image>
 								<Text style={styles.label}>{val.label}</Text>

@@ -35,7 +35,11 @@ exports[`Main should render correctly 1`] = `
           "childRouters": Object {
             "AddBookmarkView": null,
             "BrowserView": null,
+            "Create": null,
+            "CreateStep2": null,
             "GeneralSettings": null,
+            "Password": null,
+            "Restore": null,
             "SettingsView": null,
             "Webview": null,
           },
@@ -55,7 +59,7 @@ exports[`Main should render correctly 1`] = `
           "routes": Array [
             Object {
               "key": "id-123-0",
-              "routeName": "BrowserView",
+              "routeName": "Password",
             },
           ],
         },
@@ -93,7 +97,11 @@ exports[`Main should render correctly 1`] = `
             "childRouters": Object {
               "AddBookmarkView": null,
               "BrowserView": null,
+              "Create": null,
+              "CreateStep2": null,
               "GeneralSettings": null,
+              "Password": null,
+              "Restore": null,
               "SettingsView": null,
               "Webview": null,
             },
@@ -113,7 +121,7 @@ exports[`Main should render correctly 1`] = `
             "routes": Array [
               Object {
                 "key": "id-123-0",
-                "routeName": "BrowserView",
+                "routeName": "Password",
               },
             ],
           },

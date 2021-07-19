@@ -164,6 +164,231 @@ exports[`Browser should render correctly 1`] = `
       showUrlModal={[Function]}
       toggleOptions={[Function]}
     />
+    <ReactNativeModal
+      animationIn="slideInUp"
+      animationInTiming={300}
+      animationOut="slideOutDown"
+      animationOutTiming={300}
+      avoidKeyboard={false}
+      backdropColor="black"
+      backdropOpacity={0.7}
+      backdropTransitionInTiming={300}
+      backdropTransitionOutTiming={300}
+      coverScreen={true}
+      customBackdrop={null}
+      deviceHeight={null}
+      deviceWidth={null}
+      hasBackdrop={true}
+      hideModalContentWhileAnimating={false}
+      isVisible={false}
+      onBackButtonPress={[Function]}
+      onBackdropPress={[Function]}
+      onModalHide={[Function]}
+      onModalShow={[Function]}
+      onModalWillHide={[Function]}
+      onModalWillShow={[Function]}
+      panResponderThreshold={4}
+      propagateSwipe={false}
+      scrollHorizontal={false}
+      scrollOffset={0}
+      scrollOffsetMax={0}
+      scrollTo={null}
+      supportedOrientations={
+        Array [
+          "portrait",
+          "landscape",
+        ]
+      }
+      swipeThreshold={100}
+      useNativeDriver={false}
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderRadius": 15,
+            "padding": 20,
+            "width": 710,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "marginBottom": 17,
+            }
+          }
+        >
+          Forward
+        </Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={10}
+          placeholder="Please enter the contents"
+          style={
+            Object {
+              "backgroundColor": "#F8F8F8",
+              "borderRadius": 5,
+              "fontSize": 17,
+              "height": 200,
+              "justifyContent": "flex-start",
+              "padding": 17,
+              "textAlignVertical": "top",
+            }
+          }
+          underlineColorAndroid="transparent"
+        />
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#f8f8f8",
+              "borderRadius": 2,
+              "flexDirection": "row",
+              "marginTop": 15,
+              "padding": 5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "row",
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "uri": undefined,
+                }
+              }
+              style={
+                Object {
+                  "height": 28,
+                  "width": 28,
+                }
+              }
+            />
+            <View
+              style={
+                Object {
+                  "marginLeft": 7,
+                }
+              }
+            >
+              <View>
+                <Text
+                  style={
+                    Object {
+                      "color": "#222",
+                      "fontSize": 12,
+                      "fontWeight": "bold",
+                    }
+                  }
+                />
+              </View>
+              <View
+                style={
+                  Object {
+                    "marginTop": 4,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#999",
+                      "fontSize": 10,
+                    }
+                  }
+                />
+              </View>
+            </View>
+          </View>
+          <Image
+            source={
+              Object {
+                "testUri": "../../../app/images/link.png",
+              }
+            }
+            style={
+              Object {
+                "height": 15,
+                "marginRight": 8,
+                "width": 15,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "marginTop": 30,
+            }
+          }
+        >
+          <Button
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "borderRadius": 22,
+                  "height": 40,
+                  "marginLeft": 7,
+                  "marginRight": 7,
+                  "width": 144,
+                },
+                Object {
+                  "backgroundColor": "#eee",
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#666",
+                }
+              }
+            >
+              Cancel
+            </Text>
+          </Button>
+          <Button
+            style={
+              Array [
+                Object {
+                  "borderRadius": 22,
+                  "height": 40,
+                  "marginLeft": 7,
+                  "marginRight": 7,
+                  "width": 144,
+                },
+                Object {
+                  "backgroundColor": "#5D61FF",
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "white",
+                }
+              }
+            >
+              Forward
+            </Text>
+          </Button>
+        </View>
+      </View>
+    </ReactNativeModal>
   </View>
 </ErrorBoundary>
 `;

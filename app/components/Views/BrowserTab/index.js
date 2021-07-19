@@ -12,6 +12,7 @@ import {
   BackHandler,
   InteractionManager,
   Image,
+  Dimensions,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {WebView} from 'react-native-webview';
@@ -25,7 +26,6 @@ import {isEmulatorSync} from 'react-native-device-info';
 import URL from 'url-parse';
 import Modal from 'react-native-modal';
 import SearchApi from 'react-native-search-api';
-
 import {colors, baseStyles, fontStyles} from 'app/styles/common';
 import Logger from 'app/util/Logger';
 import onUrlSubmit, {getHost, getUrlObj} from 'app/util/browser';
@@ -49,6 +49,7 @@ import WebviewError from '../../UI/WebviewError';
 
 import ErrorBoundary from '../../UI/ErrorBoundary';
 import { BoxShadow } from 'react-native-shadow';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 const {HOMEPAGE_URL, USER_AGENT} = AppConstants;
 const HOMEPAGE_HOST = 'home.mises.site';
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   optionsWrapperBox:{
     position: 'absolute',
     zIndex: 99999999,
-    bottom: 75,
+    bottom: 25,
     right: 5
   },
   option: {
@@ -224,6 +225,87 @@ const styles = StyleSheet.create({
 		bottom:-11,
 		right:24
 	},
+  forwardBox:{
+    width:Dimensions.get('window').width - 40,
+    backgroundColor:'white',
+    borderRadius:15,
+    padding:20
+  },
+  forwardTitle:{
+    fontSize:20,
+    fontWeight:'bold',
+    marginBottom:17
+  },
+  forwardInput:{
+    height:200,
+    backgroundColor:'#F8F8F8',
+    borderRadius:5,
+    textAlignVertical:"top",
+    justifyContent: "flex-start",
+    padding:17,
+    fontSize:17
+  },
+  websiteBox:{
+    backgroundColor:'#f8f8f8',
+    borderRadius:2,
+    padding:5,
+    flexDirection:'row',
+    marginTop:15,
+    alignItems:'center',
+  },
+  websiteDataBox:{
+    flex:1,
+    flexDirection:'row',
+    alignItems:'center'
+  },
+  websiteIcon:{
+    width:28,
+    height:28
+  },
+  websiteData:{
+    marginLeft:7
+  },
+  websiteTitle:{
+    fontSize:12,
+    fontWeight:'bold',
+    color:'#222'
+  },
+  websiteUrl:{
+    fontSize:10,
+    color:'#999',
+  },
+  websiteIconBox:{
+    marginTop:4
+  },
+  iconType:{
+    width:15,
+    height:15,
+    marginRight:8
+  },
+  btnBox:{
+    marginTop:30,
+    flexDirection:'row',
+    
+  },
+  btnStyle:{
+    width:144,
+    height:40,
+    borderRadius:22,
+    marginLeft:7,
+    marginRight:7
+  },
+  cancelBtn:{
+    backgroundColor:'#eee'
+  },
+  cancelBtnTxt:{
+    color:"#666"
+  },
+  addBtn:{
+    backgroundColor:'#5D61FF',
+  },
+  addBtnTxt:{
+    color:"white"
+  }
 });
 
 const sessionENSNames = {};
@@ -239,6 +321,7 @@ export const BrowserTab = props => {
   const [error, setError] = useState(null);
   const [showUrlModal, setShowUrlModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [showForward, setshowForward] = useState(false)
   const [blockedUrl, setBlockedUrl] = useState(undefined);
 
   const webviewRef = useRef(null);
@@ -628,6 +711,7 @@ export const BrowserTab = props => {
       props.navigation.setParams({
         url: getMaskedUrl(siteInfo.url),
         icon: siteInfo.icon,
+        name: siteInfo.title,
         silent: true,
       });
 
@@ -706,7 +790,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-
+    const {title} = nativeEvent
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
       if (!data || (!data.type && !data.name)) {
@@ -727,6 +811,7 @@ export const BrowserTab = props => {
         case 'GET_WEBVIEW_URL': {
           const {url} = data.payload;
           if (url === nativeEvent.url) {
+            data.payload.title = title;
             webviewUrlPostMessagePromiseResolve.current &&
               webviewUrlPostMessagePromiseResolve.current(data.payload);
           }
@@ -1005,14 +1090,10 @@ export const BrowserTab = props => {
 		icon:require('@/images/forward.png'),
 		fn:()=>{ //call page function
       toggleOptions()
-		}
-	},{
-		label:strings('menu.new'),
-		icon:require('@/images/new.png'),
-		fn:()=>{
-      toggleOptions()
+      toggleForwardModal()
 		}
 	}]
+  const toggleForwardModal = ()=> setshowForward(!showForward)
   const setting = {
     inset: false,
     style: { marginVertical: 5 },
@@ -1049,7 +1130,33 @@ export const BrowserTab = props => {
       );
     }
   };
-
+  const renderForwardModal = ()=>{
+    const {params={}}= props.navigation.state;
+    const webviewParams = params.icon&&initialUrl ? {...params,initialUrl}:{}
+    return <Modal isVisible={showForward}>
+      <View style={styles.forwardBox}>
+        <Text style={styles.forwardTitle}>{strings('menu.forward')}</Text>
+        <TextInput style={styles.forwardInput} 
+        numberOfLines={10}
+        underlineColorAndroid="transparent"
+        multiline={true} placeholder={strings('common.placeholder')}></TextInput>
+        <View style={styles.websiteBox}>
+          <View style={styles.websiteDataBox}>
+            <Image source={{uri:webviewParams.icon}} style={styles.websiteIcon}></Image>
+            <View style={styles.websiteData}>
+              <View><Text style={styles.websiteTitle}>{webviewParams.name}</Text></View>
+              <View style={styles.websiteIconBox}><Text style={styles.websiteUrl}>{webviewParams.initialUrl}</Text></View>
+            </View>
+          </View>
+          <Image source={require('../../../images/link.png')} style={styles.iconType}></Image>
+        </View>
+        <View style={styles.btnBox}>
+          <Button style={[styles.btnStyle,styles.cancelBtn]} onPress={toggleForwardModal}><Text style={styles.cancelBtnTxt}>{strings('common.cancel_button')}</Text></Button>
+          <Button style={[styles.btnStyle,styles.addBtn]}><Text style={styles.addBtnTxt}>{strings('forward.add_button')}</Text></Button>
+        </View>
+      </View>
+    </Modal>
+  }
   /**
    * Show the different tabs
    */
@@ -1110,6 +1217,7 @@ export const BrowserTab = props => {
         {isTabActive() && renderUrlModal()}
         {isTabActive() && renderOptions()}
         {isTabActive() && renderBottomBar()}
+        {isTabActive() && renderForwardModal()}
       </View>
     </ErrorBoundary>
   );

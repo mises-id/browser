@@ -1,0 +1,779 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create should render correctly 1`] = `
+<ScrollView>
+  <View
+    style={
+      Object {
+        "paddingLeft": 15,
+        "paddingRight": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "paddingBottom": 17,
+          "paddingTop": 25,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#333",
+            "fontSize": 16,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Enter the mnemonic words in order
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#F8F8F8",
+          "borderRadius": 5,
+          "height": 50,
+          "marginBottom": 25,
+          "paddingLeft": 15,
+          "paddingRight": 15,
+        }
+      }
+    >
+      <TextInput
+        placeholder="Please enter the contents"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "borderColor": "#EEEEEE",
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "padding": 5,
+        }
+      }
+    >
+      <View
+        key="0"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          cloud
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="1"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          rabbit
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="2"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          fly
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="3"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          hawk
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="4"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          contemplate
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="5"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          pretty
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="6"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          superduty
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="7"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          lovely
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="8"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          come
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="9"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          gift
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="10"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          main
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+      <View
+        key="11"
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#F7F7FF",
+            "borderRadius": 5,
+            "justifyContent": "center",
+            "margin": 5,
+            "padding": 15,
+            "position": "relative",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          green
+        </Text>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "bottom": 0,
+              "justifyContent": "center",
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#999",
+                "fontSize": 21,
+              }
+            }
+          >
+            ?
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginLeft": 25,
+          "marginRight": 25,
+          "marginTop": 15,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 50,
+              "borderWidth": 1,
+              "height": 50,
+              "justifyContent": "center",
+              "marginTop": 25,
+              "overflow": "hidden",
+            },
+            Object {
+              "borderColor": "#5D61FF",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Creating a successful
+        </Text>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 50,
+              "borderWidth": 1,
+              "height": 50,
+              "justifyContent": "center",
+              "marginTop": 25,
+              "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "#EEEEEE",
+              "borderColor": "#EEEEEE",
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#666",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Cancel
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "marginBottom": 200,
+            "marginTop": 25,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#5D61FF",
+              "fontSize": 15,
+            }
+          }
+        >
+          Back to previous step
+        </Text>
+      </View>
+    </View>
+  </View>
+</ScrollView>
+`;
