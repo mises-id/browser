@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-19 18:10:32
+ * @LastEditTime: 2021-07-20 09:52:27
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -16,7 +16,10 @@ const word = (item={},key)=>{
     </View>
   </View>
 }
-const Create = (props)=>{
+const Create = ({navigation})=>{
+  const nextStep = ()=>{
+    navigation.push('CreateStep2')
+  }
   const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
   return <ScrollView>
     <View style={styles.pageBox}>
@@ -28,9 +31,11 @@ const Create = (props)=>{
       {data.map(word)}
     </View>
     <View style={styles.btnBox}>
-      <View style={[styles.btnStyle,styles.success]}>
-        <Text style={styles.successBtnTxt}>{strings('create.success_button')}</Text>
-      </View>
+      <TouchableOpacity onPress={nextStep}>
+        <View style={[styles.btnStyle,styles.success]}>
+          <Text style={styles.successBtnTxt}>{strings('create.success_button')}</Text>
+        </View>
+      </TouchableOpacity>
       <View style={[styles.btnStyle,styles.cancel]}>
         <Text style={styles.cancelBtnTxt}>{strings('common.cancel_button')}</Text>
       </View>

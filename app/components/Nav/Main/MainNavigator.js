@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-12 14:33:08
- * @LastEditTime: 2021-07-19 18:12:39
+ * @LastEditTime: 2021-07-20 09:57:22
  * @LastEditors: lmk
  * @Description: MainNavigator
  */
@@ -55,24 +55,24 @@ const navigationOptions = ({navigation})=>({
   }
 })
 const AppStack = createStackNavigator({
+  BrowserView: {
+    screen:Browser,
+  },
   Password: {
     screen: Password,
     navigationOptions
   },
   CreateStep2: {
-    screen: Create,
+    screen: Create, //step2
     navigationOptions
   },
   Create: {
-    screen: CreateStep,
+    screen: CreateStep, //step 1
     navigationOptions
   },
   Restore: {
     screen: Restore,
     navigationOptions
-  },
-  BrowserView: {
-    screen:Browser,
   },
   Webview: {
     screen: SimpleWebview

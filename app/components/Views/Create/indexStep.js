@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-19 17:45:51
+ * @LastEditTime: 2021-07-20 09:58:35
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -13,7 +13,11 @@ const word = (item={},key)=>{
     <Text style={styles.wordTxt}>{item.value}</Text>
   </View>
 }
-const CreateStep = (props)=>{
+const CreateStep = ({navigation})=>{
+
+  const nextStep = ()=>{
+    navigation.push('CreateStep2')
+  }
   const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
   return <View style={styles.pageBox}>
     <View style={styles.titleBox}><Text style={styles.title}>{strings('create.Step1Title')}</Text></View>
@@ -22,9 +26,11 @@ const CreateStep = (props)=>{
       {data.map(word)}
     </View>
     <View style={styles.btnBox}>
-      <View style={[styles.btnStyle,styles.success]}>
-        <Text style={styles.successBtnTxt}>{strings('create.step_btn')}</Text>
-      </View>
+      <TouchableOpacity onPress={nextStep}>
+        <View style={[styles.btnStyle,styles.success]}>
+          <Text style={styles.successBtnTxt}>{strings('create.step_btn')}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   </View>
 }
