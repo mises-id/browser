@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-20 09:52:27
+ * @LastEditTime: 2021-07-25 21:53:56
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -11,21 +11,34 @@ import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, TextInput, But
 const word = (item={},key)=>{
   return <View key={key} style={styles.wordContent}>
     <Text style={styles.wordTxt}>{item.value}</Text>
-    <View style={styles.isHidden}>
+    {!item.isShow&&<View style={styles.isHidden}>
       <Text style={styles.isHiddenTxt}>?</Text>
-    </View>
+    </View>}
   </View>
 }
 const Create = ({navigation})=>{
+  const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
   const nextStep = ()=>{
     navigation.push('CreateStep2')
   }
-  const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
+  const [inputValue, setinputValue] = useState('')
+  const getChange = ({nativeEvent})=>{
+    const {text} = nativeEvent;
+    setinputValue(text)
+    if(text){
+      const findIndex = data.findIndex(val=>val.value===text);
+      if(findIndex>-1){
+        data[findIndex].isShow = true;
+        setdata([...data])
+        setinputValue('')
+      }
+    }
+  }
   return <ScrollView>
     <View style={styles.pageBox}>
     <View style={styles.titleBox}><Text style={styles.title}>{strings('restore.title')}</Text></View>
     <View style={styles.inputBox}>
-      <TextInput placeholder={strings('common.placeholder')}></TextInput>
+      <TextInput value={inputValue} onChange={getChange} placeholder={strings('common.placeholder')}></TextInput>
     </View>
     <View style={styles.wordsContainer}>
       {data.map(word)}
