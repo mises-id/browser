@@ -816,6 +816,15 @@ export const BrowserTab = props => {
               webviewUrlPostMessagePromiseResolve.current(data.payload);
           }
         }
+        break;
+        case "OpenCreateUserPanel":{
+          props.navigation.push('Create')
+        }
+        break;
+        case "OpenRestoreUserPanel":{
+          props.navigation.push('Restore')
+        }
+        break;
       }
     } catch (e) {
       Logger.error(e, `Browser::onMessage on ${url.current}`);
