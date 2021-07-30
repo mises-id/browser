@@ -6267,9 +6267,8 @@ react-native-screens@^3.3.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.3.0.tgz#d4464a96620b85d09e46bd6865b5f48456c244f0"
   integrity sha512-ni11jC6I9cFVXdLIDwkgafDHw/STXUNzkR5Fx3w8Wikdzi8gfTEan2kiOm7aS42d2F/LXddZ6i74Z2em0L6LPQ==
 
-"react-native-sdk-bridge@https://Liuminke1996@github.com/mises-id/react-native-sdk-bridge.git#develop":
-  version "1.0.2"
-  resolved "https://Liuminke1996@github.com/mises-id/react-native-sdk-bridge.git#10ec73b161912c862e1795302cb50f1332d8fd53"
+react-native-sdk-bridge@../react-native-sdk-bridge:
+  version "1.0.3"
 
 react-native-search-api@^1.2.0:
   version "1.2.0"

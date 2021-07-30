@@ -3,12 +3,10 @@
  */
 
 import 'react-native';
-import React from 'react';
-import {shallow} from 'enzyme';
-import {SdkBridge, MisesSdk} from 'react-native-sdk-bridge';
+import {MSdk} from 'react-native-sdk-bridge';
 
 const testSdk = async () => {
-  const sdk = await MisesSdk.newsdk();
+  const sdk = await MSdk.newSdk();
   sdk.setLogLevel(0);
 };
 

@@ -17,6 +17,8 @@ import SplashScreen from 'react-native-splash-screen';
 import App from 'app/components/Nav/App';
 import Logger from 'app/util/Logger';
 
+import Sdk from 'app/core/Sdk';
+
 import ErrorBoundary from 'app/components/UI/ErrorBoundary';
 
 /**
@@ -40,6 +42,14 @@ export default class Root extends PureComponent {
     super(props);
 
     SplashScreen.hide();
+    //It is an sdk sample usage
+    Sdk.init()
+      .then(sdk => {
+        return sdk.testConnection();
+      })
+      .then(_ => {
+        Logger.log('Mises sdk init ok');
+      });
   }
 
   render = () => (

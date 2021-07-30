@@ -1,11 +1,22 @@
 'use strict';
 
-import {SdkBridge, MisesSdk} from 'react-native-sdk-bridge';
+import {MSdk} from 'react-native-sdk-bridge';
 
 // TODO: What to do with the module?
-SdkBridge;
+let instance;
 
-const testSdk = async () => {
-  const sdk = await MisesSdk.newsdk();
-  sdk.setLogLevel(0);
+export default {
+  init: async () => {
+    if (instance) {
+      return instance;
+    }
+    instance = await MSdk.newSdk();
+    return instance;
+  },
+  testConnection: async () => {
+    return instance && instance.testConnection();
+  },
+  randomMnemonics: async () => {
+    return instance && instance.randomMnemonics();
+  },
 };
