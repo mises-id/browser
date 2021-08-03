@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-19 22:11:07
+ * @LastEditTime: 2021-08-02 23:29:28
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -10,29 +10,56 @@ import React, { useReducer, useEffect, useRef, useState } from 'react';
 import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, TextInput, Button} from 'react-native';
 import radio from 'app/images/radio.png'
 import radioChecked from 'app/images/radio_selected.png'
-const Password = (props)=>{
+import { Toast, useBind } from 'app/util';
+import Sdk from 'app/core/Sdk';
+const Password = ({navigation})=>{
+  
   const [checked, setchecked] = useState(false)
+  const pwd = useBind('')
+  const confimPwd = useBind('')
+  const submit = ()=>{
+    const toastContent = strings('common.placeholder')
+    if(!pwd.value){
+      Toast(strings('password.pwderror'))
+      return false;
+    }
+    if(!confimPwd.value){
+      Toast(strings('password.confimPwderror'))
+      return false;
+    }
+    if(pwd.value!==confimPwd.value){
+      Toast(strings('password.retypederror'))
+      return false;
+    }
+    Sdk.createUser(navigation.state.params.mnemonics.split(',').join(' '),pwd.value).then(res=>{
+      console.log(res)
+    })
+  }
   return <View style={styles.pageBox}>
     <View style={styles.titleBox}><Text style={styles.title}>{strings('password.title')}</Text></View>
     <View style={styles.inputTitleBox}><Text style={styles.inputTitleTxt}>{strings('password.inputTxt')}:</Text></View>
     <View style={styles.inputBox}>
-      <TextInput placeholder={strings('common.placeholder')}></TextInput>
+      <TextInput placeholder={strings('common.placeholder')} {...pwd}
+			secureTextEntry={true}></TextInput>
     </View>
     <View style={styles.inputTitleBox}><Text style={styles.inputTitleTxt}>{strings('password.inputTxtConfirm')}:</Text></View>
     <View style={styles.inputBox}>
-      <TextInput placeholder={strings('common.placeholder')}></TextInput>
+      <TextInput placeholder={strings('common.placeholder')} {...confimPwd}
+			secureTextEntry={true}></TextInput>
     </View>
-    <View style={styles.txtBtnBox}>
+    {/* <View style={styles.txtBtnBox}>
       <TouchableOpacity onPress={()=>setchecked(!checked)} style={{flexDirection:'row',alignItems:'center'}}>
         <Image source={checked? radioChecked : radio} style={styles.radio}></Image>
         <Text style={styles.stay}>{strings('password.stay')}</Text>
       </TouchableOpacity>
       <Text  style={styles.txtBtnStyle}>{strings('password.forgot')}</Text>
-    </View>
+    </View> */}
     <View style={styles.btnBox}>
-      <View style={[styles.btnStyle,styles.success]}>
-        <Text style={styles.successBtnTxt}>{strings('password.success_button')}</Text>
-      </View>
+      <TouchableOpacity onPress={submit}>
+        <View style={[styles.btnStyle,styles.success]}>
+          <Text style={styles.successBtnTxt}>{strings('password.success_button')}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   </View>
 }

@@ -1,3 +1,10 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-08-02 14:33:49
+ * @LastEditTime: 2021-08-02 17:29:50
+ * @LastEditors: lmk
+ * @Description: 
+ */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -20,6 +27,7 @@ import Logger from 'app/util/Logger';
 import Sdk from 'app/core/Sdk';
 
 import ErrorBoundary from 'app/components/UI/ErrorBoundary';
+import { WRootToastApp } from 'react-native-smart-tip'
 
 /**
  * Top level of the component hierarchy
@@ -53,12 +61,14 @@ export default class Root extends PureComponent {
   }
 
   render = () => (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <ErrorBoundary onError={this.errorHandler} view="Root">
-          <App />
-        </ErrorBoundary>
-      </PersistGate>
-    </Provider>
+    <WRootToastApp>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ErrorBoundary onError={this.errorHandler} view="Root">
+            <App />
+          </ErrorBoundary>
+        </PersistGate>
+      </Provider>
+    </WRootToastApp>
   );
 }

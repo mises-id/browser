@@ -1,13 +1,15 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-25 21:53:56
+ * @LastEditTime: 2021-08-02 17:06:16
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
 import { strings } from 'app/locales/i18n';
 import React, { useReducer, useEffect, useRef, useState } from 'react';
 import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, TextInput, Button, ScrollView} from 'react-native';
+import { NavigationActions, StackActions } from 'react-navigation';
+import { useNavigation } from 'react-navigation-hooks';
 const word = (item={},key)=>{
   return <View key={key} style={styles.wordContent}>
     <Text style={styles.wordTxt}>{item.value}</Text>
@@ -16,10 +18,31 @@ const word = (item={},key)=>{
     </View>}
   </View>
 }
-const Create = ({navigation})=>{
+const Create =  ({navigation})=>{
   const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
-  const nextStep = ()=>{
-    navigation.push('CreateStep2')
+  const {params} = navigation.state;
+  const [isHidden, setisHidden] = useState(true)
+  useEffect(() => {
+    if(params){
+      const mnemonics = params.mnemonics.split(',').map(val=>({value:val,isShow:false})) 
+      setdata(mnemonics)
+    }
+  }, [])
+  const submit = ()=>{
+    //if(!isHidden){
+      navigation.push('Password',params)
+    //}
+  }
+  const back = routeName=>{
+    if(routeName){
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName})],
+      });
+      navigation.dispatch(resetAction)
+      return false;
+    }
+    navigation.goBack(null)
   }
   const [inputValue, setinputValue] = useState('')
   const getChange = ({nativeEvent})=>{
@@ -31,30 +54,37 @@ const Create = ({navigation})=>{
         data[findIndex].isShow = true;
         setdata([...data])
         setinputValue('')
+        const isHiddenFlag = data.some(val=>!val.isShow);
+        setisHidden(isHiddenFlag)
       }
     }
   }
   return <ScrollView>
     <View style={styles.pageBox}>
-    <View style={styles.titleBox}><Text style={styles.title}>{strings('restore.title')}</Text></View>
-    <View style={styles.inputBox}>
-      <TextInput value={inputValue} onChange={getChange} placeholder={strings('common.placeholder')}></TextInput>
-    </View>
-    <View style={styles.wordsContainer}>
-      {data.map(word)}
-    </View>
-    <View style={styles.btnBox}>
-      <TouchableOpacity onPress={nextStep}>
-        <View style={[styles.btnStyle,styles.success]}>
-          <Text style={styles.successBtnTxt}>{strings('create.success_button')}</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={[styles.btnStyle,styles.cancel]}>
-        <Text style={styles.cancelBtnTxt}>{strings('common.cancel_button')}</Text>
+      <View style={styles.titleBox}><Text style={styles.title}>{strings('restore.title')}</Text></View>
+      <View style={styles.inputBox}>
+        <TextInput value={inputValue} onChange={getChange} placeholder={strings('common.placeholder')}></TextInput>
       </View>
-      <View style={styles.back}><Text style={styles.backTxt}>{strings('create.back')}</Text></View>
+      <View style={styles.wordsContainer}>
+        {data.map(word)}
+      </View>
+      <View style={styles.btnBox}>
+        <TouchableOpacity onPress={submit}>
+          <View style={[styles.btnStyle,isHidden ? styles.disableSuccess:styles.success]}>
+            <Text style={isHidden ? styles.disableSuccessBtnTxt:styles.successBtnTxt}>{strings('create.success_button')}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>back('Main')}>
+          <View style={[styles.btnStyle,styles.cancel]}>
+            <Text style={styles.cancelBtnTxt}>{strings('common.cancel_button')}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>back(null)}>
+          <View style={styles.back}><Text style={styles.backTxt}>{strings('create.back')}</Text></View>
+
+        </TouchableOpacity>
+      </View>
     </View>
-  </View>
   </ScrollView>
 }
 const styles = StyleSheet.create({
@@ -118,10 +148,18 @@ const styles = StyleSheet.create({
   success:{
     borderColor:'#5D61FF'
   },
+  disableSuccess:{
+    borderColor:'#bdbfff'
+  },
+  disableSuccessBtnTxt:{
+    fontSize:16,
+    fontWeight:'bold',
+    color:'#bdbfff'
+  },
   successBtnTxt:{
     fontSize:16,
-    color:"#5D61FF",
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color:"#5D61FF"
   },
   cancel:{
     borderColor:'#EEEEEE',

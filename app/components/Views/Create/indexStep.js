@@ -1,24 +1,34 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-07-20 09:58:35
+ * @LastEditTime: 2021-08-02 22:39:31
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
+import Sdk from 'app/core/Sdk';
 import { strings } from 'app/locales/i18n';
 import React, { useReducer, useEffect, useRef, useState } from 'react';
 import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, TextInput, Button} from 'react-native';
 const word = (item={},key)=>{
   return <View key={key} style={styles.wordContent}>
-    <Text style={styles.wordTxt}>{item.value}</Text>
+    <Text style={styles.wordTxt}>{item}</Text>
   </View>
 }
 const CreateStep = ({navigation})=>{
-
+  const [data, setdata] = useState([])
+  const [mnemonics, setmnemonics] = useState('')
+  useEffect(()=>{
+    Sdk.randomMnemonics().then(res=>{
+      const word = res.split(' ');
+      setdata(word)
+      setmnemonics(word.join(','))
+    })
+  },[])
   const nextStep = ()=>{
-    navigation.push('CreateStep2')
+    navigation.push('CreateStep2',{
+      mnemonics
+    })
   }
-  const [data, setdata] = useState([{value:'cloud'},{value:'rabbit'},{value:'fly'},{value:'hawk'},{value:'contemplate'},{value:'pretty'},{value:'superduty'},{value:'lovely'},{value:'come'},{value:'gift'},{value:'main'},{value:'green'}])
   return <View style={styles.pageBox}>
     <View style={styles.titleBox}><Text style={styles.title}>{strings('create.Step1Title')}</Text></View>
     <View style={styles.desc}><Text style={styles.title}>{strings('create.desc')}</Text></View>

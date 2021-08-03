@@ -18,10 +18,11 @@ import {AppConstants} from 'app/constants/core';
 import {getHost} from 'app/util/browser';
 
 import WebsiteIcon from '../../WebsiteIcon';
+import { getBrowserViewNavbarOptions } from '../../Navbar';
 
 const margin = 15;
 const width = Dimensions.get('window').width - margin * 2;
-const height = Dimensions.get('window').height / (Device.isIphone5S() ? 4 : 5);
+const height = Dimensions.get('window').height / 3.5;
 let paddingTop = Dimensions.get('window').height - 190;
 if (Device.isIphoneX()) {
   paddingTop -= 65;
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   tabSiteName: {
-    color: colors.white,
+    color: '#333333',
     ...fontStyles.bold,
     fontSize: 18,
     marginRight: 40,
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    backgroundColor: colors.grey500,
+    backgroundColor: '#F8F8F8',
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
@@ -85,14 +86,14 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   activeTab: {
-    borderWidth: 5,
-    borderColor: colors.blue,
+    borderWidth: 3,
+    borderColor: '#5D61FF',
   },
   closeTabIcon: {
     paddingHorizontal: 10,
     paddingTop: 3,
     fontSize: 32,
-    color: colors.white,
+    color: '#333',
     right: 0,
     marginTop: -7,
     position: 'absolute',
@@ -137,7 +138,7 @@ export default class TabThumbnail extends PureComponent {
      */
     onSwitch: PropTypes.func,
   };
-
+  // static navigationOptions = ({navigation}) => getBrowserViewNavbarOptions(navigation,'dark');
   getContainer = () => (Device.isAndroid() ? View : ElevatedView);
 
   render() {
@@ -153,7 +154,7 @@ export default class TabThumbnail extends PureComponent {
           style={[styles.tabWrapper, isActiveTab && styles.activeTab]}>
           <View style={styles.tabHeader}>
             <View style={styles.titleButton}>
-              {!isHomepage ? (
+              {/* {!isHomepage ? (
                 <WebsiteIcon
                   transparent
                   style={styles.tabFavicon}
@@ -166,7 +167,7 @@ export default class TabThumbnail extends PureComponent {
                   title={tab.url}
                   source={APP_ICON}
                 />
-              )}
+              )} */}
               <Text style={styles.tabSiteName} numberOfLines={1}>
                 {isHomepage ? strings('browser.new_tab') : hostname}
               </Text>

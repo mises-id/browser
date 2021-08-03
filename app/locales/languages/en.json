@@ -399,6 +399,9 @@
 		"inputTxtConfirm":"Confirm password",
 		"success_button":"Confirm",
 		"stay":"Stay logged in",
-		"forgot":"Forgot password?"
+		"forgot":"Forgot password?",
+		"pwderror":"Please enter the password",
+		"confimPwderror":"Please enter the confirm password",
+		"retypederror":"the password did not match the re-typed password"
 	}
 }

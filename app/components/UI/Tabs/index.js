@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
   InteractionManager,
   Dimensions,
@@ -16,6 +16,7 @@ import {colors, fontStyles} from 'app/styles/common';
 import Device from 'app/util/Device';
 
 import TabThumbnail from './TabThumbnail';
+import { getBrowserViewNavbarOptions } from '../Navbar';
 
 const THUMB_VERTICAL_MARGIN = 15;
 const NAVBAR_SIZE = Device.isIphoneX() ? 88 : 64;
@@ -63,16 +64,16 @@ const styles = StyleSheet.create({
     ...fontStyles.bold,
   },
   tabActionText: {
-    color: colors.blue,
+    color: '#CCCCCC',
     ...fontStyles.normal,
-    fontSize: 16,
+    fontSize: 17,
   },
   actionDisabled: {
     color: colors.fontSecondary,
   },
   tabsView: {
     flex: 1,
-    backgroundColor: colors.grey100,
+    backgroundColor: '#161B1D',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.58,
     shadowRadius: 15.0,
-    backgroundColor: colors.grey000,
+    backgroundColor: '#2D2F33',
     height: Device.isIphoneX() ? 80 : 50,
   },
   tabs: {
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
   newTabIcon: {
     marginTop: Device.isIos() ? 3 : 2.5,
     color: colors.white,
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'center',
     justifyContent: 'center',
     alignContent: 'center',
@@ -114,10 +115,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'flex-start',
     alignContent: 'flex-start',
-    backgroundColor: colors.blue,
-    borderRadius: 100,
-    width: 30,
-    height: 30,
+    backgroundColor: '#5D61FF',
+    borderRadius: 5,
+    width: 33,
+    height: 27,
     marginTop: -7,
   },
 });
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
  * PureComponent that wraps all the thumbnails
  * representing all the open tabs
  */
-export default class Tabs extends PureComponent {
+export default class Tabs extends  Component{
   static propTypes = {
     /**
      * Array of tabs
@@ -256,7 +257,7 @@ export default class Tabs extends PureComponent {
       <View style={styles.tabActions}>
         <TouchableOpacity
           style={[styles.tabAction, styles.tabActionleft]}
-          onPress={closeAllTabs}>
+          onPress={closeAllTabs}>   
           <Text
             style={[
               styles.tabActionText,
