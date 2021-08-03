@@ -43,13 +43,10 @@ export default class Root extends PureComponent {
 
     SplashScreen.hide();
     //It is an sdk sample usage
-    Sdk.init()
-      .then(sdk => {
-        return sdk.testConnection();
-      })
-      .then(_ => {
-        Logger.log('Mises sdk init ok');
-      });
+    Logger.log('Mises sdk init start');
+    Sdk.isLogin().then(login => {
+      Logger.log('Mises sdk init ok ' + login);
+    });
   }
 
   render = () => (
