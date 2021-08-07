@@ -1,4 +1,6 @@
+import sdk from 'app/core/Sdk';
 import { strings } from 'app/locales/i18n';
+import { Toast } from 'app/util';
 import React, { useReducer, useEffect, useRef, useState } from 'react';
 import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, Dimensions} from 'react-native';
 import { BoxShadow } from "react-native-shadow";
@@ -19,12 +21,14 @@ const setting = {
 const {width,height} = Dimensions.get('window')
 const MenuTips = ({navigation})=>{
 	const closePop = ()=>navigation.pop();
+	const [activeUser, setactiveUser] = useState(false)
 	const list = [{
 		label:strings('menu.create'),
 		icon:require('@/images/create.png'),
 		fn:()=>{
 			closePop()
-			navigation.push('Create')
+			!activeUser&&navigation.push('Create')
+			activeUser&&hasActiveUser()
 		}
 	},{
 		label:strings('menu.restore'),
@@ -34,6 +38,12 @@ const MenuTips = ({navigation})=>{
 			navigation.push('Restore')
 		}
 	}]
+	useEffect(()=>{
+		sdk.isLogin().then(setactiveUser)
+	},[])
+	const hasActiveUser = ()=>{
+		Toast('Has ActiveUser')
+	}
   return <View>
 		<BoxShadow setting={setting}>
       <View style={{position:'relative',marginTop:45,marginLeft:5,zIndex:9999}}>

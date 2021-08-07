@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-12 14:33:08
- * @LastEditTime: 2021-08-02 23:06:01
+ * @LastEditTime: 2021-08-07 13:52:26
  * @LastEditors: lmk
  * @Description: MainNavigator
  */
@@ -19,6 +19,7 @@ import Create from 'app/components/Views/Create';
 import Restore from 'app/components/Views/Restore';
 import CreateStep from 'app/components/Views/Create/indexStep';
 import Password from 'app/components/Views/Password';
+import Login from 'app/components/Views/Login';
 
 const styles = StyleSheet.create({
   headerLogo: {
@@ -86,6 +87,10 @@ const AppStack = createStackNavigator({
   AddBookmarkView: {
     screen: AddBookmark
   },
+  Login:{
+    screen:Login,
+    navigationOptions
+  }
 },
 {
   mode: 'modal',

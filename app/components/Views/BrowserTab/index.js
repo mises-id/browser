@@ -21,7 +21,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import Share from 'react-native-share';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {isEmulatorSync} from 'react-native-device-info';
 import URL from 'url-parse';
 import Modal from 'react-native-modal';
@@ -50,6 +50,7 @@ import WebviewError from '../../UI/WebviewError';
 import ErrorBoundary from '../../UI/ErrorBoundary';
 import { BoxShadow } from 'react-native-shadow';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import sdk from 'app/core/Sdk';
 
 const {HOMEPAGE_URL, USER_AGENT} = AppConstants;
 const HOMEPAGE_HOST = 'home.mises.site';
@@ -784,7 +785,11 @@ export const BrowserTab = props => {
       webviewRef
     })
   };
-
+  const injectCallbackJavaScript = data=>{
+    const {current} = webviewRef;
+    const callback = `window.ReactNativeWebViewCallback(${JSON.stringify(data)})`;
+    current && current.injectJavaScript(callback);
+  }
   /**
    * Handle message from website
    */
@@ -823,6 +828,25 @@ export const BrowserTab = props => {
         break;
         case "OpenRestoreUserPanel":{
           props.navigation.push('Restore')
+        }
+        break;
+        case "setUserInfo":{
+          sdk.setUserInfo(data.data).then(res=>{
+            injectCallbackJavaScript({success:true})
+          }).catch(err=>{
+            injectCallbackJavaScript({success:false})
+          })
+        }
+        case "getAuth":{
+          sdk.getAuth().then(res=>{
+            injectCallbackJavaScript({success:true,data:res})
+          }).catch(err=>{
+            injectCallbackJavaScript({success:false})
+          })
+        }
+        break;
+        case "openLoginPage":{
+          props.navigation.push('Login')
         }
         break;
       }
@@ -1193,6 +1217,11 @@ export const BrowserTab = props => {
   /**
    * Main render
    */
+  let webviewUrl = initialUrl;
+  const misesId = useSelector(state => state.misesId);
+  if(misesId.auth){
+    webviewUrl=webviewUrl+((webviewUrl.indexOf('?')===-1 ? '?' : '&') + `${misesId.auth}`)
+  }
   return (
     <ErrorBoundary view="BrowserTab">
       <View
@@ -1205,7 +1234,7 @@ export const BrowserTab = props => {
               renderError={() => (
                 <WebviewError error={error} onReload={() => null} />
               )}
-              source={{uri: initialUrl}}
+              source={{uri: webviewUrl}}
               style={styles.webview}
               onLoadStart={onLoadStart}
               onLoadEnd={onLoadEnd}

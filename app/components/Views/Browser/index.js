@@ -63,8 +63,8 @@ class Browser extends Component {
      */
     activeTab: PropTypes.number,
   };
-  // static navigationOptions = ({navigation}) =>
-  //   getBrowserViewNavbarOptions(navigation);
+  static navigationOptions = ({navigation}) =>
+    getBrowserViewNavbarOptions(navigation);
 
   constructor(props) {
     super(props);

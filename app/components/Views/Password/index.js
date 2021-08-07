@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-02 23:29:28
+ * @LastEditTime: 2021-08-07 19:55:56
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -12,13 +12,32 @@ import radio from 'app/images/radio.png'
 import radioChecked from 'app/images/radio_selected.png'
 import { Toast, useBind } from 'app/util';
 import Sdk from 'app/core/Sdk';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMisesAuth } from 'app/actions/misesId';
+import { NavigationActions, StackActions } from 'react-navigation';
 const Password = ({navigation})=>{
   
-  const [checked, setchecked] = useState(false)
+  // const [checked, setchecked] = useState(false)
   const pwd = useBind('')
   const confimPwd = useBind('')
-  const submit = ()=>{
-    const toastContent = strings('common.placeholder')
+  const dispatch = useDispatch()
+  const [loading, setloading] = useState(false)
+  const misesIdReducer = useSelector(state => state.misesId)
+  useEffect(() => {
+    if(misesIdReducer.auth){
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName:'Main'})],
+      });
+      navigation.dispatch(resetAction)
+    }
+  }, [misesIdReducer.auth])
+  const submit = async ()=>{
+    console.log(1)
+    if(loading){
+      Toast('loading')
+      return false;
+    }
     if(!pwd.value){
       Toast(strings('password.pwderror'))
       return false;
@@ -31,9 +50,18 @@ const Password = ({navigation})=>{
       Toast(strings('password.retypederror'))
       return false;
     }
-    Sdk.createUser(navigation.state.params.mnemonics.split(',').join(' '),pwd.value).then(res=>{
-      console.log(res)
-    })
+    setloading(true)
+    try {
+      const activeUser = await Sdk.createUser(navigation.state.params.mnemonics.split(',').join(' '),pwd.value);
+      await activeUser.register('appdid')
+      const permissions = await Sdk.MStringList('signin', ',');
+      const auth = await Sdk.login('mises.site', permissions);
+      setloading(false)
+      dispatch(setMisesAuth(auth))
+    } catch (error) {
+      console.log(error,'22222')
+      setloading(false)
+    }
   }
   return <View style={styles.pageBox}>
     <View style={styles.titleBox}><Text style={styles.title}>{strings('password.title')}</Text></View>
@@ -106,7 +134,6 @@ const styles = StyleSheet.create({
   inputTitleTxt:{
     fontSize:16,
     color:'#333',
-    
   },
   success:{
     borderColor:'#5D61FF'

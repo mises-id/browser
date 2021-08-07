@@ -6187,7 +6187,7 @@ react-native-screens@^3.3.0:
     warn-once "^0.1.0"
 
 react-native-sdk-bridge@../react-native-sdk-bridge:
-  version "1.0.3"
+  version "1.0.4"
 
 react-native-search-api@^1.2.0:
   version "1.2.0"

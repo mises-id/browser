@@ -487,7 +487,6 @@ export function getBrowserViewNavbarOptions(navigation,type="light") {
   let hostname = null;
   let isHttps = false;
   const menu = {light,dark}[type];
-  console.log(menu,type)
   const isHomepage = u => getHost(u) === getHost(HOMEPAGE_URL);
   const error = navigation.getParam('error', '');
   const icon = navigation.getParam('icon', null);

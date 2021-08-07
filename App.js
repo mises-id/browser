@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-02 14:33:49
- * @LastEditTime: 2021-08-02 17:29:50
+ * @LastEditTime: 2021-08-07 20:52:36
  * @LastEditors: lmk
  * @Description: 
  */
@@ -52,9 +52,20 @@ export default class Root extends PureComponent {
     SplashScreen.hide();
     //It is an sdk sample usage
     Logger.log('Mises sdk init start');
-    Sdk.isLogin().then(login => {
-      Logger.log('Mises sdk init ok ' + login);
-    });
+    (async ()=>{
+      try {
+        const login = await Sdk.isLogin();
+        if(!login){
+          const list = await Sdk.ListUsers();
+          // const len = await list.count()
+          // console.log(len)
+        }
+        Logger.log('Mises sdk init ok ' + login);
+      } catch (error) {
+        
+        Logger.log('Mises sdk init error ',error);
+      }
+    })()
   }
 
   render = () => (
