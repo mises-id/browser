@@ -51,9 +51,9 @@ import ErrorBoundary from '../../UI/ErrorBoundary';
 import { BoxShadow } from 'react-native-shadow';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import sdk from 'app/core/Sdk';
+import { useBind ,urlToJson, obj2strUrl, Toast} from 'app/util';
 
-const {HOMEPAGE_URL, USER_AGENT} = AppConstants;
-const HOMEPAGE_HOST = 'home.mises.site';
+const {HOMEPAGE_URL, USER_AGENT,HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
 const ANIMATION_TIMING = 300;
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     marginBottom:17
   },
   forwardInput:{
-    height:200,
+    height:150,
     backgroundColor:'#F8F8F8',
     borderRadius:5,
     textAlignVertical:"top",
@@ -834,9 +834,10 @@ export const BrowserTab = props => {
           sdk.setUserInfo(data.data).then(res=>{
             injectCallbackJavaScript({success:true})
           }).catch(err=>{
-            injectCallbackJavaScript({success:false})
+            injectCallbackJavaScript({success:false,message:'update error'})
           })
         }
+        break;
         case "getAuth":{
           sdk.getAuth().then(res=>{
             injectCallbackJavaScript({success:true,data:res})
@@ -1163,14 +1164,34 @@ export const BrowserTab = props => {
       );
     }
   };
+  const forwardContent = useBind('')
+  const browserForward = ({name,origin,link,icon})=>{
+    const form = {
+      title:name,
+      host:origin,
+      link,
+      attachment_url:icon
+    }
+    Toast('暂不支持转发')
+    toggleForwardModal()
+  }
   const renderForwardModal = ()=>{
     const {params={}}= props.navigation.state;
-    const webviewParams = params.icon&&initialUrl ? {...params,initialUrl}:{}
+    const {origin,href} = new URL(params.url);
+    const queryObj = urlToJson(href);
+    if(!isHomepage(href)&&queryObj.mises_id&&queryObj.nonce&&queryObj.sig){
+      delete queryObj.mises_id;
+      delete queryObj.nonce 
+      delete queryObj.sig
+    }
+    const link = `${origin}?${obj2strUrl(queryObj)}`;
+    const webviewParams = params.icon&&initialUrl ? {...params,link,origin}:{};
     return <Modal isVisible={showForward}>
       <View style={styles.forwardBox}>
         <Text style={styles.forwardTitle}>{strings('menu.forward')}</Text>
         <TextInput style={styles.forwardInput} 
-        numberOfLines={10}
+        numberOfLines={6}
+        {...forwardContent}
         underlineColorAndroid="transparent"
         multiline={true} placeholder={strings('common.placeholder')}></TextInput>
         <View style={styles.websiteBox}>
@@ -1178,14 +1199,14 @@ export const BrowserTab = props => {
             <Image source={{uri:webviewParams.icon}} style={styles.websiteIcon}></Image>
             <View style={styles.websiteData}>
               <View><Text style={styles.websiteTitle}>{webviewParams.name}</Text></View>
-              <View style={styles.websiteIconBox}><Text style={styles.websiteUrl}>{webviewParams.initialUrl}</Text></View>
+              <View style={styles.websiteIconBox}><Text style={styles.websiteUrl}>{origin}</Text></View>
             </View>
           </View>
           <Image source={require('../../../images/link.png')} style={styles.iconType}></Image>
         </View>
         <View style={styles.btnBox}>
           <Button style={[styles.btnStyle,styles.cancelBtn]} onPress={toggleForwardModal}><Text style={styles.cancelBtnTxt}>{strings('common.cancel_button')}</Text></Button>
-          <Button style={[styles.btnStyle,styles.addBtn]}><Text style={styles.addBtnTxt}>{strings('forward.add_button')}</Text></Button>
+          <Button style={[styles.btnStyle,styles.addBtn]} onPress={()=>browserForward(webviewParams)}><Text style={styles.addBtnTxt}>{strings('forward.add_button')}</Text></Button>
         </View>
       </View>
     </Modal>

@@ -1,3 +1,10 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-08-07 10:52:25
+ * @LastEditTime: 2021-08-10 01:19:06
+ * @LastEditors: lmk
+ * @Description: 
+ */
 import Device from 'app/util/Device';
 
 const DEVELOPMENT = 'development';
@@ -23,5 +30,6 @@ export const AppConstants = {
     INFURA_BLOCKED_MESSAGE:
       'EthQuery - RPC Error - This service is not available in your country',
   },
-  HOMEPAGE_URL: 'https://home.mises.site/',
+  HOMEPAGE_HOST:"home.mises.site",
+  HOMEPAGE_URL: 'https://home.mises.site/'
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-30 16:20:12
- * @LastEditTime: 2021-08-07 21:03:45
+ * @LastEditTime: 2021-08-07 22:28:06
  * @LastEditors: lmk
  * @Description: 
  */
@@ -90,7 +90,6 @@ const sdk = {
     try {
       const activeUser = await sdk.getActiveUser();
       if(activeUser){
-        console.log(info)
         const {username:name,gender,avatarDid,mobile,email} = info;
         const telphones = await sdk.MStringList(mobile,',');
         const emails = await sdk.MStringList(email,',');

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-02 14:33:49
- * @LastEditTime: 2021-08-07 20:52:36
+ * @LastEditTime: 2021-08-07 22:19:17
  * @LastEditors: lmk
  * @Description: 
  */
@@ -57,8 +57,8 @@ export default class Root extends PureComponent {
         const login = await Sdk.isLogin();
         if(!login){
           const list = await Sdk.ListUsers();
-          // const len = await list.count()
-          // console.log(len)
+          const len = await list.count()
+          console.log(len)
         }
         Logger.log('Mises sdk init ok ' + login);
       } catch (error) {
