@@ -1,13 +1,12 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-30 16:20:12
- * @LastEditTime: 2021-08-07 22:28:06
+ * @LastEditTime: 2021-08-10 23:56:55
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
 'use strict';
-import {MSdk,MStringList,MUserInfo} from 'react-native-sdk-bridge';
-import Logger from 'app/util/Logger';
+import {MSdk, MStringList, MUserInfo} from 'react-native-sdk-bridge';
 // TODO: What to do with the module
 
 const sdk = {
@@ -19,42 +18,42 @@ const sdk = {
     var i = await MSdk.instance();
     return i.randomMnemonics();
   },
-  getUserMgr:async ()=>{
-    try {
-      const  i = await MSdk.instance();
-      return await i.userMgr();
-    } catch (error) {
-      return Promise.reject()
-    }
-  },
-  createUser: async (mnemonics="",password="")=>{
-    try {
-      const umgr = await sdk.getUserMgr();
-      return await umgr.createUser(mnemonics,password);
-    } catch (error) {
-      return Promise.reject()
-    }
-  },
-  login:async(site="",permission=[])=>{
+  getUserMgr: async () => {
     try {
       const i = await MSdk.instance();
-      return i.login(site,permission);
+      return await i.userMgr();
     } catch (error) {
-      return Promise.reject()
+      return Promise.reject();
     }
-  },  
-  MStringList:async (a,b)=>{
+  },
+  createUser: async (mnemonics = '', password = '') => {
+    try {
+      const umgr = await sdk.getUserMgr();
+      return await umgr.createUser(mnemonics, password);
+    } catch (error) {
+      return Promise.reject();
+    }
+  },
+  login: async (site = '', permission = []) => {
+    try {
+      const i = await MSdk.instance();
+      return i.login(site, permission);
+    } catch (error) {
+      return Promise.reject();
+    }
+  },
+  MStringList: async (a, b) => {
     try {
       return await MStringList.newStringList(a, b);
     } catch (error) {
-      return Promise.reject()
+      return Promise.reject();
     }
   },
-  isLogin:async()=>{
+  isLogin: async () => {
     try {
       const i = await MSdk.instance();
       await i.setTestEndpoint('http://gw.mises.site:1317/');
-      const activeUser = await sdk.getActiveUser()
+      const activeUser = await sdk.getActiveUser();
       // var m = await i.randomMnemonics();
       // Logger.log('randomMnemonics ' + m);
       // var activeUser = await umgr.createUser(m, '1243');
@@ -62,62 +61,73 @@ const sdk = {
       // var did = await activeUser.misesID();
       // Logger.log('misesID ' + did);
       // await umgr.setActiveUser(did, '1243');
-      return !!activeUser
+      return !!activeUser;
     } catch (error) {
-      return Promise.reject()
+      return Promise.reject();
     }
   },
-  ListUsers:async()=>{
+  ListUsers: async () => {
     try {
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return await umgr.listUsers();
     } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
+      console.log(error);
+      return Promise.reject(error);
     }
   },
-  getActiveUser:async ()=>{
+  getActiveUser: async () => {
     try {
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return await umgr.activeUser();
     } catch (error) {
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   },
-  setUserInfo:async info=>{
+  setUserInfo: async info => {
     try {
       const activeUser = await sdk.getActiveUser();
-      if(activeUser){
-        const {username:name,gender,avatarDid,mobile,email} = info;
-        const telphones = await sdk.MStringList(mobile,',');
-        const emails = await sdk.MStringList(email,',');
-        const userInfo = await MUserInfo.newUserInfo(name,gender,avatarDid,'','',emails,telphones,'')
+      if (activeUser) {
+        const {username: name, gender, avatarDid, mobile, email} = info;
+        const telphones = await sdk.MStringList(mobile, ',');
+        const emails = await sdk.MStringList(email, ',');
+        const userInfo = await MUserInfo.newUserInfo(
+          name,
+          gender,
+          avatarDid,
+          '',
+          '',
+          emails,
+          telphones,
+          '',
+        );
         return await activeUser.setInfo(userInfo);
       }
     } catch (error) {
-      console.log(error)
-      return Promise.reject(error)
+      console.log(error, 'setUserInfo error');
+      return Promise.reject(error);
     }
   },
-  getAuth:async ()=>{
+  getAuth: async () => {
     try {
       const i = await MSdk.instance();
       const permissions = await sdk.MStringList('signin', ',');
       return await i.login('mises.site', permissions);
     } catch (error) {
-      return Promise.reject(error)
+      console.log(error);
+      return Promise.reject(error);
     }
   },
-  setActiveUser:async (did,password)=>{
+  setActiveUser: async (did, password) => {
     try {
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
-      return umgr.setActiveUser(did,password)
+      return umgr.setActiveUser(did, password);
     } catch (error) {
-      
+      console.log(error, 'setActiveUser error');
+      return Promise.reject(error);
     }
-  }
+  },
 };
 export default sdk;

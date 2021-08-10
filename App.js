@@ -1,9 +1,9 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-02 14:33:49
- * @LastEditTime: 2021-08-07 22:19:17
+ * @LastEditTime: 2021-08-10 23:30:04
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
 /**
  * Sample React Native App
@@ -27,7 +27,7 @@ import Logger from 'app/util/Logger';
 import Sdk from 'app/core/Sdk';
 
 import ErrorBoundary from 'app/components/UI/ErrorBoundary';
-import { WRootToastApp } from 'react-native-smart-tip'
+import {WRootToastApp} from 'react-native-smart-tip';
 
 /**
  * Top level of the component hierarchy
@@ -52,20 +52,19 @@ export default class Root extends PureComponent {
     SplashScreen.hide();
     //It is an sdk sample usage
     Logger.log('Mises sdk init start');
-    (async ()=>{
+    (async () => {
       try {
         const login = await Sdk.isLogin();
-        if(!login){
-          const list = await Sdk.ListUsers();
-          const len = await list.count()
-          console.log(len)
-        }
+        // if (!login) {
+        //   const list = await Sdk.ListUsers();
+        //   const len = await list.count();
+        //   console.log(len);
+        // }
         Logger.log('Mises sdk init ok ' + login);
       } catch (error) {
-        
-        Logger.log('Mises sdk init error ',error);
+        Logger.log('Mises sdk init error ', error);
       }
-    })()
+    })();
   }
 
   render = () => (

@@ -1,12 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-02 13:40:27
- * @LastEditTime: 2021-08-07 09:54:20
+ * @LastEditTime: 2021-08-11 00:48:10
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
 const initialState = {
-  auth:null
+  auth: null,
+  token: null,
 };
 
 const misesIdReducer = (state = initialState, action) => {
@@ -14,7 +15,12 @@ const misesIdReducer = (state = initialState, action) => {
     case 'SET_MISESAUTH':
       return {
         ...state,
-        auth: action.auth
+        auth: action.auth,
+      };
+    case 'SET_TOKEN':
+      return {
+        ...state,
+        token: action.token,
       };
     default:
       return state;

@@ -1,9 +1,9 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-05 10:09:07
- * @LastEditTime: 2021-08-02 13:46:21
+ * @LastEditTime: 2021-08-11 00:26:44
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
 import {combineReducers} from 'redux';
 import bookmarksReducer from './bookmarks';
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   notificatio: notificationReducer,
   wizard: wizardReducer,
   modals: modalsReducer,
-  misesId:misesIdReducer
+  misesId: misesIdReducer,
 });
 
 export default rootReducer;

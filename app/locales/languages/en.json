@@ -377,7 +377,8 @@
 		"create":"Create mises id",
 		"restore":"Restore mises id",
 		"forward":"Forward",
-		"new":"New post"
+		"new":"New post",
+		"login":"Login mises id"
 	},
 	"forward":{
 		"add_button": "Forward"

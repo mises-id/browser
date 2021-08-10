@@ -1,119 +1,163 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 13:50:47
- * @LastEditTime: 2021-08-07 20:04:36
+ * @LastEditTime: 2021-08-11 01:08:12
  * @LastEditors: lmk
  * @Description: loginPage
  */
-import { setMisesAuth } from 'app/actions/misesId';
+import {setMisesAuth, setToken} from 'app/actions/misesId';
+import {signin} from 'app/api/user';
 import sdk from 'app/core/Sdk';
-import { strings } from 'app/locales/i18n';
-import { Toast, useBind } from 'app/util';
-import React, { useReducer, useEffect, useRef, useState } from 'react';
-import {Platform, StyleSheet, Text, View,Image ,TouchableOpacity, TextInput} from 'react-native';
-import { useDispatch } from 'react-redux';
-const Login = (props)=>{
+import {strings} from 'app/locales/i18n';
+import {Toast, useBind} from 'app/util';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import {NavigationActions, StackActions} from 'react-navigation';
+import {useDispatch} from 'react-redux';
+const Login = ({navigation}) => {
   const pwd = useBind('');
   const dispatch = useDispatch();
-  let misesId = '';
-  let activeUser = '';
-  const [info, setinfo] = useState({})
-  useEffect(()=>{
-    (async ()=>{
-      try {
-        // activeUser = await sdk.getActiveUser();
-        // misesId = await activeUser.misesID();
-        // const userInfo = await activeUser.info();
-        // const name = await userInfo.name();
-        // const avatarDid = await userInfo.avatarDid()
-        // setinfo({name,avatarDid})
-      } catch (error) {
-        console.log(error,'www')
+  const [info, setinfo] = useState({});
+  const [misesId, setmisesId] = useState('');
+  const [pageAuth, setpageAuth] = useState('');
+  useEffect(() => {
+    if (pageAuth) {
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({routeName: 'Main'})],
+      });
+      navigation.dispatch(resetAction);
+    }
+  }, [pageAuth, navigation]);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = async () => {
+    try {
+      const list = await sdk.ListUsers();
+      const count = await list.count();
+      if (count > 0) {
+        const user = await list.get(0);
+        const id = await user.misesID();
+        const userinfo = await user.info();
+        const name = await userinfo.name();
+        const avatarDid = await userinfo.avatarDid();
+        const obj = {
+          name,
+          avatarDid,
+        };
+        console.log(obj, 'weeee');
+        setinfo(obj);
+        setmisesId(id);
       }
-    })()
-  },[])
-  const submit = async ()=>{
-    if(!pwd.value){
-      Toast(strings('password.pwderror'))
+    } catch (error) {
+      console.log(error, 'www');
+    }
+  };
+  const submit = async () => {
+    if (!pwd.value) {
+      Toast(strings('password.pwderror'));
       return false;
     }
     try {
-      if(!misesId){
+      if (!misesId) {
         return false;
       }
-      await sdk.setActiveUser(misesId,pwd.value)
-      const permissions = await Sdk.MStringList('signin', ',');
-      const auth = await Sdk.login('mises.site', permissions);
-      dispatch(setMisesAuth(auth))
+      await sdk.setActiveUser(misesId, pwd.value);
+      const auth = await sdk.getAuth();
+      const res = await signin({
+        provider: 'mises',
+        user_authz: {auth},
+      });
+      dispatch(setToken(res.token));
+      dispatch(setMisesAuth(auth));
+      setpageAuth(auth);
     } catch (error) {
-      console.log(error,'22222')
+      Toast(error.message);
+      console.log(error, 'loginerror');
     }
-  }
-  return <View style={styles.pageBox}>
-    <View style={styles.userHeader}>
-      
+  };
+  return (
+    <View style={styles.pageBox}>
+      <View style={styles.userHeader}>
+        <Text>{info.name}</Text>
+      </View>
+      <View style={styles.inputTitleBox}>
+        <Text style={styles.inputTitleTxt}>
+          {strings('password.inputTxt')}:
+        </Text>
+      </View>
+      <View style={styles.inputBox}>
+        <TextInput
+          placeholder={strings('common.placeholder')}
+          {...pwd}
+          secureTextEntry={true}
+        />
+      </View>
+      <View style={styles.btnBox}>
+        <TouchableOpacity onPress={submit}>
+          <View style={[styles.btnStyle, styles.success]}>
+            <Text style={styles.successBtnTxt}>
+              {strings('password.success_button')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
-    <View style={styles.inputTitleBox}><Text style={styles.inputTitleTxt}>{strings('password.inputTxt')}:</Text></View>
-    <View style={styles.inputBox}>
-      <TextInput placeholder={strings('common.placeholder')} {...pwd}
-			secureTextEntry={true}></TextInput>
-    </View>
-    <View style={styles.btnBox}>
-      <TouchableOpacity onPress={submit}>
-        <View style={[styles.btnStyle,styles.success]}>
-          <Text style={styles.successBtnTxt}>{strings('password.success_button')}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  </View>
-}
+  );
+};
 const styles = StyleSheet.create({
-  userHeader:{
-    alignItems:'center',
-    justifyContent:'center'
+  userHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  pageBox:{
-    paddingLeft:15,
-    paddingRight:15
+  pageBox: {
+    paddingLeft: 15,
+    paddingRight: 15,
   },
-  inputTitleBox:{
-    marginTop:0,
-    marginBottom:15
+  inputTitleBox: {
+    marginTop: 20,
+    marginBottom: 15,
   },
-  inputTitleTxt:{
-    fontSize:16,
-    color:'#333',
+  inputTitleTxt: {
+    fontSize: 16,
+    color: '#333',
   },
-  inputBox:{
-    height:50,
-    backgroundColor:"#F8F8F8",
-    borderRadius:5,
-    paddingLeft:15,
-    paddingRight:15,
-    marginBottom:25
+  inputBox: {
+    height: 50,
+    backgroundColor: '#F8F8F8',
+    borderRadius: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginBottom: 25,
   },
-  btnBox:{
-    marginTop:15,
-    marginLeft:25,
-    marginRight:25
+  btnBox: {
+    marginTop: 15,
+    marginLeft: 25,
+    marginRight: 25,
   },
-  btnStyle:{
-    borderWidth:1,
-    height:50,
-    borderRadius:50,
-    alignItems:'center',
-    justifyContent:'center',
-    overflow:'hidden',
-    marginTop:25
+  btnStyle: {
+    borderWidth: 1,
+    height: 50,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    marginTop: 25,
   },
-  success:{
-    borderColor:'#5D61FF'
+  success: {
+    borderColor: '#5D61FF',
   },
-  successBtnTxt:{
-    fontSize:16,
-    color:"#5D61FF",
-    fontWeight:'bold'
+  successBtnTxt: {
+    fontSize: 16,
+    color: '#5D61FF',
+    fontWeight: 'bold',
   },
-
-})
-export default Login
+});
+export default Login;
