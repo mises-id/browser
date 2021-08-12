@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-30 16:20:12
- * @LastEditTime: 2021-08-10 23:56:55
+ * @LastEditTime: 2021-08-13 00:58:46
  * @LastEditors: lmk
  * @Description:
  */
@@ -126,6 +126,24 @@ const sdk = {
       return umgr.setActiveUser(did, password);
     } catch (error) {
       console.log(error, 'setActiveUser error');
+      return Promise.reject(error);
+    }
+  },
+  follow: async misesId => {
+    try {
+      const activeUser = await sdk.getActiveUser();
+      return activeUser.follow(misesId);
+    } catch (error) {
+      console.log(error, 'follow error');
+      return Promise.reject(error);
+    }
+  },
+  unFollow: async misesId => {
+    try {
+      const activeUser = await sdk.getActiveUser();
+      return activeUser.unfollow(misesId);
+    } catch (error) {
+      console.log(error, 'unFollow error');
       return Promise.reject(error);
     }
   },

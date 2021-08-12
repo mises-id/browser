@@ -28,7 +28,7 @@ import onUrlSubmit, {getUrlObj} from 'app/util/browser';
 import {JS_DESELECT_TEXT, JS_WEBVIEW_URL} from 'app/util/browserScripts';
 import {strings} from 'app/locales/i18n';
 import {addBookmark, removeBookmark} from 'app/actions/bookmarks';
-import {addToHistory, addToWhitelist} from 'app/actions/browser';
+import {addToHistory, addToWhitelist, createNewTab} from 'app/actions/browser';
 import {toggleNetworkModal} from 'app/actions/modals';
 import setOnboardingWizardStep from 'app/actions/wizard';
 import Device from 'app/util/Device';
@@ -865,6 +865,29 @@ export const BrowserTab = props => {
         case 'openLoginPage':
           props.navigation.push('Login');
           break;
+        case 'newTagPage':
+          props.newTab(data.data);
+          break;
+        case 'follow':
+          sdk
+            .follow(data.data)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
+        case 'unFollow':
+          sdk
+            .unFollow(data.data)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
       }
     } catch (e) {
       Logger.error(e, `Browser::onMessage on ${url.current}`);
@@ -1496,6 +1519,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addBookmark: bookmark => dispatch(addBookmark(bookmark)),
   removeBookmark: bookmark => dispatch(removeBookmark(bookmark)),
+  createNewTab: url => dispatch(createNewTab(url)),
   addToBrowserHistory: ({url, name}) => dispatch(addToHistory({url, name})),
   addToWhitelist: url => dispatch(addToWhitelist(url)),
   toggleNetworkModal: () => dispatch(toggleNetworkModal()),
