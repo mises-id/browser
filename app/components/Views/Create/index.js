@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-14 22:48:24
+ * @LastEditTime: 2021-08-14 23:15:11
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -28,7 +28,7 @@ const word = (item = {}, key) => {
     </View>
   );
 };
-const Create = ({navigation}) => {
+const Create = ({navigation = {}}) => {
   const [data, setdata] = useState([
     {value: 'cloud'},
     {value: 'rabbit'},
@@ -43,7 +43,7 @@ const Create = ({navigation}) => {
     {value: 'main'},
     {value: 'green'},
   ]);
-  const {params} = navigation.state;
+  const {params = {}} = navigation.state || {};
   const [isHidden, setisHidden] = useState(true);
   const [loading, setloading] = useState(false);
   useEffect(() => {

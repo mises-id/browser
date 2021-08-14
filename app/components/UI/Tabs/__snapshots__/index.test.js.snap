@@ -4,7 +4,7 @@ exports[`Tabs should render correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#d6d9dc",
+      "backgroundColor": "#161B1D",
       "bottom": 0,
       "flex": 1,
       "left": 0,
@@ -44,7 +44,7 @@ exports[`Tabs should render correctly 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#f2f3f4",
+        "backgroundColor": "#2D2F33",
         "flexDirection": "row",
         "height": 80,
         "marginBottom": 0,
@@ -79,9 +79,9 @@ exports[`Tabs should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#037dd6",
+              "color": "#CCCCCC",
               "fontFamily": "EuclidCircularB-Regular",
-              "fontSize": 16,
+              "fontSize": 17,
               "fontWeight": "400",
             },
             null,
@@ -107,12 +107,12 @@ exports[`Tabs should render correctly 1`] = `
           Object {
             "alignContent": "flex-start",
             "alignSelf": "center",
-            "backgroundColor": "#037dd6",
-            "borderRadius": 100,
-            "height": 30,
+            "backgroundColor": "#5D61FF",
+            "borderRadius": 5,
+            "height": 27,
             "justifyContent": "flex-start",
             "marginTop": -7,
-            "width": 30,
+            "width": 33,
           }
         }
       >
@@ -124,7 +124,7 @@ exports[`Tabs should render correctly 1`] = `
             Object {
               "alignContent": "center",
               "color": "#FFFFFF",
-              "fontSize": 24,
+              "fontSize": 20,
               "justifyContent": "center",
               "marginTop": 3,
               "textAlign": "center",
@@ -153,9 +153,9 @@ exports[`Tabs should render correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#037dd6",
+              "color": "#CCCCCC",
               "fontFamily": "EuclidCircularB-Regular",
-              "fontSize": 16,
+              "fontSize": 17,
               "fontWeight": "400",
             },
             Object {

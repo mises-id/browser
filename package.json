@@ -15,7 +15,7 @@
     "@react-native-community/cookies": "^5.0.1",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-picker/picker": "^1.16.1",
-    "@react-navigation/compat": "5.x",
+    "@react-navigation/compat": "^5.3.15",
     "@react-navigation/native": "5.x",
     "@react-navigation/stack": "5.x",
     "axios": "^0.21.1",

@@ -43,7 +43,9 @@ exports[`Create should render correctly 1`] = `
       }
     >
       <TextInput
+        onChange={[Function]}
         placeholder="Please enter the contents"
+        value=""
       />
     </View>
     <View
@@ -692,87 +694,99 @@ exports[`Create should render correctly 1`] = `
         }
       }
     >
-      <View
-        style={
-          Array [
+      <TouchableOpacity
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 50,
+                "borderWidth": 1,
+                "height": 50,
+                "justifyContent": "center",
+                "marginTop": 25,
+                "overflow": "hidden",
+              },
+              Object {
+                "borderColor": "#bdbfff",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#bdbfff",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Creating a successful
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={[Function]}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "borderRadius": 50,
+                "borderWidth": 1,
+                "height": 50,
+                "justifyContent": "center",
+                "marginTop": 25,
+                "overflow": "hidden",
+              },
+              Object {
+                "backgroundColor": "#EEEEEE",
+                "borderColor": "#EEEEEE",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#666",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            Cancel
+          </Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={[Function]}
+      >
+        <View
+          style={
             Object {
               "alignItems": "center",
-              "borderRadius": 50,
-              "borderWidth": 1,
-              "height": 50,
-              "justifyContent": "center",
+              "marginBottom": 200,
               "marginTop": 25,
-              "overflow": "hidden",
-            },
-            Object {
-              "borderColor": "#5D61FF",
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#5D61FF",
-              "fontSize": 16,
-              "fontWeight": "bold",
             }
           }
         >
-          Creating a successful
-        </Text>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "borderRadius": 50,
-              "borderWidth": 1,
-              "height": 50,
-              "justifyContent": "center",
-              "marginTop": 25,
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "#EEEEEE",
-              "borderColor": "#EEEEEE",
-            },
-          ]
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#666",
-              "fontSize": 16,
-              "fontWeight": "bold",
+          <Text
+            style={
+              Object {
+                "color": "#5D61FF",
+                "fontSize": 15,
+              }
             }
-          }
-        >
-          Cancel
-        </Text>
-      </View>
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "marginBottom": 200,
-            "marginTop": 25,
-          }
-        }
-      >
-        <Text
-          style={
-            Object {
-              "color": "#5D61FF",
-              "fontSize": 15,
-            }
-          }
-        >
-          Back to previous step
-        </Text>
-      </View>
+          >
+            Back to previous step
+          </Text>
+        </View>
+      </TouchableOpacity>
     </View>
   </View>
 </ScrollView>

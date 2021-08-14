@@ -1,197 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Password should render correctly 1`] = `
-<View
-  style={
+<ContextProvider
+  value={
     Object {
-      "paddingLeft": 15,
-      "paddingRight": 15,
+      "store": Object {
+        "@@observable": [Function],
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "@@observable": [Function],
+          "dispatch": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
+      },
     }
   }
 >
-  <View
-    style={
-      Object {
-        "paddingBottom": 17,
-        "paddingTop": 25,
-      }
-    }
-  >
-    <Text
-      style={
-        Object {
-          "color": "#333",
-          "fontSize": 16,
-          "fontWeight": "bold",
-        }
-      }
-    >
-      Browser local password
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "marginBottom": 15,
-        "marginTop": 0,
-      }
-    }
-  >
-    <Text
-      style={
-        Object {
-          "color": "#333",
-          "fontSize": 16,
-        }
-      }
-    >
-      Password
-      :
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#F8F8F8",
-        "borderRadius": 5,
-        "height": 50,
-        "marginBottom": 25,
-        "paddingLeft": 15,
-        "paddingRight": 15,
-      }
-    }
-  >
-    <TextInput
-      placeholder="Please enter the contents"
-    />
-  </View>
-  <View
-    style={
-      Object {
-        "marginBottom": 15,
-        "marginTop": 0,
-      }
-    }
-  >
-    <Text
-      style={
-        Object {
-          "color": "#333",
-          "fontSize": 16,
-        }
-      }
-    >
-      Confirm password
-      :
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#F8F8F8",
-        "borderRadius": 5,
-        "height": 50,
-        "marginBottom": 25,
-        "paddingLeft": 15,
-        "paddingRight": 15,
-      }
-    }
-  >
-    <TextInput
-      placeholder="Please enter the contents"
-    />
-  </View>
-  <View
-    style={
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      }
-    }
-  >
-    <TouchableOpacity
-      onPress={[Function]}
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-        }
-      }
-    >
-      <Image
-        source={
-          Object {
-            "testUri": "../../../app/images/radio.png",
-          }
-        }
-        style={
-          Object {
-            "height": 15,
-            "width": 15,
-          }
-        }
-      />
-      <Text
-        style={
-          Object {
-            "color": "#666",
-            "fontSize": 13,
-            "marginLeft": 6,
-          }
-        }
-      >
-        Stay logged in
-      </Text>
-    </TouchableOpacity>
-    <Text
-      style={
-        Object {
-          "color": "#5D61FF",
-        }
-      }
-    >
-      Forgot password?
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "marginLeft": 25,
-        "marginRight": 25,
-        "marginTop": 15,
-      }
-    }
-  >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 50,
-            "borderWidth": 1,
-            "height": 50,
-            "justifyContent": "center",
-            "marginTop": 25,
-            "overflow": "hidden",
-          },
-          Object {
-            "borderColor": "#5D61FF",
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        Confirm
-      </Text>
-    </View>
-  </View>
-</View>
+  <Password />
+</ContextProvider>
 `;

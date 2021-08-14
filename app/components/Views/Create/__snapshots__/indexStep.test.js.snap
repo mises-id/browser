@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`aaa should render correctly 1`] = `<aaa />`;
-
 exports[`indexStep should render correctly 1`] = `<indexStep />`;
