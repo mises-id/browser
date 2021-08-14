@@ -15,7 +15,7 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
-import {withNavigation} from 'react-navigation';
+import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';

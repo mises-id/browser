@@ -9,7 +9,7 @@ import axios from 'axios';
 import {store} from 'app/store';
 import {setToken} from 'app/actions/misesId';
 import {Toast} from 'app/util';
-export const baseURL = 'http://api.mises.site:8080/api/v1/';
+export const baseURL = 'https://api.mises.site/api/v1/';
 // create an axios instance
 const request = axios.create({
   baseURL, // url = base url + request url http://47.100.235.21:12338

@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 10:52:25
- * @LastEditTime: 2021-08-14 18:26:36
+ * @LastEditTime: 2021-08-14 22:42:47
  * @LastEditors: lmk
  * @Description:
  */
@@ -30,6 +30,6 @@ export const AppConstants = {
     INFURA_BLOCKED_MESSAGE:
       'EthQuery - RPC Error - This service is not available in your country',
   },
-  HOMEPAGE_HOST: 'home.mises.site',
-  HOMEPAGE_URL: 'https://home.mises.site/',
+  HOMEPAGE_HOST: 'www.mises.site',
+  HOMEPAGE_URL: 'https://www.mises.site/',
 };

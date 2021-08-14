@@ -1,13 +1,14 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-12 14:33:08
- * @LastEditTime: 2021-08-14 18:31:41
+ * @LastEditTime: 2021-08-14 22:42:37
  * @LastEditors: lmk
  * @Description: MainNavigator
  */
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {createStackNavigator} from 'react-navigation-stack';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createCompatNavigatorFactory} from '@react-navigation/compat';
 
 import Browser from '../../Views/Browser';
 import AddBookmark from '../../Views/AddBookmark';
@@ -61,7 +62,7 @@ const navigationOptions = ({navigation}) => ({
     backgroundColor: 'white',
   },
 });
-const AppStack = createStackNavigator(
+const AppStack = createCompatNavigatorFactory(createStackNavigator)(
   {
     BrowserView: {
       screen: Browser,
