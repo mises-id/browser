@@ -1,12 +1,8 @@
 import React, {PureComponent} from 'react';
-import {
-  createAppContainer,
-  createSwitchNavigator,
-  NavigationActions,
-} from 'react-navigation';
-
-import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
+import {NavigationActions} from '@react-navigation/compat';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createCompatNavigatorFactory} from '@react-navigation/compat';
 import Branch from 'react-native-branch';
 import Entry from 'app/components/Views/Entry';
 import Logger from 'app/util/Logger';
@@ -14,9 +10,9 @@ import {AppConstants} from 'app/constants/core';
 import trackErrorAsAnalytics from 'app/util/analyticsV2';
 import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 
-import Main from '../Main';
-import DrawerView from 'app/components/UI/DrawerView';
+import Main from '../Main/MainNavigator';
 import MenuToolTips from 'app/components/UI/MenuToolTips';
+
 // import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
 /**
  * Main app navigator which handles all the screens
@@ -59,37 +55,35 @@ import MenuToolTips from 'app/components/UI/MenuToolTips';
  * Top level switch navigator which decides
  * which top level view to show
  */
-const AppNavigator = createStackNavigator(
+const AppNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
     Entry,
     Main,
-    MenuToolTips:{
-      screen:MenuToolTips,
-      navigationOptions:(current)=>{
+    MenuToolTips: {
+      screen: MenuToolTips,
+      navigationOptions: current => {
         return {
           opacity: current.progress,
-          cardStyleInterpolator:()=>{
+          cardStyleInterpolator: () => {
             return {
-              cardStyle:{
-                backgroundColor: 'rgba(0,0,0,0)' 
+              cardStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
               },
-              containerStyle:{
-                backgroundColor: 'rgba(0,0,0,0)' ,
-              }
-            }
-          }
-        }
-      }
-    }
+              containerStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
+              },
+            };
+          },
+        };
+      },
+    },
   },
   {
     initialRouteName: 'Main',
-    headerMode:"none",
-    mode:'modal'
+    headerMode: 'none',
+    mode: 'modal',
   },
 );
-
-const AppContainer = createAppContainer(AppNavigator);
 
 class App extends PureComponent {
   unsubscribeFromBranch;
@@ -139,11 +133,9 @@ class App extends PureComponent {
 
   render() {
     return (
-      <AppContainer
-        ref={nav => {
-          this.navigator = nav;
-        }}
-      />
+      <NavigationContainer>
+        <AppNavigator> </AppNavigator>
+      </NavigationContainer>
     );
   }
 }

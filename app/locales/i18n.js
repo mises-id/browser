@@ -1,7 +1,8 @@
 import ReactNative from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import I18n from 'react-native-i18n';
 import {LANGUAGE} from 'app/constants/storage';
+import I18n from 'i18n-js';
+import * as RNLocalize from "react-native-localize";
 
 // Import all locales
 import en from './languages/en.json';
@@ -16,6 +17,8 @@ import en from './languages/en.json';
 // import vi from './languages/vi-vn.json';
 // import zh from './languages/zh-cn.json';
 // Should the app fallback to English if user locale doesn't exists
+
+
 I18n.fallbacks = true;
 I18n.defaultLocale = 'en';
 // Define the supported translations

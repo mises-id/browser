@@ -18,7 +18,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {NavigationActions, StackActions} from 'react-navigation';
+import {CommonActions} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 const Login = ({navigation}) => {
   const pwd = useBind('');
@@ -28,9 +28,9 @@ const Login = ({navigation}) => {
   const [pageAuth, setpageAuth] = useState('');
   useEffect(() => {
     if (pageAuth) {
-      const resetAction = StackActions.reset({
+      const resetAction = CommonActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({routeName: 'Main'})],
+        routes: [{name: 'Main'}],
       });
       navigation.dispatch(resetAction);
     }
