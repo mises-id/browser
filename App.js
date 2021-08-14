@@ -54,13 +54,13 @@ export default class Root extends PureComponent {
     Logger.log('Mises sdk init start');
     (async () => {
       try {
-        const login = await Sdk.isLogin();
+        await Sdk.init();
         // if (!login) {
         //   const list = await Sdk.ListUsers();
         //   const len = await list.count();
         //   console.log(len);
         // }
-        Logger.log('Mises sdk init ok ' + login);
+        Logger.log('Mises sdk init ok');
       } catch (error) {
         Logger.log('Mises sdk init error ', error);
       }

@@ -7,19 +7,24 @@
  */
 'use strict';
 import {MSdk, MStringList, MUserInfo} from 'react-native-sdk-bridge';
+import Logger from 'app/util/Logger';
 // TODO: What to do with the module
 
 const sdk = {
   testConnection: async () => {
+    Logger.log('testConnection ');
     var i = await MSdk.instance();
-    return i.testConnection();
+    return await i.testConnection();
   },
   randomMnemonics: async () => {
+    Logger.log('randomMnemonics ');
     var i = await MSdk.instance();
+    Logger.log('randomMnemonics return');
     return i.randomMnemonics();
   },
   getUserMgr: async () => {
     try {
+      Logger.log('getUserMgr ');
       const i = await MSdk.instance();
       return await i.userMgr();
     } catch (error) {
@@ -28,6 +33,7 @@ const sdk = {
   },
   createUser: async (mnemonics = '', password = '') => {
     try {
+      Logger.log('createUser ');
       const umgr = await sdk.getUserMgr();
       return await umgr.createUser(mnemonics, password);
     } catch (error) {
@@ -36,6 +42,7 @@ const sdk = {
   },
   login: async (site = '', permission = []) => {
     try {
+      Logger.log('login ');
       const i = await MSdk.instance();
       return i.login(site, permission);
     } catch (error) {
@@ -44,6 +51,7 @@ const sdk = {
   },
   MStringList: async (a, b) => {
     try {
+      Logger.log('MStringList ');
       return await MStringList.newStringList(a, b);
     } catch (error) {
       return Promise.reject();
@@ -51,23 +59,24 @@ const sdk = {
   },
   isLogin: async () => {
     try {
+      const activeUser = await sdk.getActiveUser();
+      return !!activeUser;
+    } catch (error) {
+      return Promise.reject();
+    }
+  },
+  
+  init: async () => {
+    try {
       const i = await MSdk.instance();
       await i.setTestEndpoint('http://gw.mises.site:1317/');
-      const activeUser = await sdk.getActiveUser();
-      // var m = await i.randomMnemonics();
-      // Logger.log('randomMnemonics ' + m);
-      // var activeUser = await umgr.createUser(m, '1243');
-      // Logger.log('activeUser ' + activeUser);
-      // var did = await activeUser.misesID();
-      // Logger.log('misesID ' + did);
-      // await umgr.setActiveUser(did, '1243');
-      return !!activeUser;
     } catch (error) {
       return Promise.reject();
     }
   },
   ListUsers: async () => {
     try {
+      Logger.log('ListUsers ');
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return await umgr.listUsers();
@@ -78,6 +87,7 @@ const sdk = {
   },
   getActiveUser: async () => {
     try {
+      Logger.log('getActiveUser ');
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return await umgr.activeUser();
@@ -87,6 +97,7 @@ const sdk = {
   },
   setUserInfo: async info => {
     try {
+      Logger.log('setUserInfo ');
       const activeUser = await sdk.getActiveUser();
       if (activeUser) {
         const {username: name, gender, avatarDid, mobile, email} = info;
@@ -111,6 +122,7 @@ const sdk = {
   },
   getAuth: async () => {
     try {
+      Logger.log('getAuth ');
       const i = await MSdk.instance();
       const permissions = await sdk.MStringList('signin', ',');
       return await i.login('mises.site', permissions);
@@ -121,6 +133,7 @@ const sdk = {
   },
   setActiveUser: async (did, password) => {
     try {
+      Logger.log('setActiveUser ');
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return umgr.setActiveUser(did, password);
@@ -131,6 +144,7 @@ const sdk = {
   },
   follow: async misesId => {
     try {
+      Logger.log('follow ');
       const activeUser = await sdk.getActiveUser();
       return activeUser.follow(misesId);
     } catch (error) {
@@ -140,6 +154,7 @@ const sdk = {
   },
   unFollow: async misesId => {
     try {
+      Logger.log('unfollow ');
       const activeUser = await sdk.getActiveUser();
       return activeUser.unfollow(misesId);
     } catch (error) {

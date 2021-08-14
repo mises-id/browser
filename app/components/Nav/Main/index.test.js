@@ -1,12 +1,10 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {createAppContainer} from 'react-navigation';
-import Main from './';
+import {NavigationContainer} from '@react-navigation/native';
 
 describe('Main', () => {
   it('should render correctly', () => {
-    const MainAppContainer = createAppContainer(Main);
-    const wrapper = shallow(<MainAppContainer />);
+    const wrapper = shallow(<NavigationContainer />);
     expect(wrapper).toMatchSnapshot();
   });
 });

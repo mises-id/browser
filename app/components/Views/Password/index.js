@@ -20,7 +20,7 @@ import {Toast, useBind} from 'app/util';
 import Sdk from 'app/core/Sdk';
 import {useDispatch, useSelector} from 'react-redux';
 import {setMisesAuth, setToken} from 'app/actions/misesId';
-import {NavigationActions, StackActions} from 'react-navigation';
+import {NavigationActions, StackActions} from '@react-navigation/compat';
 import sdk from 'app/core/Sdk';
 import {signin} from 'app/api/user';
 const Password = ({navigation}) => {

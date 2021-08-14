@@ -15,7 +15,7 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import {NavigationActions, StackActions} from 'react-navigation';
+import {NavigationActions, StackActions} from '@react-navigation/compat';
 const word = (item = {}, key) => {
   return (
     <View key={key} style={styles.wordContent}>

@@ -18,7 +18,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {NavigationActions, StackActions} from 'react-navigation';
+import {NavigationActions, StackActions} from '@react-navigation/compat';
 import {useDispatch} from 'react-redux';
 const Login = ({navigation}) => {
   const pwd = useBind('');
