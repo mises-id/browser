@@ -20,7 +20,7 @@ import {Toast, useBind} from 'app/util';
 import Sdk from 'app/core/Sdk';
 import {useDispatch, useSelector} from 'react-redux';
 import {setMisesAuth, setToken} from 'app/actions/misesId';
-import {NavigationActions, StackActions} from '@react-navigation/compat';
+import {CommonActions} from '@react-navigation/native';
 import sdk from 'app/core/Sdk';
 import {signin} from 'app/api/user';
 const Password = ({navigation}) => {
@@ -32,9 +32,9 @@ const Password = ({navigation}) => {
   const misesIdReducer = useSelector(state => state.misesId);
   useEffect(() => {
     if (misesIdReducer.auth) {
-      const resetAction = StackActions.reset({
+      const resetAction = CommonActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({routeName: 'Main'})],
+        routes: [{name: 'Main'}],
       });
       navigation.dispatch(resetAction);
     }

@@ -16,6 +16,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {NavigationActions, StackActions} from '@react-navigation/compat';
+import {CommonActions} from '@react-navigation/native';
 const word = (item = {}, key) => {
   return (
     <View key={key} style={styles.wordContent}>
@@ -69,9 +70,9 @@ const Create = ({navigation}) => {
   };
   const back = routeName => {
     if (routeName) {
-      const resetAction = StackActions.reset({
+      const resetAction = CommonActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({routeName})],
+        routes: [{name: routeName}],
       });
       navigation.dispatch(resetAction);
       return false;
