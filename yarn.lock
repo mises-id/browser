@@ -6210,8 +6210,9 @@ react-native-screens@^3.3.0:
   dependencies:
     warn-once "^0.1.0"
 
-react-native-sdk-bridge@../react-native-sdk-bridge:
-  version "1.0.4"
+"react-native-sdk-bridge@https://github.com/mises-id/react-native-sdk-bridge":
+  version "1.0.5"
+  resolved "https://github.com/mises-id/react-native-sdk-bridge#e73c897cc1d7741bffe67faa8c13a8eac4c3bfcd"
 
 react-native-search-api@^1.2.0:
   version "1.2.0"
