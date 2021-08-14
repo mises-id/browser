@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-30 16:20:12
- * @LastEditTime: 2021-08-13 00:58:46
+ * @LastEditTime: 2021-08-14 22:48:32
  * @LastEditors: lmk
  * @Description:
  */
@@ -65,7 +65,6 @@ const sdk = {
       return Promise.reject();
     }
   },
-  
   init: async () => {
     try {
       const i = await MSdk.instance();

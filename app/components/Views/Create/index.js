@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-14 22:03:00
+ * @LastEditTime: 2021-08-14 22:48:24
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -15,7 +15,6 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import {NavigationActions, StackActions} from '@react-navigation/compat';
 import {CommonActions} from '@react-navigation/native';
 const word = (item = {}, key) => {
   return (
