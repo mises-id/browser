@@ -48,7 +48,9 @@
 		"wrong_password_error": "Error: Decrypt failed",
 		"wrong_password_error_android": "Error: error:1e000065:Cipher functions:OPENSSL_internal:BAD_DECRYPT",
 		"vault_error": "Error: Cannot unlock without a previous vault.",
-		"clean_vault_error": "MisesBrowser encountered an error due to reaching a storage limit. The local data has been corrupted. Please reinstall MisesBrowser and restore with your Secret Recovery Phrase."
+		"clean_vault_error": "MisesBrowser encountered an error due to reaching a storage limit. The local data has been corrupted. Please reinstall MisesBrowser and restore with your Secret Recovery Phrase.",
+		"create_modal_content":"Go to register Mises ID",
+		"login_modal_content":"Go to Login Mises ID"
 	},
 	"enter_password": {
 		"title": "Enter your password",
@@ -115,7 +117,6 @@
 		"new_password": "New Password",
 		"confirm_password": "Confirm password",
 		"import_button": "IMPORT",
-		"cancel_button": "Cancel",
 		"password_length_error": "The password needs to be at least 8 characters long",
 		"password_dont_match": "Passwords don't match",
 		"seed_phrase_requirements": "Secret Recovery Phrases contain 12, 15, 18, 21, or 24 words",
@@ -353,8 +354,7 @@
 		"title": "Add Favorite",
 		"title_label": "Name",
 		"url_label": "Url",
-		"add_button": "Add",
-		"cancel_button": "Cancel"
+		"add_button": "Add"
 	},
 	"accounts": {
 		"create_new_account": "Create New Account",
@@ -370,5 +370,41 @@
 		"message": "We weren't able to load that page.",
 		"reason": "Reason",
 		"try_again": "Try again"
+	},
+	"common":{
+		"cancel_button": "Cancel",
+		"placeholder":"Please enter the contents"
+	},
+	"menu":{
+		"create":"Create mises id",
+		"restore":"Restore mises id",
+		"forward":"Forward",
+		"new":"New post",
+		"login":"Login mises id"
+	},
+	"forward":{
+		"add_button": "Forward"
+	},
+	"restore":{
+		"title":"Enter the mnemonic words in order",
+		"success_button":"Restore success"
+	},
+	"create":{
+		"Step1Title":"The mnemonic word",
+		"desc":"This is the introduction. This is the introduction. This  is the introduction. This is the introduction. This is the introduction. This is the introduction. ",
+		"step_btn":"Next step",
+		"success_button":"Creating a successful",
+		"back":"Back to previous step"
+	},
+	"password":{
+		"title":"Browser local password",
+		"inputTxt":"Password",
+		"inputTxtConfirm":"Confirm password",
+		"success_button":"Confirm",
+		"stay":"Stay logged in",
+		"forgot":"Forgot password?",
+		"pwderror":"Please enter the password",
+		"confimPwderror":"Please enter the confirm password",
+		"retypederror":"the password did not match the re-typed password"
 	}
 }

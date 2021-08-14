@@ -1,3 +1,10 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-05 10:09:07
+ * @LastEditTime: 2021-08-14 18:28:47
+ * @LastEditors: lmk
+ * @Description:
+ */
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -10,7 +17,7 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const {exit} = require('process');
+//const {exit} = require('process');
 
 function getGlobalCacheKey(files, values) {
   const presetVersion = require('fbjs-scripts/package').dependencies[

@@ -92,7 +92,7 @@ export default class AddBookmark extends PureComponent {
       <ActionView
         cancelTestID={'add-bookmark-cancel-button'}
         confirmTestID={'add-bookmark-confirm-button'}
-        cancelText={strings('add_favorite.cancel_button')}
+        cancelText={strings('common.cancel_button')}
         confirmText={strings('add_favorite.add_button')}
         onCancelPress={this.cancelAddBookmark}
         onConfirmPress={this.addBookmark}>

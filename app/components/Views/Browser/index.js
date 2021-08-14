@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
@@ -28,7 +28,7 @@ const THUMB_HEIGHT = Device.isIos() ? THUMB_WIDTH * 1.81 : THUMB_WIDTH * 1.48;
  * PureComponent that wraps all the browser
  * individual tabs and the tabs view
  */
-class Browser extends PureComponent {
+class Browser extends Component {
   static propTypes = {
     /**
      * react-navigation object used to switch between screens
@@ -121,6 +121,7 @@ class Browser extends PureComponent {
       Logger.error(e);
     }
 
+    // const header = getBrowserViewNavbarOptions(this.props.navigation,'dark');
     this.props.navigation.setParams({
       ...this.props.navigation.state.params,
       showTabs: true,
@@ -238,9 +239,7 @@ class Browser extends PureComponent {
         THUMB_HEIGHT,
       }).then(
         uri => {
-          const {updateTab} = this.props;
-
-          updateTab(tabID, {
+          this.props.updateTab(tabID, {
             url,
             image: uri,
           });

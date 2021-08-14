@@ -1,11 +1,7 @@
 import React, {PureComponent} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import ElevatedView from 'react-native-elevated-view';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FeatherIcons from 'react-native-vector-icons/Feather';
 
 import Device from 'app/util/Device';
 import {colors} from 'app/styles/common';
@@ -49,8 +45,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-    color: colors.grey500,
-    textAlign: 'center',
   },
 });
 
@@ -113,10 +107,13 @@ export default class BrowserBottomBar extends PureComponent {
           style={styles.iconButton}
           testID={'go-back-button'}
           disabled={!canGoBack}>
-          <Icon
-            name="angle-left"
-            size={24}
-            style={[styles.icon, !canGoBack ? styles.disabledIcon : {}]}
+          <Image
+            source={
+              !canGoBack
+                ? require('app/images/left_no.png')
+                : require('app/images/left.png')
+            }
+            style={styles.icon}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -124,17 +121,23 @@ export default class BrowserBottomBar extends PureComponent {
           style={styles.iconButton}
           testID={'go-forward-button'}
           disabled={!canGoForward}>
-          <Icon
-            name="angle-right"
-            size={24}
-            style={[styles.icon, !canGoForward ? styles.disabledIcon : {}]}
+          <Image
+            source={
+              !canGoForward
+                ? require('app/images/right_no.png')
+                : require('app/images/right.png')
+            }
+            style={styles.icon}
           />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={showUrlModal}
           style={styles.iconButton}
           testID={'search-button'}>
-          <FeatherIcons name="search" size={24} style={styles.icon} />
+          <Image
+            source={require('app/images/search.png')}
+            style={styles.icon}
+          />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -147,14 +150,14 @@ export default class BrowserBottomBar extends PureComponent {
           onPress={goHome}
           style={styles.iconButton}
           testID={'home-button'}>
-          <SimpleLineIcons name="home" size={22} style={styles.icon} />
+          <Image source={require('app/images/home.png')} style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={toggleOptions}
           style={styles.iconButton}
           testID={'options-button'}>
-          <MaterialIcon name="more-horiz" size={22} style={styles.icon} />
+          <Image source={require('app/images/more.png')} style={styles.icon} />
         </TouchableOpacity>
       </ElevatedView>
     );

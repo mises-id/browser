@@ -1,12 +1,8 @@
 import React, {PureComponent} from 'react';
-import {
-  createAppContainer,
-  createSwitchNavigator,
-  NavigationActions,
-} from 'react-navigation';
-
-import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
+import {NavigationActions} from '@react-navigation/compat';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createCompatNavigatorFactory} from '@react-navigation/compat';
 import Branch from 'react-native-branch';
 import Entry from 'app/components/Views/Entry';
 import Logger from 'app/util/Logger';
@@ -14,61 +10,80 @@ import {AppConstants} from 'app/constants/core';
 import trackErrorAsAnalytics from 'app/util/analyticsV2';
 import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 
-import Main from '../Main';
-import DrawerView from 'app/components/UI/DrawerView';
-import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
+import Main from '../Main/MainNavigator';
+import MenuToolTips from 'app/components/UI/MenuToolTips';
+
+// import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
 /**
  * Main app navigator which handles all the screens
  * after the user is already onboarded
  */
-const HomeNav = createDrawerNavigator(
-  {
-    Main: {
-      screen: Main,
-    },
-  },
-  {
-    contentComponent: DrawerView,
-    drawerWidth: 315,
-    overlayColor: 'rgba(0, 0, 0, 0.5)',
-  },
-);
+// const HomeNav = createDrawerNavigator(
+//   {
+//     Main: {
+//       screen: Main,
+//     },
+//   },
+//   {
+//     contentComponent: DrawerView,
+//     drawerWidth: 315,
+//     overlayColor: 'rgba(0, 0, 0, 0.5)',
+//   },
+// );
 
-/**
- * Drawer status tracking
- */
-const defaultGetStateForAction = HomeNav.router.getStateForAction;
-SharedDrawerStatusTracker.init();
-HomeNav.router.getStateForAction = (action, state) => {
-  if (action) {
-    if (action.type === 'Navigation/MARK_DRAWER_SETTLING' && action.willShow) {
-      SharedDrawerStatusTracker.setStatus('open');
-    } else if (
-      action.type === 'Navigation/MARK_DRAWER_SETTLING' &&
-      !action.willShow
-    ) {
-      SharedDrawerStatusTracker.setStatus('closed');
-    }
-  }
+// /**
+//  * Drawer status tracking
+//  */
+// const defaultGetStateForAction = HomeNav.router.getStateForAction;
+// SharedDrawerStatusTracker.init();
+// HomeNav.router.getStateForAction = (action, state) => {
+//   if (action) {
+//     if (action.type === 'Navigation/MARK_DRAWER_SETTLING' && action.willShow) {
+//       SharedDrawerStatusTracker.setStatus('open');
+//     } else if (
+//       action.type === 'Navigation/MARK_DRAWER_SETTLING' &&
+//       !action.willShow
+//     ) {
+//       SharedDrawerStatusTracker.setStatus('closed');
+//     }
+//   }
 
-  return defaultGetStateForAction(action, state);
-};
+//   return defaultGetStateForAction(action, state);
+// };
 
 /**
  * Top level switch navigator which decides
  * which top level view to show
  */
-const AppNavigator = createSwitchNavigator(
+const AppNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
     Entry,
-    HomeNav,
+    Main,
+    MenuToolTips: {
+      screen: MenuToolTips,
+      navigationOptions: current => {
+        return {
+          opacity: current.progress,
+          cardStyleInterpolator: () => {
+            return {
+              cardStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
+              },
+              containerStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
+              },
+            };
+          },
+        };
+      },
+    },
   },
   {
-    initialRouteName: 'Entry',
+    initialRouteName: 'Main',
+    headerMode: 'none',
+    mode: 'modal',
   },
 );
-
-const AppContainer = createAppContainer(AppNavigator);
 
 class App extends PureComponent {
   unsubscribeFromBranch;
@@ -118,11 +133,9 @@ class App extends PureComponent {
 
   render() {
     return (
-      <AppContainer
-        ref={nav => {
-          this.navigator = nav;
-        }}
-      />
+      <NavigationContainer>
+        <AppNavigator> </AppNavigator>
+      </NavigationContainer>
     );
   }
 }

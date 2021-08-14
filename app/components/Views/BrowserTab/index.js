@@ -1,3 +1,5 @@
+/* eslint-disable no-catch-shadow */
+/* eslint-disable no-shadow */
 import React, {useState, useRef, useEffect, useCallback} from 'react';
 import {
   Text,
@@ -5,33 +7,29 @@ import {
   TextInput,
   View,
   TouchableWithoutFeedback,
-  Alert,
   TouchableOpacity,
-  Linking,
   Keyboard,
   BackHandler,
   InteractionManager,
+  Image,
+  Dimensions,
+  Alert,
 } from 'react-native';
-import {withNavigation} from 'react-navigation';
+import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
-import Share from 'react-native-share';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {isEmulatorSync} from 'react-native-device-info';
 import URL from 'url-parse';
 import Modal from 'react-native-modal';
-import SearchApi from 'react-native-search-api';
-
 import {colors, baseStyles, fontStyles} from 'app/styles/common';
 import Logger from 'app/util/Logger';
-import onUrlSubmit, {getHost, getUrlObj} from 'app/util/browser';
+import onUrlSubmit, {getUrlObj} from 'app/util/browser';
 import {JS_DESELECT_TEXT, JS_WEBVIEW_URL} from 'app/util/browserScripts';
 import {strings} from 'app/locales/i18n';
 import {addBookmark, removeBookmark} from 'app/actions/bookmarks';
-import {addToHistory, addToWhitelist} from 'app/actions/browser';
+import {addToHistory, addToWhitelist, createNewTab} from 'app/actions/browser';
 import {toggleNetworkModal} from 'app/actions/modals';
 import setOnboardingWizardStep from 'app/actions/wizard';
 import Device from 'app/util/Device';
@@ -44,12 +42,15 @@ import WebviewProgressBar from '../../UI/WebviewProgressBar';
 import Button from '../../UI/Button';
 import UrlAutocomplete from '../../UI/UrlAutocomplete';
 import WebviewError from '../../UI/WebviewError';
-import SharedDrawerStatusTracker from '../../UI/DrawerView/DrawerStatusTracker';
+// import SharedDrawerStatusTracker from '../../UI/DrawerView/DrawerStatusTracker';
 
 import ErrorBoundary from '../../UI/ErrorBoundary';
+import {BoxShadow} from 'react-native-shadow';
+import sdk from 'app/core/Sdk';
+import {useBind, urlToJson, obj2strUrl, Toast} from 'app/util';
+import {createStatus} from 'app/api/user';
 
-const {HOMEPAGE_URL, USER_AGENT} = AppConstants;
-const HOMEPAGE_HOST = 'home.mises.site';
+const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
 const ANIMATION_TIMING = 300;
@@ -84,30 +85,18 @@ const styles = StyleSheet.create({
     right: 0,
   },
   optionsWrapper: {
+    width: 150,
+    backgroundColor: colors.white,
+    borderRadius: 15,
+    paddingBottom: 13,
+    paddingTop: 12,
+    paddingLeft: 15.0,
+    paddingRight: 15,
+  },
+  optionsWrapperBox: {
     position: 'absolute',
     zIndex: 99999999,
-    width: 200,
-    borderWidth: 1,
-    borderColor: colors.grey100,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    paddingBottom: 5,
-    paddingTop: 10,
-  },
-  optionsWrapperAndroid: {
-    shadowColor: colors.grey400,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    bottom: 65,
-    right: 5,
-  },
-  optionsWrapperIos: {
-    shadowColor: colors.grey400,
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    bottom: 90,
+    bottom: 25,
     right: 5,
   },
   option: {
@@ -205,10 +194,116 @@ const styles = StyleSheet.create({
   fullScreenModal: {
     flex: 1,
   },
+  icon: {
+    width: 20,
+    height: 20,
+  },
+  labelBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 12,
+    marginBottom: 12,
+  },
+  label: {
+    marginLeft: 15,
+    fontSize: 16,
+  },
+
+  arrow: {
+    width: 0,
+    height: 0,
+    borderWidth: 6,
+    borderTopColor: 'white',
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: 'transparent',
+    position: 'absolute',
+    bottom: -11,
+    right: 24,
+  },
+  forwardBox: {
+    width: Dimensions.get('window').width - 40,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    padding: 20,
+  },
+  forwardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 17,
+  },
+  forwardInput: {
+    height: 150,
+    backgroundColor: '#F8F8F8',
+    borderRadius: 5,
+    textAlignVertical: 'top',
+    justifyContent: 'flex-start',
+    padding: 17,
+    fontSize: 17,
+  },
+  websiteBox: {
+    backgroundColor: '#f8f8f8',
+    borderRadius: 2,
+    padding: 5,
+    flexDirection: 'row',
+    marginTop: 15,
+    alignItems: 'center',
+  },
+  websiteDataBox: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  websiteIcon: {
+    width: 28,
+    height: 28,
+  },
+  websiteData: {
+    marginLeft: 7,
+  },
+  websiteTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#222',
+  },
+  websiteUrl: {
+    fontSize: 10,
+    color: '#999',
+  },
+  websiteIconBox: {
+    marginTop: 4,
+  },
+  iconType: {
+    width: 15,
+    height: 15,
+    marginRight: 8,
+  },
+  btnBox: {
+    marginTop: 30,
+    flexDirection: 'row',
+  },
+  btnStyle: {
+    width: 144,
+    height: 40,
+    borderRadius: 22,
+    marginLeft: 7,
+    marginRight: 7,
+  },
+  cancelBtn: {
+    backgroundColor: '#eee',
+  },
+  cancelBtnTxt: {
+    color: '#666',
+  },
+  addBtn: {
+    backgroundColor: '#5D61FF',
+  },
+  addBtnTxt: {
+    color: 'white',
+  },
 });
 
 const sessionENSNames = {};
-const ensIgnoreList = [];
 
 export const BrowserTab = props => {
   const [backEnabled, setBackEnabled] = useState(false);
@@ -220,6 +315,7 @@ export const BrowserTab = props => {
   const [error, setError] = useState(null);
   const [showUrlModal, setShowUrlModal] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [showForward, setshowForward] = useState(false);
   const [blockedUrl, setBlockedUrl] = useState(undefined);
 
   const webviewRef = useRef(null);
@@ -376,11 +472,11 @@ export const BrowserTab = props => {
     [props.whitelist],
   );
 
-  const isBookmark = () => {
-    const {bookmarks} = props;
-    const maskedUrl = getMaskedUrl(url.current);
-    return bookmarks.some(({url: bookmark}) => bookmark === maskedUrl);
-  };
+  // const isBookmark = () => {
+  //   const {bookmarks} = props;
+  //   const maskedUrl = getMaskedUrl(url.current);
+  //   return bookmarks.some(({url: bookmark}) => bookmark === maskedUrl);
+  // };
 
   /**
    * Inject home page scripts to get the favourites and set analytics key
@@ -407,9 +503,13 @@ export const BrowserTab = props => {
   /**
    * Show a phishing modal when a url is not allowed
    */
-  const handleNotAllowedUrl = urlToGo => {
-    setBlockedUrl(urlToGo);
-  };
+  const handleNotAllowedUrl = useCallback(
+    urlToGo => {
+      setBlockedUrl(urlToGo);
+      console.log(blockedUrl);
+    },
+    [blockedUrl],
+  );
 
   /**
    * Go to a url
@@ -418,7 +518,7 @@ export const BrowserTab = props => {
     async (url, initialCall) => {
       const hasProtocol = url.match(/^[a-z]*:\/\//) || isHomepage(url);
       const sanitizedURL = hasProtocol ? url : `${props.defaultProtocol}${url}`;
-      const {hostname, query, pathname} = new URL(sanitizedURL);
+      const {hostname} = new URL(sanitizedURL);
 
       let urlToGo = sanitizedURL;
       const {current} = webviewRef;
@@ -439,21 +539,21 @@ export const BrowserTab = props => {
       handleNotAllowedUrl(urlToGo);
       return null;
     },
-    [isAllowedUrl, isHomepage, props.defaultProtocol],
+    [handleNotAllowedUrl, isAllowedUrl, isHomepage, props.defaultProtocol],
   );
 
   /**
    * Open a new tab
    */
-  const openNewTab = useCallback(
-    url => {
-      toggleOptionsIfNeeded();
-      dismissTextSelectionIfNeeded();
-      props.newTab(url);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [dismissTextSelectionIfNeeded, toggleOptionsIfNeeded],
-  );
+  // const openNewTab = useCallback(
+  //   url => {
+  //     toggleOptionsIfNeeded();
+  //     dismissTextSelectionIfNeeded();
+  //     props.newTab(url);
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   [dismissTextSelectionIfNeeded, toggleOptionsIfNeeded],
+  // );
 
   /**
    * Hide url input modal
@@ -508,9 +608,9 @@ export const BrowserTab = props => {
   /**
    * Handle when the drawer (app menu) is opened
    */
-  const drawerOpenHandler = useCallback(() => {
-    dismissTextSelectionIfNeeded();
-  }, [dismissTextSelectionIfNeeded]);
+  // const drawerOpenHandler = useCallback(() => {
+  //   dismissTextSelectionIfNeeded();
+  // }, [dismissTextSelectionIfNeeded]);
 
   /**
    * Set initial url, dapp scripts and engine. Similar to componentDidMount
@@ -540,22 +640,22 @@ export const BrowserTab = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, props.activeTab, props.id, toggleUrlModal]);
 
-  useEffect(() => {
-    if (Device.isAndroid()) {
-      SharedDrawerStatusTracker.hub.on('drawer::open', drawerOpenHandler);
-    }
+  // useEffect(() => {
+  //   if (Device.isAndroid()) {
+  //     SharedDrawerStatusTracker.hub.on('drawer::open', drawerOpenHandler);
+  //   }
 
-    return function cleanup() {
-      if (Device.isAndroid()) {
-        SharedDrawerStatusTracker &&
-          SharedDrawerStatusTracker.hub &&
-          SharedDrawerStatusTracker.hub.removeListener(
-            'drawer::open',
-            drawerOpenHandler,
-          );
-      }
-    };
-  }, [drawerOpenHandler]);
+  //   return function cleanup() {
+  //     if (Device.isAndroid()) {
+  //       SharedDrawerStatusTracker &&
+  //         SharedDrawerStatusTracker.hub &&
+  //         SharedDrawerStatusTracker.hub.removeListener(
+  //           'drawer::open',
+  //           drawerOpenHandler,
+  //         );
+  //     }
+  //   };
+  // }, [drawerOpenHandler]);
 
   /**
    * Set navigation listeners
@@ -609,6 +709,7 @@ export const BrowserTab = props => {
       props.navigation.setParams({
         url: getMaskedUrl(siteInfo.url),
         icon: siteInfo.icon,
+        name: siteInfo.title,
         silent: true,
       });
 
@@ -677,14 +778,21 @@ export const BrowserTab = props => {
         changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
       }
     });
+    props.navigation.setParams({webviewRef});
   };
-
+  const injectCallbackJavaScript = data => {
+    const {current} = webviewRef;
+    const callback = `window.ReactNativeWebViewCallback(${JSON.stringify(
+      data,
+    )})`;
+    current && current.injectJavaScript(callback);
+  };
   /**
    * Handle message from website
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-
+    const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
       if (!data || (!data.type && !data.name)) {
@@ -702,13 +810,89 @@ export const BrowserTab = props => {
           onFrameLoadStarted(url);
           break;
         }*/
-        case 'GET_WEBVIEW_URL': {
-          const {url} = data.payload;
-          if (url === nativeEvent.url) {
-            webviewUrlPostMessagePromiseResolve.current &&
-              webviewUrlPostMessagePromiseResolve.current(data.payload);
+        case 'GET_WEBVIEW_URL':
+          {
+            const {url} = data.payload;
+            if (url === nativeEvent.url) {
+              data.payload.title = title;
+              webviewUrlPostMessagePromiseResolve.current &&
+                webviewUrlPostMessagePromiseResolve.current(data.payload);
+            }
           }
-        }
+          break;
+        case 'OpenCreateUserPanel':
+          props.navigation.push('Create');
+          break;
+        case 'OpenRestoreUserPanel':
+          props.navigation.push('Restore');
+          break;
+        case 'setUserInfo':
+          //判断是否有activeuser 为空则去登录
+          (async () => {
+            try {
+              const activeUser = await sdk.getActiveUser();
+              if (!activeUser) {
+                Toast('Please log in');
+                props.navigation.push('Login');
+                return false;
+              }
+              sdk
+                .setUserInfo(data.data)
+                .then(() => {
+                  console.log('setUserInfo success');
+                  injectCallbackJavaScript({success: true});
+                })
+                .catch(() => {
+                  console.log('setUserInfo error');
+                  injectCallbackJavaScript({
+                    success: false,
+                    message: 'update error',
+                  });
+                });
+            } catch (error) {
+              injectCallbackJavaScript({
+                success: false,
+                message: 'update error',
+              });
+            }
+          })();
+          break;
+        case 'getAuth':
+          sdk
+            .getAuth()
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
+        case 'openLoginPage':
+          props.navigation.push('Login');
+          break;
+        case 'newTagPage':
+          props.newTab(data.data);
+          break;
+        case 'follow':
+          sdk
+            .follow(data.data)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
+        case 'unFollow':
+          sdk
+            .unFollow(data.data)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
       }
     } catch (e) {
       Logger.error(e, `Browser::onMessage on ${url.current}`);
@@ -855,173 +1039,312 @@ export const BrowserTab = props => {
   /**
    * Add bookmark
    */
-  const addBookmark = () => {
-    toggleOptionsIfNeeded();
-    props.navigation.push('AddBookmarkView', {
-      title: title.current || '',
-      url: getMaskedUrl(url.current),
-      onAddBookmark: async ({name, url}) => {
-        props.addBookmark({name, url});
-        if (Device.isIos()) {
-          const item = {
-            uniqueIdentifier: url,
-            title: name || getMaskedUrl(url),
-            contentDescription: `Launch ${name || url} on MetaMask`,
-            keywords: [name.split(' '), url, 'dapp'],
-            thumbnail: {
-              uri:
-                icon.current ||
-                `https://api.faviconkit.com/${getHost(url)}/256`,
-            },
-          };
-          try {
-            SearchApi.indexSpotlightItem(item);
-          } catch (e) {
-            Logger.error(e, 'Error adding to spotlight');
-          }
-        }
-      },
-    });
+  // const addBookmark = () => {
+  //   toggleOptionsIfNeeded();
+  //   props.navigation.push('AddBookmarkView', {
+  //     title: title.current || '',
+  //     url: getMaskedUrl(url.current),
+  //     onAddBookmark: async ({name, url}) => {
+  //       props.addBookmark({name, url});
+  //       if (Device.isIos()) {
+  //         const item = {
+  //           uniqueIdentifier: url,
+  //           title: name || getMaskedUrl(url),
+  //           contentDescription: `Launch ${name || url} on MetaMask`,
+  //           keywords: [name.split(' '), url, 'dapp'],
+  //           thumbnail: {
+  //             uri:
+  //               icon.current ||
+  //               `https://api.faviconkit.com/${getHost(url)}/256`,
+  //           },
+  //         };
+  //         try {
+  //           SearchApi.indexSpotlightItem(item);
+  //         } catch (e) {
+  //           Logger.error(e, 'Error adding to spotlight');
+  //         }
+  //       }
+  //     },
+  //   });
 
-    Analytics.trackEvent(ANALYTICS_EVENT_OPTS.DAPP_ADD_TO_FAVORITE);
-  };
+  //   Analytics.trackEvent(ANALYTICS_EVENT_OPTS.DAPP_ADD_TO_FAVORITE);
+  // };
 
-  /**
-   * Share url
-   */
-  const share = () => {
-    toggleOptionsIfNeeded();
-    Share.open({
-      url: url.current,
-    }).catch(err => {
-      Logger.log('Error while trying to share address', err);
-    });
-  };
+  // /**
+  //  * Share url
+  //  */
+  // const share = () => {
+  //   toggleOptionsIfNeeded();
+  //   Share.open({
+  //     url: url.current,
+  //   }).catch(err => {
+  //     Logger.log('Error while trying to share address', err);
+  //   });
+  // };
 
-  /**
-   * Open external link
-   */
-  const openInBrowser = () => {
-    toggleOptionsIfNeeded();
-    Linking.openURL(url.current).catch(error =>
-      Logger.log(
-        `Error while trying to open external link: ${url.current}`,
-        error,
-      ),
-    );
-    Analytics.trackEvent(ANALYTICS_EVENT_OPTS.DAPP_OPEN_IN_BROWSER);
-  };
+  // /**
+  //  * Open external link
+  //  */
+  // const openInBrowser = () => {
+  //   toggleOptionsIfNeeded();
+  //   Linking.openURL(url.current).catch(error =>
+  //     Logger.log(
+  //       `Error while trying to open external link: ${url.current}`,
+  //       error,
+  //     ),
+  //   );
+  //   Analytics.trackEvent(ANALYTICS_EVENT_OPTS.DAPP_OPEN_IN_BROWSER);
+  // };
 
   /**
    * Render non-homepage options menu
    */
-  const renderNonHomeOptions = () => {
-    if (isHomepage()) {
-      return null;
-    }
+  // const renderNonHomeOptions = () => {
+  //   if (isHomepage()) {
+  //     return null;
+  //   }
 
-    return (
-      <React.Fragment>
-        <Button onPress={reload} style={styles.option}>
-          <View style={styles.optionIconWrapper}>
-            <Icon name="refresh" size={15} style={styles.optionIcon} />
-          </View>
-          <Text style={styles.optionText} numberOfLines={2}>
-            {strings('browser.reload')}
-          </Text>
-        </Button>
-        {!isBookmark() && (
-          <Button onPress={addBookmark} style={styles.option}>
-            <View style={styles.optionIconWrapper}>
-              <Icon name="star" size={16} style={styles.optionIcon} />
-            </View>
-            <Text style={styles.optionText} numberOfLines={2}>
-              {strings('browser.add_to_favorites')}
-            </Text>
-          </Button>
-        )}
-        <Button onPress={share} style={styles.option}>
-          <View style={styles.optionIconWrapper}>
-            <Icon name="share" size={15} style={styles.optionIcon} />
-          </View>
-          <Text style={styles.optionText} numberOfLines={2}>
-            {strings('browser.share')}
-          </Text>
-        </Button>
-        <Button onPress={openInBrowser} style={styles.option}>
-          <View style={styles.optionIconWrapper}>
-            <Icon name="expand" size={16} style={styles.optionIcon} />
-          </View>
-          <Text style={styles.optionText} numberOfLines={2}>
-            {strings('browser.open_in_browser')}
-          </Text>
-        </Button>
-      </React.Fragment>
-    );
-  };
+  //   return (
+  //     <React.Fragment>
+  //       <Button onPress={reload} style={styles.option}>
+  //         <View style={styles.optionIconWrapper}>
+  //           <Icon name="refresh" size={15} style={styles.optionIcon} />
+  //         </View>
+  //         <Text style={styles.optionText} numberOfLines={2}>
+  //           {strings('browser.reload')}
+  //         </Text>
+  //       </Button>
+  //       {!isBookmark() && (
+  //         <Button onPress={addBookmark} style={styles.option}>
+  //           <View style={styles.optionIconWrapper}>
+  //             <Icon name="star" size={16} style={styles.optionIcon} />
+  //           </View>
+  //           <Text style={styles.optionText} numberOfLines={2}>
+  //             {strings('browser.add_to_favorites')}
+  //           </Text>
+  //         </Button>
+  //       )}
+  //       <Button onPress={share} style={styles.option}>
+  //         <View style={styles.optionIconWrapper}>
+  //           <Icon name="share" size={15} style={styles.optionIcon} />
+  //         </View>
+  //         <Text style={styles.optionText} numberOfLines={2}>
+  //           {strings('browser.share')}
+  //         </Text>
+  //       </Button>
+  //       <Button onPress={openInBrowser} style={styles.option}>
+  //         <View style={styles.optionIconWrapper}>
+  //           <Icon name="expand" size={16} style={styles.optionIcon} />
+  //         </View>
+  //         <Text style={styles.optionText} numberOfLines={2}>
+  //           {strings('browser.open_in_browser')}
+  //         </Text>
+  //       </Button>
+  //     </React.Fragment>
+  //   );
+  // };
 
-  /**
-   * Handle new tab button press
-   */
-  const onNewTabPress = () => {
-    openNewTab();
-  };
+  // /**
+  //  * Handle new tab button press
+  //  */
+  // const onNewTabPress = () => {
+  //   openNewTab();
+  // };
 
-  /**
-   * Handle switch network press
-   */
-  const switchNetwork = () => {
-    toggleOptionsIfNeeded();
-    props.toggleNetworkModal();
-  };
+  // /**
+  //  * Handle switch network press
+  //  */
+  // const switchNetwork = () => {
+  //   toggleOptionsIfNeeded();
+  //   props.toggleNetworkModal();
+  // };
 
+  const misesId = useSelector(state => state.misesId);
   /**
    * Render options menu
    */
+  const optionsMenuList = [
+    {
+      label: strings('menu.forward'),
+      icon: require('@/images/forward.png'),
+      fn: async () => {
+        //call page function
+        toggleOptions();
+        const activeUser = await sdk.getActiveUser();
+        if (props.navigation.state.params.error) {
+          Toast('Can’t forward this website page');
+          return false;
+        }
+        if (activeUser) {
+          toggleForwardModal();
+          return false;
+        }
+        const list = await sdk.ListUsers();
+        const count = await list.count();
+        const flag = count > 0;
+        const content = flag
+          ? strings('login.login_modal_content')
+          : strings('login.create_modal_content');
+        Alert.alert('Message', content, [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              const url = flag ? 'Login' : 'Create';
+              props.navigation.push(url);
+            },
+          },
+        ]);
+      },
+    },
+  ];
+  const toggleForwardModal = () => setshowForward(!showForward);
+  const setting = {
+    inset: false,
+    style: {marginVertical: 5},
+    side: 'top',
+    opacity: 0.5,
+    x: 0,
+    color: '#ECECEC',
+    width: 150,
+    height: 115,
+    border: 15,
+    radius: 15,
+    y: 20,
+  };
   const renderOptions = () => {
     if (showOptions) {
       return (
         <TouchableWithoutFeedback onPress={toggleOptions}>
           <View style={styles.optionsOverlay}>
-            <View
-              style={[
-                styles.optionsWrapper,
-                Device.isAndroid()
-                  ? styles.optionsWrapperAndroid
-                  : styles.optionsWrapperIos,
-              ]}>
-              <Button onPress={onNewTabPress} style={styles.option}>
-                <View style={styles.optionIconWrapper}>
-                  <MaterialCommunityIcon
-                    name="plus"
-                    size={18}
-                    style={styles.optionIcon}
-                  />
+            <View style={styles.optionsWrapperBox}>
+              <BoxShadow setting={setting}>
+                <View style={styles.optionsWrapper}>
+                  {optionsMenuList.map((val, index) => {
+                    return (
+                      <TouchableOpacity
+                        onPress={val.fn}
+                        key={index}
+                        style={styles.labelBox}>
+                        <Image source={val.icon} style={styles.icon} />
+                        <Text style={styles.label}>{val.label}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                  <View style={styles.arrow} />
                 </View>
-                <Text style={styles.optionText} numberOfLines={1}>
-                  {strings('browser.new_tab')}
-                </Text>
-              </Button>
-              {renderNonHomeOptions()}
-              <Button onPress={switchNetwork} style={styles.option}>
-                <View style={styles.optionIconWrapper}>
-                  <MaterialCommunityIcon
-                    name="earth"
-                    size={18}
-                    style={styles.optionIcon}
-                  />
-                </View>
-                <Text style={styles.optionText} numberOfLines={2}>
-                  {strings('browser.switch_network')}
-                </Text>
-              </Button>
+              </BoxShadow>
             </View>
           </View>
         </TouchableWithoutFeedback>
       );
     }
   };
-
+  const forwardContent = useBind('');
+  const browserForward = ({name, origin, link, icon}) => {
+    /**
+     * @description: 如果有token 直接用 如果返回token过期就登录
+     * @param {*}
+     * @return {*}
+     */
+    toggleForwardModal();
+    if (misesId.token) {
+      const form = {
+        title: name,
+        host: origin,
+        link,
+        attachment_url: icon,
+      };
+      const obj = {
+        link_meta: form,
+        content: forwardContent.value,
+        status_type: 'link',
+        form_type: 'status',
+      };
+      createStatus(obj)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          Toast(err);
+        });
+      return false;
+    }
+    props.navigation.push('Login');
+  };
+  const renderForwardModal = () => {
+    const {params = {}} = props.navigation.state;
+    const {origin, href} = new URL(params.url);
+    const queryObj = urlToJson(href);
+    if (
+      !isHomepage(href) &&
+      queryObj.mises_id &&
+      queryObj.nonce &&
+      queryObj.sig
+    ) {
+      delete queryObj.mises_id;
+      delete queryObj.nonce;
+      delete queryObj.sig;
+    }
+    const link = `${origin}?${obj2strUrl(queryObj)}`;
+    const webviewParams =
+      params.icon && initialUrl ? {...params, link, origin} : {};
+    return (
+      <Modal isVisible={showForward}>
+        <View style={styles.forwardBox}>
+          <Text style={styles.forwardTitle}>{strings('menu.forward')}</Text>
+          <TextInput
+            style={styles.forwardInput}
+            numberOfLines={6}
+            {...forwardContent}
+            underlineColorAndroid="transparent"
+            multiline={true}
+            placeholder={strings('common.placeholder')}
+          />
+          <View style={styles.websiteBox}>
+            <View style={styles.websiteDataBox}>
+              <Image
+                source={{uri: webviewParams.icon}}
+                style={styles.websiteIcon}
+              />
+              <View style={styles.websiteData}>
+                <View>
+                  <Text style={styles.websiteTitle}>{webviewParams.name}</Text>
+                </View>
+                <View style={styles.websiteIconBox}>
+                  <Text style={styles.websiteUrl}>{origin}</Text>
+                </View>
+              </View>
+            </View>
+            <Image
+              source={require('../../../images/link.png')}
+              style={styles.iconType}
+            />
+          </View>
+          <View style={styles.btnBox}>
+            <Button
+              style={[styles.btnStyle, styles.cancelBtn]}
+              onPress={toggleForwardModal}>
+              <Text style={styles.cancelBtnTxt}>
+                {strings('common.cancel_button')}
+              </Text>
+            </Button>
+            <Button
+              style={[styles.btnStyle, styles.addBtn]}
+              onPress={() => browserForward(webviewParams)}>
+              <Text style={styles.addBtnTxt}>
+                {strings('forward.add_button')}
+              </Text>
+            </Button>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
   /**
    * Show the different tabs
    */
@@ -1049,6 +1372,12 @@ export const BrowserTab = props => {
   /**
    * Main render
    */
+  let webviewUrl = initialUrl;
+  if (misesId.auth) {
+    webviewUrl =
+      webviewUrl +
+      ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
+  }
   return (
     <ErrorBoundary view="BrowserTab">
       <View
@@ -1061,7 +1390,7 @@ export const BrowserTab = props => {
               renderError={() => (
                 <WebviewError error={error} onReload={() => null} />
               )}
-              source={{uri: initialUrl}}
+              source={{uri: webviewUrl}}
               style={styles.webview}
               onLoadStart={onLoadStart}
               onLoadEnd={onLoadEnd}
@@ -1082,6 +1411,7 @@ export const BrowserTab = props => {
         {isTabActive() && renderUrlModal()}
         {isTabActive() && renderOptions()}
         {isTabActive() && renderBottomBar()}
+        {isTabActive() && renderForwardModal()}
       </View>
     </ErrorBoundary>
   );
@@ -1218,6 +1548,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addBookmark: bookmark => dispatch(addBookmark(bookmark)),
   removeBookmark: bookmark => dispatch(removeBookmark(bookmark)),
+  createNewTab: url => dispatch(createNewTab(url)),
   addToBrowserHistory: ({url, name}) => dispatch(addToHistory({url, name})),
   addToWhitelist: url => dispatch(addToWhitelist(url)),
   toggleNetworkModal: () => dispatch(toggleNetworkModal()),

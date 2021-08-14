@@ -2,265 +2,28 @@
 
 exports[`Main should render correctly 1`] = `
 <ContextProvider
-  value="light"
+  value={
+    Object {
+      "options": undefined,
+    }
+  }
 >
-  <ContextProvider
+  <ThemeProvider
     value={
       Object {
-        "_childrenNavigation": Object {},
-        "actions": Object {
-          "dismiss": [Function],
-          "pop": [Function],
-          "popToTop": [Function],
-          "push": [Function],
-          "replace": [Function],
-          "reset": [Function],
+        "colors": Object {
+          "background": "rgb(242, 242, 242)",
+          "border": "rgb(216, 216, 216)",
+          "card": "rgb(255, 255, 255)",
+          "notification": "rgb(255, 59, 48)",
+          "primary": "rgb(0, 122, 255)",
+          "text": "rgb(28, 28, 30)",
         },
-        "addListener": [Function],
-        "dangerouslyGetParent": [Function],
-        "dismiss": [Function],
-        "dispatch": [Function],
-        "getChildNavigation": [Function],
-        "getScreenProps": [Function],
-        "goBack": [Function],
-        "isFirstRouteInParent": [Function],
-        "isFocused": [Function],
-        "navigate": [Function],
-        "pop": [Function],
-        "popToTop": [Function],
-        "push": [Function],
-        "replace": [Function],
-        "reset": [Function],
-        "router": Object {
-          "childRouters": Object {
-            "AddBookmarkView": Object {
-              "childRouters": Object {
-                "AddBookmark": null,
-              },
-              "getActionCreators": [Function],
-              "getActionForPathAndParams": [Function],
-              "getComponentForRouteName": [Function],
-              "getComponentForState": [Function],
-              "getPathAndParamsForState": [Function],
-              "getScreenOptions": [Function],
-              "getStateForAction": [Function],
-            },
-            "Home": Object {
-              "childRouters": Object {
-                "BrowserTabHome": Object {
-                  "childRouters": Object {
-                    "BrowserView": null,
-                  },
-                  "getActionCreators": [Function],
-                  "getActionForPathAndParams": [Function],
-                  "getComponentForRouteName": [Function],
-                  "getComponentForState": [Function],
-                  "getPathAndParamsForState": [Function],
-                  "getScreenOptions": [Function],
-                  "getStateForAction": [Function],
-                },
-              },
-              "getActionCreators": [Function],
-              "getActionForPathAndParams": [Function],
-              "getComponentForRouteName": [Function],
-              "getComponentForState": [Function],
-              "getPathAndParamsForState": [Function],
-              "getScreenOptions": [Function],
-              "getStateForAction": [Function],
-            },
-            "SettingsView": Object {
-              "childRouters": Object {
-                "GeneralSettings": null,
-                "Settings": null,
-              },
-              "getActionCreators": [Function],
-              "getActionForPathAndParams": [Function],
-              "getComponentForRouteName": [Function],
-              "getComponentForState": [Function],
-              "getPathAndParamsForState": [Function],
-              "getScreenOptions": [Function],
-              "getStateForAction": [Function],
-            },
-            "Webview": Object {
-              "childRouters": Object {
-                "SimpleWebview": null,
-              },
-              "getActionCreators": [Function],
-              "getActionForPathAndParams": [Function],
-              "getComponentForRouteName": [Function],
-              "getComponentForState": [Function],
-              "getPathAndParamsForState": [Function],
-              "getScreenOptions": [Function],
-              "getStateForAction": [Function],
-            },
-          },
-          "getActionCreators": [Function],
-          "getActionForPathAndParams": [Function],
-          "getComponentForRouteName": [Function],
-          "getComponentForState": [Function],
-          "getPathAndParamsForState": [Function],
-          "getScreenOptions": [Function],
-          "getStateForAction": [Function],
-        },
-        "setParams": [Function],
-        "state": Object {
-          "index": 0,
-          "isTransitioning": false,
-          "key": "StackRouterRoot",
-          "routes": Array [
-            Object {
-              "index": 0,
-              "key": "id-123-1",
-              "routeName": "Home",
-              "routes": Array [
-                Object {
-                  "index": 0,
-                  "isTransitioning": false,
-                  "key": "BrowserTabHome",
-                  "routeName": "BrowserTabHome",
-                  "routes": Array [
-                    Object {
-                      "key": "id-123-0",
-                      "routeName": "BrowserView",
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
+        "dark": false,
       }
     }
   >
-    <Connect(Main)
-      navigation={
-        Object {
-          "_childrenNavigation": Object {},
-          "actions": Object {
-            "dismiss": [Function],
-            "pop": [Function],
-            "popToTop": [Function],
-            "push": [Function],
-            "replace": [Function],
-            "reset": [Function],
-          },
-          "addListener": [Function],
-          "dangerouslyGetParent": [Function],
-          "dismiss": [Function],
-          "dispatch": [Function],
-          "getChildNavigation": [Function],
-          "getScreenProps": [Function],
-          "goBack": [Function],
-          "isFirstRouteInParent": [Function],
-          "isFocused": [Function],
-          "navigate": [Function],
-          "pop": [Function],
-          "popToTop": [Function],
-          "push": [Function],
-          "replace": [Function],
-          "reset": [Function],
-          "router": Object {
-            "childRouters": Object {
-              "AddBookmarkView": Object {
-                "childRouters": Object {
-                  "AddBookmark": null,
-                },
-                "getActionCreators": [Function],
-                "getActionForPathAndParams": [Function],
-                "getComponentForRouteName": [Function],
-                "getComponentForState": [Function],
-                "getPathAndParamsForState": [Function],
-                "getScreenOptions": [Function],
-                "getStateForAction": [Function],
-              },
-              "Home": Object {
-                "childRouters": Object {
-                  "BrowserTabHome": Object {
-                    "childRouters": Object {
-                      "BrowserView": null,
-                    },
-                    "getActionCreators": [Function],
-                    "getActionForPathAndParams": [Function],
-                    "getComponentForRouteName": [Function],
-                    "getComponentForState": [Function],
-                    "getPathAndParamsForState": [Function],
-                    "getScreenOptions": [Function],
-                    "getStateForAction": [Function],
-                  },
-                },
-                "getActionCreators": [Function],
-                "getActionForPathAndParams": [Function],
-                "getComponentForRouteName": [Function],
-                "getComponentForState": [Function],
-                "getPathAndParamsForState": [Function],
-                "getScreenOptions": [Function],
-                "getStateForAction": [Function],
-              },
-              "SettingsView": Object {
-                "childRouters": Object {
-                  "GeneralSettings": null,
-                  "Settings": null,
-                },
-                "getActionCreators": [Function],
-                "getActionForPathAndParams": [Function],
-                "getComponentForRouteName": [Function],
-                "getComponentForState": [Function],
-                "getPathAndParamsForState": [Function],
-                "getScreenOptions": [Function],
-                "getStateForAction": [Function],
-              },
-              "Webview": Object {
-                "childRouters": Object {
-                  "SimpleWebview": null,
-                },
-                "getActionCreators": [Function],
-                "getActionForPathAndParams": [Function],
-                "getComponentForRouteName": [Function],
-                "getComponentForState": [Function],
-                "getPathAndParamsForState": [Function],
-                "getScreenOptions": [Function],
-                "getStateForAction": [Function],
-              },
-            },
-            "getActionCreators": [Function],
-            "getActionForPathAndParams": [Function],
-            "getComponentForRouteName": [Function],
-            "getComponentForState": [Function],
-            "getPathAndParamsForState": [Function],
-            "getScreenOptions": [Function],
-            "getStateForAction": [Function],
-          },
-          "setParams": [Function],
-          "state": Object {
-            "index": 0,
-            "isTransitioning": false,
-            "key": "StackRouterRoot",
-            "routes": Array [
-              Object {
-                "index": 0,
-                "key": "id-123-1",
-                "routeName": "Home",
-                "routes": Array [
-                  Object {
-                    "index": 0,
-                    "isTransitioning": false,
-                    "key": "BrowserTabHome",
-                    "routeName": "BrowserTabHome",
-                    "routes": Array [
-                      Object {
-                        "key": "id-123-0",
-                        "routeName": "BrowserView",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        }
-      }
-      theme="light"
-    />
-  </ContextProvider>
+    <ForwardRef(BaseNavigationContainer) />
+  </ThemeProvider>
 </ContextProvider>
 `;

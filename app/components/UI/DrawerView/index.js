@@ -15,7 +15,7 @@ import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {DrawerActions} from 'react-navigation-drawer';
+import {DrawerActions} from '@react-navigation/compat';
 import Modal from 'react-native-modal';
 
 import {colors, fontStyles} from 'app/styles/common';
@@ -34,7 +34,6 @@ import DeeplinkManager from 'app/core/DeeplinkManager';
 import {AppConstants} from 'app/constants/core';
 
 import Identicon from '../Identicon';
-import StyledButton from '../StyledButton';
 import AccountList from '../AccountList';
 import SettingsNotification from '../SettingsNotification';
 
@@ -595,7 +594,6 @@ class DrawerView extends PureComponent {
   render() {
     const {
       network,
-      accounts,
       identities,
       selectedAddress,
       keyrings,

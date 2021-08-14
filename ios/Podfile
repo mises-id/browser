@@ -12,6 +12,8 @@ target 'MisesBrowser' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-sdk-bridge', :path => '../node_modules/react-native-sdk-bridge'
+
   target 'MisesBrowserTests' do
     inherit! :complete
     # Pods for testing

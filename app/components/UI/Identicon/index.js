@@ -1,3 +1,10 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-05 10:09:07
+ * @LastEditTime: 2021-08-14 18:37:29
+ * @LastEditors: lmk
+ * @Description:
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Image, View, ViewPropTypes} from 'react-native';
@@ -7,7 +14,6 @@ import {connect} from 'react-redux';
 
 import {colors} from 'app/styles/common.js';
 import {toDataUrl} from 'app/util/blockies.js';
-import Logger from '../../../util/Logger';
 
 /**
  * UI component that renders an Identicon

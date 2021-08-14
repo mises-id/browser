@@ -137,10 +137,7 @@ class AccountList extends PureComponent {
       }
     });
   };
-
-  componentDidMount() {
-    this.mounted = true;
-    this.getInitialSelectedAccountIndex();
+  getOrderedAccounts = () => {
     const orderedAccounts = this.getAccounts();
     InteractionManager.runAfterInteractions(() => {
       if (orderedAccounts.length > 4) {
@@ -148,6 +145,11 @@ class AccountList extends PureComponent {
       }
     });
     this.mounted && this.setState({orderedAccounts});
+  };
+  componentDidMount() {
+    this.mounted = true;
+    this.getInitialSelectedAccountIndex();
+    this.getOrderedAccounts();
   }
 
   componentWillUnmount = () => {

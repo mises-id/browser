@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {Component} from 'react';
 import {
   InteractionManager,
   Dimensions,
@@ -63,16 +63,16 @@ const styles = StyleSheet.create({
     ...fontStyles.bold,
   },
   tabActionText: {
-    color: colors.blue,
+    color: '#CCCCCC',
     ...fontStyles.normal,
-    fontSize: 16,
+    fontSize: 17,
   },
   actionDisabled: {
     color: colors.fontSecondary,
   },
   tabsView: {
     flex: 1,
-    backgroundColor: colors.grey100,
+    backgroundColor: '#161B1D',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.58,
     shadowRadius: 15.0,
-    backgroundColor: colors.grey000,
+    backgroundColor: '#2D2F33',
     height: Device.isIphoneX() ? 80 : 50,
   },
   tabs: {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   newTabIcon: {
     marginTop: Device.isIos() ? 3 : 2.5,
     color: colors.white,
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'center',
     justifyContent: 'center',
     alignContent: 'center',
@@ -114,10 +114,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'flex-start',
     alignContent: 'flex-start',
-    backgroundColor: colors.blue,
-    borderRadius: 100,
-    width: 30,
-    height: 30,
+    backgroundColor: '#5D61FF',
+    borderRadius: 5,
+    width: 33,
+    height: 27,
     marginTop: -7,
   },
 });
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
  * PureComponent that wraps all the thumbnails
  * representing all the open tabs
  */
-export default class Tabs extends PureComponent {
+export default class Tabs extends Component {
   static propTypes = {
     /**
      * Array of tabs
@@ -159,7 +159,7 @@ export default class Tabs extends PureComponent {
     /**
      * Sets the current tab used for the animation
      */
-    animateCurrentTab: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+    animateCurrentTab: PropTypes.func,
   };
 
   thumbnails = {};
@@ -232,7 +232,6 @@ export default class Tabs extends PureComponent {
         contentContainerStyle={styles.tabsContent}
         ref={this.scrollview}>
         {tabs.map(tab => (
-          // eslint-disable-next-line react/jsx-key
           <TabThumbnail
             ref={this.thumbnails[tab.id]}
             key={tab.id}

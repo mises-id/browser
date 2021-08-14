@@ -1,3 +1,10 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-08-02 14:33:49
+ * @LastEditTime: 2021-08-10 23:30:04
+ * @LastEditors: lmk
+ * @Description:
+ */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -17,7 +24,10 @@ import SplashScreen from 'react-native-splash-screen';
 import App from 'app/components/Nav/App';
 import Logger from 'app/util/Logger';
 
+import Sdk from 'app/core/Sdk';
+
 import ErrorBoundary from 'app/components/UI/ErrorBoundary';
+import {WRootToastApp} from 'react-native-smart-tip';
 
 /**
  * Top level of the component hierarchy
@@ -40,15 +50,32 @@ export default class Root extends PureComponent {
     super(props);
 
     SplashScreen.hide();
+    //It is an sdk sample usage
+    Logger.log('Mises sdk init start');
+    (async () => {
+      try {
+        await Sdk.init();
+        // if (!login) {
+        //   const list = await Sdk.ListUsers();
+        //   const len = await list.count();
+        //   console.log(len);
+        // }
+        Logger.log('Mises sdk init ok');
+      } catch (error) {
+        Logger.log('Mises sdk init error ', error);
+      }
+    })();
   }
 
   render = () => (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <ErrorBoundary onError={this.errorHandler} view="Root">
-          <App />
-        </ErrorBoundary>
-      </PersistGate>
-    </Provider>
+    <WRootToastApp>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ErrorBoundary onError={this.errorHandler} view="Root">
+            <App />
+          </ErrorBoundary>
+        </PersistGate>
+      </Provider>
+    </WRootToastApp>
   );
 }
