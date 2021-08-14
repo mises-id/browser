@@ -16,10 +16,6 @@ import {colors, fontStyles} from 'app/styles/common';
 import Device from 'app/util/Device';
 import {AppConstants} from 'app/constants/core';
 import {getHost} from 'app/util/browser';
-
-import WebsiteIcon from '../../WebsiteIcon';
-import { getBrowserViewNavbarOptions } from '../../Navbar';
-
 const margin = 15;
 const width = Dimensions.get('window').width - margin * 2;
 const height = Dimensions.get('window').height / 3.5;
@@ -113,7 +109,6 @@ const styles = StyleSheet.create({
 });
 
 const {HOMEPAGE_URL} = AppConstants;
-const APP_ICON = require('app/images/app-icon.png');
 
 /**
  * PureComponent that renders an a thumbnail

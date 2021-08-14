@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-10 22:50:41
+ * @LastEditTime: 2021-08-14 22:03:00
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -59,13 +59,11 @@ const Create = ({navigation}) => {
     };
   }, [params, loading]);
   const submit = () => {
-    //if(!isHidden){
-    if (loading) {
+    if (loading || isHidden) {
       return false;
     }
     setloading(true);
     navigation.push('Password', params);
-    //}
   };
   const back = routeName => {
     if (routeName) {

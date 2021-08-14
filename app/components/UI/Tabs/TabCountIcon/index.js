@@ -1,15 +1,22 @@
+/*
+ * @Author: lmk
+ * @Date: 2021-07-05 10:09:07
+ * @LastEditTime: 2021-08-14 18:22:23
+ * @LastEditors: lmk
+ * @Description:
+ */
 import React, {PureComponent} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {colors, fontStyles} from 'app/styles/common';
+import {fontStyles} from 'app/styles/common';
 import Device from 'app/util/Device';
 
 const styles = StyleSheet.create({
   tabIcon: {
     borderWidth: 2,
-    borderColor: "#333",
+    borderColor: '#333',
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',

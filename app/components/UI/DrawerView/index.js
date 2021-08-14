@@ -34,7 +34,6 @@ import DeeplinkManager from 'app/core/DeeplinkManager';
 import {AppConstants} from 'app/constants/core';
 
 import Identicon from '../Identicon';
-import StyledButton from '../StyledButton';
 import AccountList from '../AccountList';
 import SettingsNotification from '../SettingsNotification';
 
@@ -595,7 +594,6 @@ class DrawerView extends PureComponent {
   render() {
     const {
       network,
-      accounts,
       identities,
       selectedAddress,
       keyrings,

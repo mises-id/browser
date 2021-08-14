@@ -13,6 +13,7 @@ import {
   InteractionManager,
   Image,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {WebView} from 'react-native-webview';
@@ -502,9 +503,13 @@ export const BrowserTab = props => {
   /**
    * Show a phishing modal when a url is not allowed
    */
-  const handleNotAllowedUrl = urlToGo => {
-    setBlockedUrl(urlToGo);
-  };
+  const handleNotAllowedUrl = useCallback(
+    urlToGo => {
+      setBlockedUrl(urlToGo);
+      console.log(blockedUrl);
+    },
+    [blockedUrl],
+  );
 
   /**
    * Go to a url
@@ -534,7 +539,7 @@ export const BrowserTab = props => {
       handleNotAllowedUrl(urlToGo);
       return null;
     },
-    [isAllowedUrl, isHomepage, props.defaultProtocol],
+    [handleNotAllowedUrl, isAllowedUrl, isHomepage, props.defaultProtocol],
   );
 
   /**
@@ -1165,11 +1170,35 @@ export const BrowserTab = props => {
       fn: async () => {
         //call page function
         toggleOptions();
+        const activeUser = await sdk.getActiveUser();
+        if (props.navigation.state.params.error) {
+          Toast('Can’t forward this website page');
+          return false;
+        }
+        if (activeUser) {
+          toggleForwardModal();
+          return false;
+        }
         const list = await sdk.ListUsers();
         const count = await list.count();
-        if (count > 0) {
-          toggleForwardModal();
-        }
+        const flag = count > 0;
+        const content = flag
+          ? strings('login.login_modal_content')
+          : strings('login.create_modal_content');
+        Alert.alert('Message', content, [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              const url = flag ? 'Login' : 'Create';
+              props.navigation.push(url);
+            },
+          },
+        ]);
       },
     },
   ];

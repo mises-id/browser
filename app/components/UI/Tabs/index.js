@@ -16,7 +16,6 @@ import {colors, fontStyles} from 'app/styles/common';
 import Device from 'app/util/Device';
 
 import TabThumbnail from './TabThumbnail';
-import { getBrowserViewNavbarOptions } from '../Navbar';
 
 const THUMB_VERTICAL_MARGIN = 15;
 const NAVBAR_SIZE = Device.isIphoneX() ? 88 : 64;
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
  * PureComponent that wraps all the thumbnails
  * representing all the open tabs
  */
-export default class Tabs extends  Component{
+export default class Tabs extends Component {
   static propTypes = {
     /**
      * Array of tabs
@@ -160,7 +159,7 @@ export default class Tabs extends  Component{
     /**
      * Sets the current tab used for the animation
      */
-    animateCurrentTab: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+    animateCurrentTab: PropTypes.func,
   };
 
   thumbnails = {};
@@ -233,7 +232,6 @@ export default class Tabs extends  Component{
         contentContainerStyle={styles.tabsContent}
         ref={this.scrollview}>
         {tabs.map(tab => (
-          // eslint-disable-next-line react/jsx-key
           <TabThumbnail
             ref={this.thumbnails[tab.id]}
             key={tab.id}
@@ -257,7 +255,7 @@ export default class Tabs extends  Component{
       <View style={styles.tabActions}>
         <TouchableOpacity
           style={[styles.tabAction, styles.tabActionleft]}
-          onPress={closeAllTabs}>   
+          onPress={closeAllTabs}>
           <Text
             style={[
               styles.tabActionText,

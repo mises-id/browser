@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 const Main = props => {
-  const [connected, setConnected] = useState(true);
+  //const [connected, setConnected] = useState(true);
   const [forceReload, setForceReload] = useState(false);
 
   const backgroundMode = useRef(false);
@@ -59,23 +59,6 @@ const Main = props => {
   };
 
   const prevLockTime = usePrevious(props.lockTime);
-
-  const connectionChangeHandler = useCallback(
-    state => {
-      if (!state) {
-        return;
-      }
-      const {isConnected} = state;
-      // Show the modal once the status changes to offline
-      if (connected && isConnected === false) {
-        props.navigation.navigate('OfflineModeView');
-      }
-      if (connected !== isConnected && isConnected !== null) {
-        setConnected(isConnected);
-      }
-    },
-    [connected, setConnected, props.navigation],
-  );
 
   const handleAppStateChange = useCallback(
     appState => {

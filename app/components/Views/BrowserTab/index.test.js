@@ -1,9 +1,9 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-05 10:09:07
- * @LastEditTime: 2021-07-19 22:17:30
+ * @LastEditTime: 2021-08-14 18:35:16
  * @LastEditors: lmk
- * @Description: 
+ * @Description:
  */
 jest.useFakeTimers();
 
@@ -14,9 +14,11 @@ import {BrowserTab} from './';
 describe('Browser', () => {
   it('should render correctly', () => {
     const navigation = {
-      state:{}
-    }
-    const wrapper = shallow(<BrowserTab initialUrl="https://mises.site" navigation={navigation}/>);
+      state: {},
+    };
+    const wrapper = shallow(
+      <BrowserTab initialUrl="https://mises.site" navigation={navigation} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

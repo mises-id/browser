@@ -191,8 +191,7 @@ class Settings extends PureComponent {
   toggleHideZeroBalanceTokens = toggleHideZeroBalanceTokens => {
     this.props.setHideZeroBalanceTokens(toggleHideZeroBalanceTokens);
   };
-
-  componentDidMount = () => {
+  setLanguages = () => {
     const languages = getLanguages();
     this.setState({languages});
     this.languageOptions = Object.keys(languages).map(key => ({
@@ -217,13 +216,14 @@ class Settings extends PureComponent {
       },
     ];
   };
+  componentDidMount() {
+    this.setLanguages();
+  }
 
   render() {
     const {
-      currentCurrency,
       primaryCurrency,
       useBlockieIcon,
-      setUseBlockieIcon,
       selectedAddress,
       hideZeroBalanceTokens,
     } = this.props;

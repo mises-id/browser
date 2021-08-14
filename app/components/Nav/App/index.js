@@ -1,12 +1,7 @@
 import React, {PureComponent} from 'react';
-import {
-  createAppContainer,
-  createSwitchNavigator,
-  NavigationActions,
-} from 'react-navigation';
+import {createAppContainer, NavigationActions} from 'react-navigation';
 
 import {createStackNavigator} from 'react-navigation-stack';
-import {createDrawerNavigator} from 'react-navigation-drawer';
 import Branch from 'react-native-branch';
 import Entry from 'app/components/Views/Entry';
 import Logger from 'app/util/Logger';
@@ -15,7 +10,6 @@ import trackErrorAsAnalytics from 'app/util/analyticsV2';
 import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 
 import Main from '../Main';
-import DrawerView from 'app/components/UI/DrawerView';
 import MenuToolTips from 'app/components/UI/MenuToolTips';
 // import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
 /**
@@ -63,29 +57,29 @@ const AppNavigator = createStackNavigator(
   {
     Entry,
     Main,
-    MenuToolTips:{
-      screen:MenuToolTips,
-      navigationOptions:(current)=>{
+    MenuToolTips: {
+      screen: MenuToolTips,
+      navigationOptions: current => {
         return {
           opacity: current.progress,
-          cardStyleInterpolator:()=>{
+          cardStyleInterpolator: () => {
             return {
-              cardStyle:{
-                backgroundColor: 'rgba(0,0,0,0)' 
+              cardStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
               },
-              containerStyle:{
-                backgroundColor: 'rgba(0,0,0,0)' ,
-              }
-            }
-          }
-        }
-      }
-    }
+              containerStyle: {
+                backgroundColor: 'rgba(0,0,0,0)',
+              },
+            };
+          },
+        };
+      },
+    },
   },
   {
     initialRouteName: 'Main',
-    headerMode:"none",
-    mode:'modal'
+    headerMode: 'none',
+    mode: 'modal',
   },
 );
 

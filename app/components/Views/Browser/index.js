@@ -239,9 +239,7 @@ class Browser extends Component {
         THUMB_HEIGHT,
       }).then(
         uri => {
-          const {updateTab} = this.props;
-
-          updateTab(tabID, {
+          this.props.updateTab(tabID, {
             url,
             image: uri,
           });

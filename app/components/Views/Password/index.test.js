@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 22:12:23
- * @LastEditTime: 2021-07-19 22:12:43
+ * @LastEditTime: 2021-08-14 18:24:06
  * @LastEditors: lmk
  * @Description: Password test
  */
@@ -11,9 +11,7 @@ import Password from './';
 
 describe('Password', () => {
   it('should render correctly', () => {
-    const wrapper = shallow(
-      <Password/>,
-    );
+    const wrapper = shallow(<Password />);
     expect(wrapper).toMatchSnapshot();
   });
 });

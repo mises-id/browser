@@ -1,9 +1,8 @@
 import sdk from 'app/core/Sdk';
 import {strings} from 'app/locales/i18n';
 import {Toast} from 'app/util';
-import React, {useReducer, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
@@ -68,13 +67,7 @@ const MenuTips = ({navigation}) => {
   return (
     <View>
       <BoxShadow setting={setting}>
-        <View
-          style={{
-            position: 'relative',
-            marginTop: 45,
-            marginLeft: 5,
-            zIndex: 9999,
-          }}>
+        <View style={styles.menubox}>
           <View style={styles.arrow} />
           <View style={styles.toolTips}>
             {list.map((val, index) => {
@@ -92,7 +85,8 @@ const MenuTips = ({navigation}) => {
       </BoxShadow>
       <TouchableOpacity
         onPress={closePop}
-        style={[styles.closePop, {width, height}]}></TouchableOpacity>
+        style={[styles.closePop, {width, height}]}
+      />
     </View>
   );
 };
@@ -115,7 +109,6 @@ const styles = StyleSheet.create({
     borderBottomColor: 'white',
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: 'transparent',
     position: 'absolute',
     top: -12,
     left: 18,
@@ -141,6 +134,12 @@ const styles = StyleSheet.create({
   label: {
     marginLeft: 15,
     fontSize: 16,
+  },
+  menubox: {
+    position: 'relative',
+    marginTop: 45,
+    marginLeft: 5,
+    zIndex: 9999,
   },
 });
 MenuTips.navigationOptions = current => {

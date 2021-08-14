@@ -48,7 +48,9 @@
 		"wrong_password_error": "Error: Decrypt failed",
 		"wrong_password_error_android": "Error: error:1e000065:Cipher functions:OPENSSL_internal:BAD_DECRYPT",
 		"vault_error": "Error: Cannot unlock without a previous vault.",
-		"clean_vault_error": "MisesBrowser encountered an error due to reaching a storage limit. The local data has been corrupted. Please reinstall MisesBrowser and restore with your Secret Recovery Phrase."
+		"clean_vault_error": "MisesBrowser encountered an error due to reaching a storage limit. The local data has been corrupted. Please reinstall MisesBrowser and restore with your Secret Recovery Phrase.",
+		"create_modal_content":"Go to register Mises ID",
+		"login_modal_content":"Go to Login Mises ID"
 	},
 	"enter_password": {
 		"title": "Enter your password",

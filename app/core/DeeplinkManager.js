@@ -1,7 +1,6 @@
 'use strict';
 
 import URL from 'url-parse';
-import qs from 'qs';
 import {InteractionManager, Alert} from 'react-native';
 import {AppConstants} from 'app/constants/core';
 import {strings} from 'app/locales/i18n';
@@ -33,11 +32,11 @@ class DeeplinkManager {
 
   parse(url, {browserCallBack, origin, onHandled}) {
     const urlObj = new URL(url);
-    let params;
+    //let params;
 
     if (urlObj.query.length) {
       try {
-        params = qs.parse(urlObj.query.substring(1));
+        //params = qs.parse(urlObj.query.substring(1));
       } catch (e) {
         Alert.alert(strings('deeplink.invalid'), e.toString());
       }
@@ -106,6 +105,7 @@ class DeeplinkManager {
         if (urlObj.origin === 'mises://wc') {
           const cleanUrlObj = new URL(urlObj.query.replace('?uri=', ''));
           const href = cleanUrlObj.href;
+          console.log(href);
         }
         break;
       default:

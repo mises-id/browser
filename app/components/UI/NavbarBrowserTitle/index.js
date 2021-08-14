@@ -2,7 +2,6 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {TouchableOpacity, View, StyleSheet, Text, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {colors, fontStyles} from 'app/styles/common';
 import Device from 'app/util/Device';
@@ -11,11 +10,11 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor:'#EEEEEE',
-    height:40,
-    position:'relative',
-    borderRadius:20,
-    flexDirection:'row'
+    backgroundColor: '#EEEEEE',
+    height: 40,
+    position: 'relative',
+    borderRadius: 20,
+    flexDirection: 'row',
   },
   network: {
     flexDirection: 'row',
@@ -36,24 +35,24 @@ const styles = StyleSheet.create({
   },
   currentUrlWrapper: {
     alignItems: 'center',
-    position:'relative',
+    position: 'relative',
     justifyContent: 'center',
-    flex: 1
+    flex: 1,
   },
   refreshIcon: {
-    width:16,
-    height:18,
+    width: 16,
+    height: 18,
   },
-  refresh:{
-    position:'absolute',
-    right:15,
-    top:11
+  refresh: {
+    position: 'absolute',
+    right: 15,
+    top: 11,
   },
   currentUrl: {
     ...fontStyles.normal,
     fontSize: 17,
     textAlign: 'center',
-    color:'#333'
+    color: '#333',
   },
   currentUrlAndroid: {
     maxWidth: '60%',
@@ -62,6 +61,9 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     marginRight: 4,
+  },
+  flex1: {
+    flex: 1,
   },
 });
 
@@ -102,7 +104,7 @@ class NavbarBrowserTitle extends PureComponent {
     /**
      * Website webviewRef
      */
-    webviewRef: PropTypes.object
+    webviewRef: PropTypes.object,
   };
 
   onTitlePress = () => {
@@ -126,17 +128,15 @@ class NavbarBrowserTitle extends PureComponent {
     return name;
   }
   //onload webviewpage
-  reloadWebview = ()=>{
+  reloadWebview = () => {
     const {current} = this.props.webviewRef;
     current && current.reload();
-  }
+  };
   render = () => {
-    const {https, network, hostname, error, icon} = this.props;
-    const color = null;
-    const name = this.getNetworkName(network);
+    const {hostname} = this.props;
     return (
       <View style={styles.wrapper}>
-        <TouchableOpacity onPress={this.onTitlePress} style={{flex:1}}>
+        <TouchableOpacity onPress={this.onTitlePress} style={styles.flex1}>
           <View style={styles.currentUrlWrapper}>
             {/* {icon && <Image style={styles.siteIcon} source={{uri: icon}} />} */}
             <Text
@@ -154,7 +154,10 @@ class NavbarBrowserTitle extends PureComponent {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.reloadWebview} style={styles.refresh}>
-          <Image  source={require('app/images/refresh.png')} style={styles.refreshIcon}></Image>
+          <Image
+            source={require('app/images/refresh.png')}
+            style={styles.refreshIcon}
+          />
         </TouchableOpacity>
         {/* <View style={styles.network}>
           <View
@@ -169,6 +172,6 @@ class NavbarBrowserTitle extends PureComponent {
   };
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps)(NavbarBrowserTitle);

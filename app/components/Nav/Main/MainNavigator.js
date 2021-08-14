@@ -1,14 +1,13 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-12 14:33:08
- * @LastEditTime: 2021-08-07 13:52:26
+ * @LastEditTime: 2021-08-14 18:31:41
  * @LastEditors: lmk
  * @Description: MainNavigator
  */
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
 
 import Browser from '../../Views/Browser';
 import AddBookmark from '../../Views/AddBookmark';
@@ -26,74 +25,83 @@ const styles = StyleSheet.create({
     width: 125,
     height: 50,
   },
-  backBox:{
-    width:60
+  backBox: {
+    width: 60,
   },
-  backIcon:{
+  backIcon: {
     width: 16,
-    height: 25
-  }
+    height: 25,
+  },
 });
 /**
  * Navigator component that wraps
  * the 2 main sections: Browser, Wallet
  */
-const headerBackImage = (navigation)=>{
-  return <TouchableOpacity style={styles.backBox} onPress={() => navigation.goBack(null)}>
-    <Image  source={require('../../../images/left.png')} style={styles.backIcon}></Image>
-  </TouchableOpacity>
-}
-const navigationOptions = ({navigation})=>({
-  headerBackImage:()=>headerBackImage(navigation),
+const headerBackImage = navigation => {
+  return (
+    <TouchableOpacity
+      style={styles.backBox}
+      onPress={() => navigation.goBack(null)}>
+      <Image
+        source={require('../../../images/left.png')}
+        style={styles.backIcon}
+      />
+    </TouchableOpacity>
+  );
+};
+const navigationOptions = ({navigation}) => ({
+  headerBackImage: () => headerBackImage(navigation),
   headerBackTitleVisible: false, // 隐藏 iOS 返回按钮标题
   headerPressColorAndroid: 'transparent', // 移除 Android 点击返回按钮效果
   headerTitleAlign: 'center', // Android 标题居中
   headerStyle: {
     backgroundColor: 'white',
   },
-  cardStyle:{
+  cardStyle: {
     backgroundColor: 'white',
-  }
-})
-const AppStack = createStackNavigator({
-  BrowserView: {
-    screen:Browser,
   },
-  Password: {
-    screen: Password,
-    navigationOptions
+});
+const AppStack = createStackNavigator(
+  {
+    BrowserView: {
+      screen: Browser,
+    },
+    Password: {
+      screen: Password,
+      navigationOptions,
+    },
+    CreateStep2: {
+      screen: Create, //step2
+      navigationOptions,
+    },
+    Create: {
+      screen: CreateStep, //step 1
+      navigationOptions,
+    },
+    Restore: {
+      screen: Restore,
+      navigationOptions,
+    },
+    Webview: {
+      screen: SimpleWebview,
+    },
+    SettingsView: {
+      screen: Settings,
+    },
+    GeneralSettings: {
+      screen: GeneralSettings,
+    },
+    AddBookmarkView: {
+      screen: AddBookmark,
+    },
+    Login: {
+      screen: Login,
+      navigationOptions,
+    },
   },
-  CreateStep2: {
-    screen: Create, //step2
-    navigationOptions
+  {
+    mode: 'modal',
+    lazy: true,
   },
-  Create: {
-    screen: CreateStep, //step 1
-    navigationOptions
-  },
-  Restore: {
-    screen: Restore,
-    navigationOptions
-  },
-  Webview: {
-    screen: SimpleWebview
-  },
-  SettingsView: {
-    screen: Settings
-  },
-  GeneralSettings: {
-    screen: GeneralSettings
-  },
-  AddBookmarkView: {
-    screen: AddBookmark
-  },
-  Login:{
-    screen:Login,
-    navigationOptions
-  }
-},
-{
-  mode: 'modal',
-  lazy: true
-})
-export default AppStack
+);
+export default AppStack;

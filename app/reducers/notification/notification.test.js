@@ -155,9 +155,7 @@ describe('notifications reducer', () => {
         type: ACTIONS.HIDE_NOTIFICATION_BY_ID,
         id,
       });
-      const notification = state.notifications.find(
-        notification => notification.id === id,
-      );
+      const notification = state.notifications.find(val => val.id === id);
       expect(notification.isVisible).toBe(false);
     });
 
@@ -236,7 +234,7 @@ describe('notifications reducer', () => {
       });
 
       const replacedNotification = state.notifications.find(
-        notification => notification.id === notificationId,
+        val => val.id === notificationId,
       );
       expect(state.notifications.length).toBe(currentCount);
       expect(replacedNotification.description).toEqual('Replaced notification');
