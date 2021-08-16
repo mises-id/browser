@@ -724,7 +724,7 @@ exports[`Create should render correctly 1`] = `
               }
             }
           >
-            Creating a successful
+            create
           </Text>
         </View>
       </TouchableOpacity>
