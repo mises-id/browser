@@ -75,7 +75,7 @@ const sdk = {
   },
   ListUsers: async () => {
     try {
-      Logger.log('ListUsers ');
+      Logger.log('ListUsers');
       const i = await MSdk.instance();
       const umgr = await i.userMgr();
       return await umgr.listUsers();
