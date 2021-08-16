@@ -6,7 +6,9 @@ import {
   StyleSheet,
   View,
   PushNotificationIOS,
+  InteractionManager,
 } from 'react-native';
+
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import BackgroundTimer from 'react-native-background-timer';
@@ -23,7 +25,10 @@ import {
   removeNotVisibleNotifications,
 } from 'app/actions/notification';
 
+import NotificationManager from 'app/core/NotificationManager';
+
 import MainNavigator from './MainNavigator';
+import Notification from '../../UI/Notification';
 
 const styles = StyleSheet.create({
   flex: {
@@ -140,6 +145,16 @@ const Main = props => {
       },
     });
 
+    setTimeout(() => {
+      NotificationManager.init({
+        navigation: props.navigation,
+        showTransactionNotification: props.showTransactionNotification,
+        hideCurrentNotification: props.hideCurrentNotification,
+        showSimpleNotification: props.showSimpleNotification,
+        removeNotificationById: props.removeNotificationById,
+      });
+    }, 1000);
+
     return function cleanup() {
       AppState.removeEventListener('change', handleAppStateChange);
       removeConnectionStatusListener.current &&
@@ -162,6 +177,7 @@ const Main = props => {
         ) : (
           renderLoader()
         )}
+        <Notification navigation={props.navigation} />
       </View>
     </React.Fragment>
   );

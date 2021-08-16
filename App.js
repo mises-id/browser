@@ -51,19 +51,8 @@ export default class Root extends PureComponent {
 
     SplashScreen.hide();
     //It is an sdk sample usage
-    Logger.log('Mises sdk init start');
     (async () => {
-      try {
-        await Sdk.init();
-        // if (!login) {
-        //   const list = await Sdk.ListUsers();
-        //   const len = await list.count();
-        //   console.log(len);
-        // }
-        Logger.log('Mises sdk init ok');
-      } catch (error) {
-        Logger.log('Mises sdk init error ', error);
-      }
+      await Sdk.init();
     })();
   }
 
