@@ -208,7 +208,7 @@ class UrlAutocomplete extends PureComponent {
     return (
       <View style={styles.wrapper}>
         {this.state.results.slice(0, 3).map(r => {
-          const {url, name} = r;
+          const {url, name} = r.item;
           const onPress = () => {
             this.props.onSubmit(url);
           };

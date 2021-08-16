@@ -822,9 +822,11 @@ export const BrowserTab = props => {
           break;
         case 'OpenCreateUserPanel':
           props.navigation.push('Create');
+          injectCallbackJavaScript({success: true});
           break;
         case 'OpenRestoreUserPanel':
           props.navigation.push('Restore');
+          injectCallbackJavaScript({success: true});
           break;
         case 'setUserInfo':
           //判断是否有activeuser 为空则去登录
@@ -834,6 +836,7 @@ export const BrowserTab = props => {
               if (!activeUser) {
                 Toast('Please log in');
                 props.navigation.push('Login');
+                injectCallbackJavaScript({success: false});
                 return false;
               }
               sdk
@@ -869,29 +872,62 @@ export const BrowserTab = props => {
           break;
         case 'openLoginPage':
           props.navigation.push('Login');
+          injectCallbackJavaScript({success: true});
+          break;
+        case 'openRegister':
+          props.navigation.push('create');
+          injectCallbackJavaScript({success: true});
           break;
         case 'newTagPage':
           props.newTab(data.data);
+          injectCallbackJavaScript({success: true});
           break;
         case 'follow':
-          sdk
-            .follow(data.data)
-            .then(res => {
-              injectCallbackJavaScript({success: true, data: res});
-            })
-            .catch(() => {
+          (async () => {
+            const activeUser = await sdk.getActiveUser();
+            if (!activeUser) {
+              misesIdModel();
               injectCallbackJavaScript({success: false});
-            });
+              return false;
+            }
+            sdk
+              .follow(data.data)
+              .then(res => {
+                injectCallbackJavaScript({success: true, data: res});
+              })
+              .catch(() => {
+                injectCallbackJavaScript({success: false});
+              });
+          })();
           break;
         case 'unFollow':
-          sdk
-            .unFollow(data.data)
-            .then(res => {
-              injectCallbackJavaScript({success: true, data: res});
-            })
-            .catch(() => {
+          (async () => {
+            const activeUser = await sdk.getActiveUser();
+            if (!activeUser) {
+              misesIdModel();
               injectCallbackJavaScript({success: false});
-            });
+              return false;
+            }
+            sdk
+              .unFollow(data.data)
+              .then(res => {
+                injectCallbackJavaScript({success: true, data: res});
+              })
+              .catch(() => {
+                injectCallbackJavaScript({success: false});
+              });
+          })();
+          break;
+        case 'getListUsersCount':
+          (async () => {
+            try {
+              const listUsers = await sdk.ListUsers();
+              const count = await listUsers.count();
+              injectCallbackJavaScript({success: true, data: count});
+            } catch (error) {
+              injectCallbackJavaScript({success: false});
+            }
+          })();
           break;
       }
     } catch (e) {
@@ -1163,6 +1199,28 @@ export const BrowserTab = props => {
   /**
    * Render options menu
    */
+  const misesIdModel = async () => {
+    const list = await sdk.ListUsers();
+    const count = await list.count();
+    const flag = count > 0;
+    const content = flag
+      ? strings('login.login_modal_content')
+      : strings('login.create_modal_content');
+    Alert.alert('Message', content, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          const url = flag ? 'Login' : 'Create';
+          props.navigation.push(url);
+        },
+      },
+    ]);
+  };
   const optionsMenuList = [
     {
       label: strings('menu.forward'),
@@ -1179,26 +1237,7 @@ export const BrowserTab = props => {
           toggleForwardModal();
           return false;
         }
-        const list = await sdk.ListUsers();
-        const count = await list.count();
-        const flag = count > 0;
-        const content = flag
-          ? strings('login.login_modal_content')
-          : strings('login.create_modal_content');
-        Alert.alert('Message', content, [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'OK',
-            onPress: () => {
-              const url = flag ? 'Login' : 'Create';
-              props.navigation.push(url);
-            },
-          },
-        ]);
+        misesIdModel();
       },
     },
   ];
@@ -1259,26 +1298,28 @@ export const BrowserTab = props => {
         link,
         attachment_url: icon,
       };
-      const obj = {
-        link_meta: form,
-        content: forwardContent.value,
-        status_type: 'link',
-        form_type: 'status',
-      };
-      createStatus(obj)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          Toast(err);
-        });
+      console.log(form, 'form');
       return false;
+      // const obj = {
+      //   link_meta: form,
+      //   content: forwardContent.value,
+      //   status_type: 'link',
+      //   form_type: 'status',
+      // };
+      // createStatus(obj)
+      //   .then(res => {
+      //     console.log(res);
+      //   })
+      //   .catch(err => {
+      //     Toast(err);
+      //   });
+      // return false;
     }
     props.navigation.push('Login');
   };
   const renderForwardModal = () => {
     const {params = {}} = props.navigation.state;
-    const {origin, href} = new URL(params.url);
+    const {origin, href, pathname} = new URL(params.url);
     const queryObj = urlToJson(href);
     if (
       !isHomepage(href) &&
@@ -1290,7 +1331,7 @@ export const BrowserTab = props => {
       delete queryObj.nonce;
       delete queryObj.sig;
     }
-    const link = `${origin}?${obj2strUrl(queryObj)}`;
+    const link = `${origin}${pathname}?${obj2strUrl(queryObj)}`;
     const webviewParams =
       params.icon && initialUrl ? {...params, link, origin} : {};
     return (

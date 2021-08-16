@@ -340,7 +340,7 @@
 		"search": "Search or type a URL",
 		"welcome": "Welcome!",
 		"remove": "Remove",
-		"new_tab": "New tab",
+		"new_tab": "Mises discover",
 		"tabs_close_all": "Close All",
 		"tabs_done": "Done",
 		"no_tabs_title": "No Open Tabs",
@@ -393,7 +393,7 @@
 		"Step1Title":"The mnemonic word",
 		"desc":"This is the introduction. This is the introduction. This  is the introduction. This is the introduction. This is the introduction. This is the introduction. ",
 		"step_btn":"Next step",
-		"success_button":"Creating a successful",
+		"success_button":"create",
 		"back":"Back to previous step"
 	},
 	"password":{
