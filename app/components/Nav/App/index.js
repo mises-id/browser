@@ -10,7 +10,7 @@ import {AppConstants} from 'app/constants/core';
 import trackErrorAsAnalytics from 'app/util/analyticsV2';
 import SharedDeeplinkManager from 'app/core/DeeplinkManager';
 
-import Main from '../Main/MainNavigator';
+import Main from '../Main';
 import MenuToolTips from 'app/components/UI/MenuToolTips';
 
 // import SharedDrawerStatusTracker from 'app/components/UI/DrawerView/DrawerStatusTracker';
@@ -57,7 +57,6 @@ import MenuToolTips from 'app/components/UI/MenuToolTips';
  */
 const AppNavigator = createCompatNavigatorFactory(createStackNavigator)(
   {
-    Entry,
     Main,
     MenuToolTips: {
       screen: MenuToolTips,

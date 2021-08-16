@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
   alert: alertReducer,
   user: userReducer,
   settings: settingsReducer,
-  notificatio: notificationReducer,
+  notification: notificationReducer,
   wizard: wizardReducer,
   modals: modalsReducer,
   misesId: misesIdReducer,

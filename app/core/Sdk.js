@@ -7,6 +7,8 @@
  */
 'use strict';
 import {MSdk, MStringList, MUserInfo} from 'react-native-sdk-bridge';
+
+import NotificationManager from 'app/core/NotificationManager';
 import Logger from 'app/util/Logger';
 // TODO: What to do with the module
 
@@ -112,7 +114,9 @@ const sdk = {
           telphones,
           '',
         );
-        return await activeUser.setInfo(userInfo);
+        const session = await activeUser.setInfo(userInfo);
+        NotificationManager.showMisesNotification();
+        return session;
       }
     } catch (error) {
       console.log(error, 'setUserInfo error');
@@ -145,7 +149,10 @@ const sdk = {
     try {
       Logger.log('follow ');
       const activeUser = await sdk.getActiveUser();
-      return activeUser.follow(misesId);
+      const session = activeUser.follow(misesId);
+
+      NotificationManager.showMisesNotification();
+      return session;
     } catch (error) {
       console.log(error, 'follow error');
       return Promise.reject(error);
@@ -155,7 +162,9 @@ const sdk = {
     try {
       Logger.log('unfollow ');
       const activeUser = await sdk.getActiveUser();
-      return activeUser.unfollow(misesId);
+      const session = activeUser.unfollow(misesId);
+      NotificationManager.showMisesNotification();
+      return session;
     } catch (error) {
       console.log(error, 'unFollow error');
       return Promise.reject(error);
