@@ -113,6 +113,7 @@ const getTitle = (status, {nonce, amount, assetType}) => {
     case 'pending_withdrawal':
       return strings('notifications.pending_withdrawal_title');
     case 'success':
+      // eslint-disable-next-line radix
       return strings('notifications.success_title', {nonce: parseInt(nonce)});
     case 'success_deposit':
       return strings('notifications.success_deposit_title');
@@ -124,6 +125,7 @@ const getTitle = (status, {nonce, amount, assetType}) => {
         assetType,
       });
     case 'speedup':
+      // eslint-disable-next-line radix
       return strings('notifications.speedup_title', {nonce: parseInt(nonce)});
     case 'received_payment':
       return strings('notifications.received_payment_title');

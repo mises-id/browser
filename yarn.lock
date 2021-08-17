@@ -6212,7 +6212,7 @@ react-native-screens@^3.3.0:
 
 "react-native-sdk-bridge@https://github.com/mises-id/react-native-sdk-bridge":
   version "1.0.5"
-  resolved "https://github.com/mises-id/react-native-sdk-bridge#e73c897cc1d7741bffe67faa8c13a8eac4c3bfcd"
+  resolved "https://github.com/mises-id/react-native-sdk-bridge#8b8804d84de8403de248c3570b177c8487a497e1"
 
 react-native-search-api@^1.2.0:
   version "1.2.0"

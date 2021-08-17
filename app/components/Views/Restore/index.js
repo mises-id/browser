@@ -1,13 +1,21 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-14 18:24:28
+ * @LastEditTime: 2021-08-17 23:56:53
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
+import sdk from 'app/core/Sdk';
 import {strings} from 'app/locales/i18n';
+import {Toast} from 'app/util';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 const word = (item = {}, key) => {
   return (
     <View key={key} style={styles.wordContent}>
@@ -15,41 +23,75 @@ const word = (item = {}, key) => {
     </View>
   );
 };
-const Restore = props => {
-  const [data] = useState([
-    {value: 'cloud'},
-    {value: 'rabbit'},
-    {value: 'fly'},
-    {value: 'hawk'},
-    {value: 'contemplate'},
-    {value: 'pretty'},
-    {value: 'superduty'},
-    {value: 'lovely'},
-    {value: 'come'},
-    {value: 'gift'},
-    {value: 'main'},
-    {value: 'green'},
-  ]);
+const Restore = ({navigation}) => {
+  const [data, setdata] = useState([]);
+  const [isHidden, setisHidden] = useState(true);
+  const [value, setvalue] = useState('');
+  const back = () => {
+    navigation.goBack(null);
+  };
+  const getChange = ({nativeEvent}) => {
+    const {text} = nativeEvent;
+    const arr = text
+      .split(',')
+      .filter(val => val)
+      .map(val => ({value: val}));
+    if (arr.length < 13) {
+      setvalue(text);
+      setdata(arr);
+    }
+    setisHidden(data.length < 12);
+  };
+  const submit = () => {
+    const mnemonics = data.map(val => val.value).join(' ');
+    sdk
+      .checkMnemonics(mnemonics)
+      .then(res => {
+        navigation.push('Password', {
+          mnemonics,
+        });
+      })
+      .catch(err => {
+        Toast(err.message);
+      });
+  };
   return (
     <View style={styles.pageBox}>
       <View style={styles.titleBox}>
         <Text style={styles.title}>{strings('restore.title')}</Text>
       </View>
       <View style={styles.inputBox}>
-        <TextInput placeholder={strings('common.placeholder')} />
+        <TextInput
+          placeholder={strings('common.placeholder')}
+          value={value}
+          onChange={getChange}
+        />
       </View>
-      <View style={styles.wordsContainer}>{data.map(word)}</View>
+      {data.length > 0 && (
+        <View style={styles.wordsContainer}>{data.map(word)}</View>
+      )}
       <View style={styles.btnBox}>
-        <View style={[styles.btnStyle, styles.success]}>
-          <Text style={styles.successBtnTxt}>
-            {strings('restore.success_button')}
-          </Text>
-        </View>
-        <View style={[styles.btnStyle, styles.cancel]}>
-          <Text style={styles.cancelBtnTxt}>
-            {strings('common.cancel_button')}
-          </Text>
-        </View>
+        <TouchableOpacity onPress={submit}>
+          <View
+            style={[
+              styles.btnStyle,
+              isHidden ? styles.disableSuccess : styles.success,
+            ]}>
+            <Text
+              style={
+                isHidden ? styles.disableSuccessBtnTxt : styles.successBtnTxt
+              }>
+              {strings('restore.success_button')}
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={back}>
+          <View style={[styles.btnStyle, styles.cancel]}>
+            <Text style={styles.cancelBtnTxt}>
+              {strings('common.cancel_button')}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -111,6 +153,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     marginTop: 25,
+  },
+  disableSuccess: {
+    borderColor: '#bdbfff',
+  },
+  disableSuccessBtnTxt: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#bdbfff',
   },
   success: {
     borderColor: '#5D61FF',

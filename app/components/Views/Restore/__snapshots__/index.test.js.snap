@@ -42,333 +42,9 @@ exports[`Restore should render correctly 1`] = `
     }
   >
     <TextInput
+      onChange={[Function]}
       placeholder="Please enter the contents"
     />
-  </View>
-  <View
-    style={
-      Object {
-        "borderColor": "#EEEEEE",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "flexWrap": "wrap",
-        "padding": 5,
-      }
-    }
-  >
-    <View
-      key="0"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        cloud
-      </Text>
-    </View>
-    <View
-      key="1"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        rabbit
-      </Text>
-    </View>
-    <View
-      key="2"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        fly
-      </Text>
-    </View>
-    <View
-      key="3"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        hawk
-      </Text>
-    </View>
-    <View
-      key="4"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        contemplate
-      </Text>
-    </View>
-    <View
-      key="5"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        pretty
-      </Text>
-    </View>
-    <View
-      key="6"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        superduty
-      </Text>
-    </View>
-    <View
-      key="7"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        lovely
-      </Text>
-    </View>
-    <View
-      key="8"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        come
-      </Text>
-    </View>
-    <View
-      key="9"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        gift
-      </Text>
-    </View>
-    <View
-      key="10"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        main
-      </Text>
-    </View>
-    <View
-      key="11"
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#F7F7FF",
-          "borderRadius": 5,
-          "justifyContent": "center",
-          "margin": 5,
-          "padding": 15,
-          "position": "relative",
-        }
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
-        }
-      >
-        green
-      </Text>
-    </View>
   </View>
   <View
     style={
@@ -379,67 +55,75 @@ exports[`Restore should render correctly 1`] = `
       }
     }
   >
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 50,
-            "borderWidth": 1,
-            "height": 50,
-            "justifyContent": "center",
-            "marginTop": 25,
-            "overflow": "hidden",
-          },
-          Object {
-            "borderColor": "#5D61FF",
-          },
-        ]
-      }
+    <TouchableOpacity
+      onPress={[Function]}
     >
-      <Text
+      <View
         style={
-          Object {
-            "color": "#5D61FF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 50,
+              "borderWidth": 1,
+              "height": 50,
+              "justifyContent": "center",
+              "marginTop": 25,
+              "overflow": "hidden",
+            },
+            Object {
+              "borderColor": "#bdbfff",
+            },
+          ]
         }
       >
-        Restore success
-      </Text>
-    </View>
-    <View
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 50,
-            "borderWidth": 1,
-            "height": 50,
-            "justifyContent": "center",
-            "marginTop": 25,
-            "overflow": "hidden",
-          },
-          Object {
-            "backgroundColor": "#EEEEEE",
-            "borderColor": "#EEEEEE",
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          Object {
-            "color": "#666",
-            "fontSize": 16,
-            "fontWeight": "bold",
+        <Text
+          style={
+            Object {
+              "color": "#bdbfff",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
           }
+        >
+          Restore success
+        </Text>
+      </View>
+    </TouchableOpacity>
+    <TouchableOpacity
+      onPress={[Function]}
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 50,
+              "borderWidth": 1,
+              "height": 50,
+              "justifyContent": "center",
+              "marginTop": 25,
+              "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "#EEEEEE",
+              "borderColor": "#EEEEEE",
+            },
+          ]
         }
       >
-        Cancel
-      </Text>
-    </View>
+        <Text
+          style={
+            Object {
+              "color": "#666",
+              "fontSize": 16,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Cancel
+        </Text>
+      </View>
+    </TouchableOpacity>
   </View>
 </View>
 `;

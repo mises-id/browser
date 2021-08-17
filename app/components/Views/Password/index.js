@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-11 00:56:34
+ * @LastEditTime: 2021-08-17 22:43:49
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -59,8 +59,9 @@ const Password = ({navigation}) => {
     }
     setloading(true);
     try {
+      const params = navigation.state.params;
       const activeUser = await Sdk.createUser(
-        navigation.state.params.mnemonics.split(',').join(' '),
+        params.mnemonics.split(',').join(' '),
         pwd.value,
       );
       await activeUser.register('appdid');

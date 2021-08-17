@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useMemo, useCallback} from 'react';
+import React, {useEffect, useRef, useCallback} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import Animated, {Easing} from 'react-native-reanimated';
@@ -12,9 +12,7 @@ import notificationTypes from 'app/constants/notifications';
 import {currentNotificationSelector} from 'app/reducers/notification';
 import SimpleNotification from './SimpleNotification';
 
-import Logger from 'app/util/Logger';
-
-const {TRANSACTION, SIMPLE} = notificationTypes;
+const {SIMPLE} = notificationTypes;
 
 const BROWSER_ROUTE = 'BrowserView';
 
@@ -22,8 +20,9 @@ function Notification(props) {
   const {
     currentNotification,
     currentNotificationIsVisible,
-    navigation,
+    // eslint-disable-next-line no-shadow
     hideCurrentNotification,
+    // eslint-disable-next-line no-shadow
     removeCurrentNotification,
   } = props;
 

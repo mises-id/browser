@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-30 16:20:12
- * @LastEditTime: 2021-08-14 22:48:32
+ * @LastEditTime: 2021-08-17 23:00:39
  * @LastEditors: lmk
  * @Description:
  */
@@ -96,6 +96,16 @@ const sdk = {
       return Promise.reject(error);
     }
   },
+  restoreUser: async () => {
+    try {
+      Logger.log('restoreUser ');
+      const i = await MSdk.instance();
+      const umgr = await i.userMgr();
+      return await umgr.RestoreUser();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  },
   setUserInfo: async info => {
     try {
       Logger.log('setUserInfo ');
@@ -167,6 +177,16 @@ const sdk = {
       return session;
     } catch (error) {
       console.log(error, 'unFollow error');
+      return Promise.reject(error);
+    }
+  },
+  checkMnemonics: async mne => {
+    try {
+      Logger.log('checkMnemonics ');
+      const i = await MSdk.instance();
+      return i.checkMnemonics(mne);
+    } catch (error) {
+      console.log(error, 'checkMnemonics error');
       return Promise.reject(error);
     }
   },
