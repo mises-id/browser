@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Enzyme from 'enzyme';
-import {NativeModules, Animated} from 'react-native';
+import {NativeModules} from 'react-native';
 
 import mockAsyncStorage from '../../node_modules/@react-native-async-storage/async-storage/jest/async-storage-mock';
 

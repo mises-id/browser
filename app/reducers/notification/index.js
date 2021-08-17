@@ -1,5 +1,4 @@
 import notificationTypes from 'app/constants/notifications';
-import Logger from 'app/util/Logger';
 const {TRANSACTION, SIMPLE} = notificationTypes;
 
 export const initialState = {

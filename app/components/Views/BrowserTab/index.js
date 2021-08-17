@@ -48,7 +48,8 @@ import ErrorBoundary from '../../UI/ErrorBoundary';
 import {BoxShadow} from 'react-native-shadow';
 import sdk from 'app/core/Sdk';
 import {useBind, urlToJson, obj2strUrl, Toast} from 'app/util';
-import {createStatus} from 'app/api/user';
+import {attachment} from 'app/api/user';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
@@ -704,7 +705,6 @@ export const BrowserTab = props => {
     if (siteInfo.icon) {
       icon.current = siteInfo.icon;
     }
-
     isTabActive() &&
       props.navigation.setParams({
         url: getMaskedUrl(siteInfo.url),
@@ -776,6 +776,7 @@ export const BrowserTab = props => {
       const {hostname} = new URL(nativeEvent.url);
       if (info.url === nativeEvent.url && currentHostname === hostname) {
         changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
+        console.log(nativeEvent);
       }
     });
     props.navigation.setParams({webviewRef});
@@ -1284,7 +1285,7 @@ export const BrowserTab = props => {
     }
   };
   const forwardContent = useBind('');
-  const browserForward = ({name, origin, link, icon}) => {
+  const browserForward = async ({name, origin, link, icon}) => {
     /**
      * @description: 如果有token 直接用 如果返回token过期就登录
      * @param {*}
@@ -1292,28 +1293,52 @@ export const BrowserTab = props => {
      */
     toggleForwardModal();
     if (misesId.token) {
-      const form = {
-        title: name,
-        host: origin,
-        link,
-        attachment_url: icon,
-      };
-      console.log(form, 'form');
+      try {
+        const res = await RNFetchBlob.config({
+          fileCache: true,
+          appendExt: 'png',
+        }).fetch('GET', icon);
+        const blob = await res.blob();
+        const formData = new FormData();
+        const prefix =
+          blob.type.indexOf('x-icon') > -1
+            ? 'ico'
+            : blob.type.replace('image/', '');
+        const filename = `websiteIcon${blob.cacheName}.${prefix}`;
+        let file = {
+          data: RNFetchBlob.wrap(res.path()),
+          'Content-Type': 'multipart/form-data',
+          filename,
+          type: 'image/x-icon',
+        };
+        formData.append('file', file, filename);
+        formData.append('file_type', 'image');
+        const imageData = await attachment(formData);
+        console.log(imageData);
+        const form = {
+          title: name,
+          host: origin,
+          link,
+          attachment_url: icon,
+        };
+        const obj = {
+          link_meta: form,
+          content: forwardContent.value,
+          status_type: 'link',
+          form_type: 'status',
+        };
+        // createStatus(obj)
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(err => {
+        //     Toast(err);
+        //   });
+        console.log(obj, '传了图片');
+      } catch (error) {
+        console.log(error, '2222');
+      }
       return false;
-      // const obj = {
-      //   link_meta: form,
-      //   content: forwardContent.value,
-      //   status_type: 'link',
-      //   form_type: 'status',
-      // };
-      // createStatus(obj)
-      //   .then(res => {
-      //     console.log(res);
-      //   })
-      //   .catch(err => {
-      //     Toast(err);
-      //   });
-      // return false;
     }
     props.navigation.push('Login');
   };
@@ -1332,8 +1357,7 @@ export const BrowserTab = props => {
       delete queryObj.sig;
     }
     const link = `${origin}${pathname}?${obj2strUrl(queryObj)}`;
-    const webviewParams =
-      params.icon && initialUrl ? {...params, link, origin} : {};
+    const webviewParams = initialUrl ? {...params, link, origin} : {};
     return (
       <Modal isVisible={showForward}>
         <View style={styles.forwardBox}>
@@ -1354,7 +1378,12 @@ export const BrowserTab = props => {
               />
               <View style={styles.websiteData}>
                 <View>
-                  <Text style={styles.websiteTitle}>{webviewParams.name}</Text>
+                  <Text
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                    style={styles.websiteTitle}>
+                    {webviewParams.name}
+                  </Text>
                 </View>
                 <View style={styles.websiteIconBox}>
                   <Text style={styles.websiteUrl}>{origin}</Text>

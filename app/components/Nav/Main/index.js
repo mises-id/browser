@@ -6,7 +6,6 @@ import {
   StyleSheet,
   View,
   PushNotificationIOS,
-  InteractionManager,
 } from 'react-native';
 
 import PropTypes from 'prop-types';

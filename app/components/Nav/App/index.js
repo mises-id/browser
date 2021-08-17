@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createCompatNavigatorFactory} from '@react-navigation/compat';
 import Branch from 'react-native-branch';
-import Entry from 'app/components/Views/Entry';
 import Logger from 'app/util/Logger';
 import {AppConstants} from 'app/constants/core';
 import trackErrorAsAnalytics from 'app/util/analyticsV2';

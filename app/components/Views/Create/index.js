@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-14 23:15:11
+ * @LastEditTime: 2021-08-16 23:01:13
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -46,6 +46,7 @@ const Create = ({navigation = {}}) => {
   const {params = {}} = navigation.state || {};
   const [isHidden, setisHidden] = useState(true);
   const [loading, setloading] = useState(false);
+  const [currentIndex, setcurrentIndex] = useState(0);
   useEffect(() => {
     if (params) {
       const mnemonics = params.mnemonics
@@ -54,16 +55,22 @@ const Create = ({navigation = {}}) => {
       setdata(mnemonics);
     }
     return () => {
-      console.log(loading);
       setloading(false);
+      setisHidden(true);
+      setcurrentIndex(0);
     };
   }, [params, loading]);
   const submit = () => {
-    if (loading || isHidden) {
+    const isHiddenFlag = data.some(val => !val.isShow);
+    console.log(isHidden, 'isHidden', loading, 'loading', isHiddenFlag);
+    // 如果当前为isHidden（禁止状态）且loading为true 就阻止 否则通过
+    if (loading && isHiddenFlag) {
       return false;
     }
     setloading(true);
-    navigation.push('Password', params);
+    if (!isHiddenFlag) {
+      navigation.push('Password', params);
+    }
   };
   const back = routeName => {
     if (routeName) {
@@ -81,9 +88,10 @@ const Create = ({navigation = {}}) => {
     const {text} = nativeEvent;
     setinputValue(text);
     if (text) {
-      const findIndex = data.findIndex(val => val.value === text);
-      if (findIndex > -1) {
-        data[findIndex].isShow = true;
+      const currentText = data[currentIndex].value;
+      if (text === currentText) {
+        data[currentIndex].isShow = true;
+        setcurrentIndex(currentIndex + 1);
         setdata([...data]);
         setinputValue('');
         const isHiddenFlag = data.some(val => !val.isShow);
