@@ -27,7 +27,11 @@ import Modal from 'react-native-modal';
 import {colors, baseStyles, fontStyles} from 'app/styles/common';
 import Logger from 'app/util/Logger';
 import onUrlSubmit, {getUrlObj} from 'app/util/browser';
-import {JS_DESELECT_TEXT, JS_WEBVIEW_URL} from 'app/util/browserScripts';
+import {
+  JS_DESELECT_TEXT,
+  JS_WEBVIEW_URL,
+  JS_WINDOW_INFORMATION,
+} from 'app/util/browserScripts';
 import {strings} from 'app/locales/i18n';
 import {addBookmark, removeBookmark} from 'app/actions/bookmarks';
 import {addToHistory, addToWhitelist, createNewTab} from 'app/actions/browser';
@@ -700,6 +704,8 @@ export const BrowserTab = props => {
    * Handles state changes for when the url changes
    */
   const changeUrl = (siteInfo, type) => {
+    Logger.log('changeUrl ', siteInfo, type);
+
     setBackEnabled(siteInfo.canGoBack);
     setForwardEnabled(siteInfo.canGoForward);
 
@@ -796,6 +802,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
+    Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -814,6 +821,15 @@ export const BrowserTab = props => {
           onFrameLoadStarted(url);
           break;
         }*/
+
+        case 'GET_TITLE_FOR_BOOKMARK':
+          if (data.payload.title) {
+            isTabActive() &&
+              props.navigation.setParams({
+                name: data.payload.title,
+              });
+          }
+          break;
         case 'GET_WEBVIEW_URL':
           {
             const {url} = data.payload;
@@ -1238,6 +1254,13 @@ export const BrowserTab = props => {
           return false;
         }
         if (activeUser) {
+          if (!showForward) {
+            // We need to get the title to add bookmark
+            const {current} = webviewRef;
+            Platform.OS === 'ios'
+              ? current.evaluateJavaScript(JS_WINDOW_INFORMATION)
+              : current.injectJavaScript(JS_WINDOW_INFORMATION);
+          }
           toggleForwardModal();
           return false;
         }
