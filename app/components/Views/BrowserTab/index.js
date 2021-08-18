@@ -827,6 +827,7 @@ export const BrowserTab = props => {
             isTabActive() &&
               props.navigation.setParams({
                 name: data.payload.title,
+                icon: data.payload.icon,
               });
           }
           break;
