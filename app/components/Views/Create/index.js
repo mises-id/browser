@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-16 23:01:13
+ * @LastEditTime: 2021-08-19 00:12:06
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -56,20 +56,13 @@ const Create = ({navigation = {}}) => {
     }
     return () => {
       setloading(false);
-      setisHidden(true);
       setcurrentIndex(0);
     };
   }, [params, loading]);
   const submit = () => {
-    const isHiddenFlag = data.some(val => !val.isShow);
-    console.log(isHidden, 'isHidden', loading, 'loading', isHiddenFlag);
-    // 如果当前为isHidden（禁止状态）且loading为true 就阻止 否则通过
-    if (loading && isHiddenFlag) {
-      return false;
-    }
-    setloading(true);
-    if (!isHiddenFlag) {
+    if (!isHidden) {
       navigation.push('Password', params);
+    } else {
     }
   };
   const back = routeName => {
@@ -100,7 +93,7 @@ const Create = ({navigation = {}}) => {
     }
   };
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps={true}>
       <View style={styles.pageBox}>
         <View style={styles.titleBox}>
           <Text style={styles.title}>{strings('restore.title')}</Text>

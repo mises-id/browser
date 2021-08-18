@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-17 23:56:53
+ * @LastEditTime: 2021-08-18 22:53:47
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -16,29 +16,46 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-const word = (item = {}, key) => {
-  return (
-    <View key={key} style={styles.wordContent}>
-      <Text style={styles.wordTxt}>{item.value}</Text>
-    </View>
-  );
-};
 const Restore = ({navigation}) => {
+  const wordClick = (item, index) => {
+    setactiveIndex(index);
+    setvalue(item.value);
+  };
+  const word = (item = {}, key) => {
+    return (
+      <TouchableOpacity key={key} onPress={() => wordClick(item, key)}>
+        <View style={styles.wordContent}>
+          <Text style={styles.wordTxt}>{item.value}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const [data, setdata] = useState([]);
   const [isHidden, setisHidden] = useState(true);
   const [value, setvalue] = useState('');
+  const [activeIndex, setactiveIndex] = useState(-1);
   const back = () => {
     navigation.goBack(null);
   };
   const getChange = ({nativeEvent}) => {
     const {text} = nativeEvent;
-    const arr = text
-      .split(',')
-      .filter(val => val)
-      .map(val => ({value: val}));
-    if (arr.length < 13) {
-      setvalue(text);
-      setdata(arr);
+    const reg = /[^a-zA-Z]/g;
+    setvalue(text);
+    if (!text && activeIndex !== -1) {
+      data.splice(activeIndex, 1);
+      setactiveIndex(-1);
+      return false;
+    }
+    if (reg.test(text)) {
+      const replaceText = text.replaceAll(reg, '');
+      if (replaceText) {
+        activeIndex > -1
+          ? (data[activeIndex].value = replaceText)
+          : data.push({value: replaceText});
+      }
+      setvalue('');
+      setdata(data);
+      setactiveIndex(-1);
     }
     setisHidden(data.length < 12);
   };

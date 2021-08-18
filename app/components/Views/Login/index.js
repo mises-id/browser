@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 13:50:47
- * @LastEditTime: 2021-08-11 01:08:12
+ * @LastEditTime: 2021-08-18 23:05:41
  * @LastEditors: lmk
  * @Description: loginPage
  */
@@ -26,6 +26,7 @@ const Login = ({navigation}) => {
   const [info, setinfo] = useState({});
   const [misesId, setmisesId] = useState('');
   const [pageAuth, setpageAuth] = useState('');
+  const [loading, setloading] = useState(false);
   useEffect(() => {
     if (pageAuth) {
       const resetAction = CommonActions.reset({
@@ -69,6 +70,12 @@ const Login = ({navigation}) => {
       if (!misesId) {
         return false;
       }
+      Toast(strings('create.operating'));
+      if (loading) {
+        Toast(strings('create.operating'));
+        return false;
+      }
+      setloading(true);
       await sdk.setActiveUser(misesId, pwd.value);
       const auth = await sdk.getAuth();
       const res = await signin({
@@ -78,9 +85,11 @@ const Login = ({navigation}) => {
       dispatch(setToken(res.token));
       dispatch(setMisesAuth(auth));
       setpageAuth(auth);
+      setloading(false);
     } catch (error) {
       Toast(error.message);
       console.log(error, 'loginerror');
+      setloading(false);
     }
   };
   return (

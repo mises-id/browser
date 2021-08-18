@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Create should render correctly 1`] = `
-<ScrollView>
+<ScrollView
+  keyboardShouldPersistTaps={true}
+>
   <View
     style={
       Object {
