@@ -394,7 +394,8 @@
 		"desc":"Mnemonics are key to your misesid, please write mnemonics in paper sequecially, keep it safely, when you reinstall mises browser, you need to restore your misesid by inputing mnemonics.",
 		"step_btn":"Next step",
 		"success_button":"create",
-		"back":"Back to previous step"
+		"back":"Back to previous step",
+		"operating":"Operating"
 	},
 	"password":{
 		"title":"Browser local password",

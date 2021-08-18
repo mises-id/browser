@@ -149,7 +149,7 @@ class Browser extends Component {
   };
 
   newTab = url => {
-    this.props.createNewTab(url || AppConstants.HOMEPAGE_URL);
+    this.props.createNewTab(url || AppConstants.HOMEPAGE_EMPTY_URL);
     setTimeout(() => {
       const {tabs} = this.props;
       this.switchToTab(tabs[tabs.length - 1]);
@@ -257,7 +257,7 @@ class Browser extends Component {
       <BrowserTab
         id={tab.id}
         key={`tab_${tab.id}`}
-        initialUrl={tab.url || AppConstants.HOMEPAGE_URL}
+        initialUrl={tab.url || AppConstants.HOMEPAGE_EMPTY_URL}
         updateTabInfo={this.updateTabInfo}
         showTabs={this.showTabs}
         newTab={this.newTab}

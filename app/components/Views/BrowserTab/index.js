@@ -58,7 +58,8 @@ import {attachment, createStatus} from 'app/api/user';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
-const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
+const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST, HOMEPAGE_EMPTY_URL} =
+  AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
 const ANIMATION_TIMING = 300;
@@ -95,11 +96,8 @@ const styles = StyleSheet.create({
   optionsWrapper: {
     width: 150,
     backgroundColor: colors.white,
-    borderRadius: 15,
-    paddingBottom: 13,
-    paddingTop: 12,
-    paddingLeft: 15.0,
-    paddingRight: 15,
+    borderRadius: 10,
+    padding: 20,
   },
   optionsWrapperBox: {
     position: 'absolute',
@@ -209,8 +207,6 @@ const styles = StyleSheet.create({
   labelBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 12,
-    marginBottom: 12,
   },
   label: {
     marginLeft: 15,
@@ -624,7 +620,7 @@ export const BrowserTab = props => {
    * Set initial url, dapp scripts and engine. Similar to componentDidMount
    */
   useEffect(() => {
-    const init_url = props.initialUrl || HOMEPAGE_URL;
+    const init_url = props.initialUrl || HOMEPAGE_EMPTY_URL;
     go(init_url, true);
 
     // Specify how to clean up after this effect:
@@ -704,7 +700,7 @@ export const BrowserTab = props => {
    * Handles state changes for when the url changes
    */
   const changeUrl = (siteInfo, type) => {
-    Logger.log('changeUrl ', siteInfo, type);
+    // Logger.log('changeUrl ', siteInfo, type);
 
     setBackEnabled(siteInfo.canGoBack);
     setForwardEnabled(siteInfo.canGoForward);
@@ -785,7 +781,6 @@ export const BrowserTab = props => {
       const {hostname} = new URL(nativeEvent.url);
       if (info.url === nativeEvent.url && currentHostname === hostname) {
         changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
-        console.log(nativeEvent);
       }
     });
     props.navigation.setParams({webviewRef});
@@ -802,7 +797,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-    Logger.log('onMessage', data);
+    // Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1290,20 +1285,18 @@ export const BrowserTab = props => {
           <View style={styles.optionsOverlay}>
             <View style={styles.optionsWrapperBox}>
               <BoxShadow setting={setting}>
-                <View style={styles.optionsWrapper}>
-                  {optionsMenuList.map((val, index) => {
-                    return (
-                      <TouchableOpacity
-                        onPress={val.fn}
-                        key={index}
-                        style={styles.labelBox}>
-                        <Image source={val.icon} style={styles.icon} />
-                        <Text style={styles.label}>{val.label}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
-                  <View style={styles.arrow} />
-                </View>
+                {optionsMenuList.map((val, index) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={val.fn}
+                      key={index}
+                      style={[styles.labelBox, styles.optionsWrapper]}>
+                      <Image source={val.icon} style={styles.icon} />
+                      <Text style={styles.label}>{val.label}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+                <View style={styles.arrow} />
               </BoxShadow>
             </View>
           </View>

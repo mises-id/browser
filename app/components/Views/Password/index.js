@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-17 22:43:49
+ * @LastEditTime: 2021-08-18 23:05:35
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -39,9 +39,9 @@ const Password = ({navigation}) => {
     }
   }, [misesIdReducer.auth, navigation]);
   const submit = async () => {
-    console.log(1);
+    Toast(strings('create.operating'));
     if (loading) {
-      Toast('loading');
+      Toast(strings('create.operating'));
       return false;
     }
     if (!pwd.value) {
