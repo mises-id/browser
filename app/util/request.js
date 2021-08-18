@@ -61,7 +61,8 @@ request.interceptors.response.use(
   },
   error => {
     error.response && reject(error.response.data);
-    console.log('err' + error.message); // for debug
+    console.log('err ' + error.message); // for debug
+    console.log(error.request); 
     return Promise.reject(error.message);
   },
 );

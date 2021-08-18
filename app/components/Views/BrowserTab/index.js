@@ -14,6 +14,7 @@ import {
   Image,
   Dimensions,
   Alert,
+  Platform,
 } from 'react-native';
 import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
@@ -36,6 +37,7 @@ import Device from 'app/util/Device';
 import {AppConstants} from 'app/constants/core';
 import Analytics from 'app/core/Analytics';
 import {ANALYTICS_EVENT_OPTS} from 'app/util/analytics';
+import {getHost} from 'app/util/browser';
 
 import BrowserBottomBar from '../../UI/BrowserBottomBar';
 import WebviewProgressBar from '../../UI/WebviewProgressBar';
@@ -48,7 +50,8 @@ import ErrorBoundary from '../../UI/ErrorBoundary';
 import {BoxShadow} from 'react-native-shadow';
 import sdk from 'app/core/Sdk';
 import {useBind, urlToJson, obj2strUrl, Toast} from 'app/util';
-import {attachment} from 'app/api/user';
+import {attachment, createStatus} from 'app/api/user';
+
 import RNFetchBlob from 'rn-fetch-blob';
 
 const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
@@ -1294,32 +1297,39 @@ export const BrowserTab = props => {
     toggleForwardModal();
     if (misesId.token) {
       try {
-        const res = await RNFetchBlob.config({
-          fileCache: true,
-          appendExt: 'png',
-        }).fetch('GET', icon);
-        const blob = await res.blob();
-        const formData = new FormData();
-        const prefix =
-          blob.type.indexOf('x-icon') > -1
-            ? 'ico'
-            : blob.type.replace('image/', '');
-        const filename = `websiteIcon${blob.cacheName}.${prefix}`;
-        let file = {
-          data: RNFetchBlob.wrap(res.path()),
-          'Content-Type': 'multipart/form-data',
-          filename,
-          type: 'image/x-icon',
-        };
-        formData.append('file', file, filename);
-        formData.append('file_type', 'image');
-        const imageData = await attachment(formData);
-        console.log(imageData);
+        var attachment_id = 0;
+        if (icon) {
+          const res = await RNFetchBlob.config({
+            fileCache: true,
+            appendExt: 'ico',
+          }).fetch('GET', icon);
+          const blob = await res.blob();
+          
+          const formData = new FormData();
+          const prefix =
+            blob.type.indexOf('x-icon') > -1
+              ? 'ico'
+              : blob.type.replace('image/', '');
+          const filename = `websiteIcon${blob.cacheName}.${prefix}`;
+          let file = {
+            uri: Platform.OS === 'ios' ? res.path() : 'file://' + res.path(),
+            name: filename,
+            type: 'image/x-icon',
+          };
+          formData.append('file', file, filename);
+          formData.append('file_type', 'image');
+          
+          console.log(formData, 'fetch');
+          const imageData = await attachment(formData);
+          console.log(imageData);
+          attachment_id = imageData.id;
+        }
+        
         const form = {
           title: name,
           host: origin,
           link,
-          attachment_url: icon,
+          attachment_id,
         };
         const obj = {
           link_meta: form,
@@ -1327,14 +1337,14 @@ export const BrowserTab = props => {
           status_type: 'link',
           form_type: 'status',
         };
-        // createStatus(obj)
-        //   .then(res => {
-        //     console.log(res);
-        //   })
-        //   .catch(err => {
-        //     Toast(err);
-        //   });
         console.log(obj, '传了图片');
+        createStatus(obj)
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            Toast(err);
+          });
       } catch (error) {
         console.log(error, '2222');
       }
@@ -1444,9 +1454,14 @@ export const BrowserTab = props => {
    */
   let webviewUrl = initialUrl;
   if (misesId.auth) {
-    webviewUrl =
+    const hostname = getHost(webviewUrl);
+    const isHomepage = hostname === getHost(HOMEPAGE_URL);
+    if (isHomepage) {
+      webviewUrl =
       webviewUrl +
       ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
+    }
+
   }
   return (
     <ErrorBoundary view="BrowserTab">
