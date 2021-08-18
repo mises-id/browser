@@ -1304,7 +1304,7 @@ export const BrowserTab = props => {
             appendExt: 'ico',
           }).fetch('GET', icon);
           const blob = await res.blob();
-          
+
           const formData = new FormData();
           const prefix =
             blob.type.indexOf('x-icon') > -1
@@ -1318,13 +1318,13 @@ export const BrowserTab = props => {
           };
           formData.append('file', file, filename);
           formData.append('file_type', 'image');
-          
+
           console.log(formData, 'fetch');
           const imageData = await attachment(formData);
           console.log(imageData);
           attachment_id = imageData.id;
         }
-        
+
         const form = {
           title: name,
           host: origin,
@@ -1458,10 +1458,9 @@ export const BrowserTab = props => {
     const isHomepage = hostname === getHost(HOMEPAGE_URL);
     if (isHomepage) {
       webviewUrl =
-      webviewUrl +
-      ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
+        webviewUrl +
+        ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
     }
-
   }
   return (
     <ErrorBoundary view="BrowserTab">
