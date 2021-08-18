@@ -17,7 +17,6 @@ import {
 // import radio from 'app/images/radio.png';
 // import radioChecked from 'app/images/radio_selected.png';
 import {Toast, useBind} from 'app/util';
-import Sdk from 'app/core/Sdk';
 import {useDispatch, useSelector} from 'react-redux';
 import {setMisesAuth, setToken} from 'app/actions/misesId';
 import {CommonActions} from '@react-navigation/native';
@@ -60,11 +59,8 @@ const Password = ({navigation}) => {
     setloading(true);
     try {
       const params = navigation.state.params;
-      const activeUser = await Sdk.createUser(
-        params.mnemonics.split(',').join(' '),
-        pwd.value,
-      );
-      await activeUser.register('appdid');
+      await sdk.createUser(params.mnemonics.split(',').join(' '), pwd.value);
+      await sdk.register();
       const auth = await sdk.getAuth();
       setloading(false);
       const res = await signin({

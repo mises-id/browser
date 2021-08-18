@@ -42,6 +42,18 @@ const sdk = {
       return Promise.reject();
     }
   },
+  register: async () => {
+    try {
+      Logger.log('register ');
+      const activeUser = await sdk.getActiveUser();
+      if (activeUser) {
+        await activeUser.register('appdid');
+      }
+    } catch (error) {
+      // it is possible that user has been regited already
+      return;
+    }
+  },
   login: async (site = '', permission = []) => {
     try {
       Logger.log('login ');
