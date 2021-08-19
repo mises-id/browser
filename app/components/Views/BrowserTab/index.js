@@ -797,7 +797,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-    // Logger.log('onMessage', data);
+    Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1373,6 +1373,7 @@ export const BrowserTab = props => {
     const {params = {}} = props.navigation.state;
     const {origin, href, pathname} = new URL(params.url);
     const queryObj = urlToJson(href);
+    var link = params.url;
     if (
       !isHomepage(href) &&
       queryObj.mises_id &&
@@ -1382,8 +1383,8 @@ export const BrowserTab = props => {
       delete queryObj.mises_id;
       delete queryObj.nonce;
       delete queryObj.sig;
+      link = `${origin}${pathname}?${obj2strUrl(queryObj)}`;
     }
-    const link = `${origin}${pathname}?${obj2strUrl(queryObj)}`;
     const webviewParams = initialUrl ? {...params, link, origin} : {};
     return (
       <Modal isVisible={showForward}>

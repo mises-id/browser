@@ -3,12 +3,17 @@ const getWindowInformation = `
   const icon = shortcutIcon || Array.from(window.document.querySelectorAll('head > link[rel="icon"]')).find((icon) => Boolean(icon.href));
 
   const siteName = document.querySelector('head > meta[property="og:site_name"]');
-  const title = document.querySelector('head > meta[name="title"]') || siteName;
+  const ogTitle = document.querySelector('head > meta[property="og:title"]');
+  const twitterTitle = document.querySelector('head > meta[property="twitter:title"]');
+  const htmlTitle = document.querySelector('head > meta[name="title"]');
+  const docTitle = document.title;
+  const title = ogTitle || twitterTitle || htmlTitle || siteName;
+  const tagTitle = title ? title.content : '';
   window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify(
     {
       type: 'GET_TITLE_FOR_BOOKMARK',
       payload: {
-        title: document.title || title.content ,
+        title: tagTitle || docTitle,
         url: location.href,
         icon: icon && icon.href
       }
