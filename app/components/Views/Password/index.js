@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-18 23:05:35
+ * @LastEditTime: 2021-08-19 23:43:51
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -13,6 +13,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 // import radio from 'app/images/radio.png';
 // import radioChecked from 'app/images/radio_selected.png';
@@ -113,6 +114,7 @@ const Password = ({navigation}) => {
       <View style={styles.btnBox}>
         <TouchableOpacity onPress={submit}>
           <View style={[styles.btnStyle, styles.success]}>
+            {loading && <ActivityIndicator color="#5D61FF" />}
             <Text style={styles.successBtnTxt}>
               {strings('password.success_button')}
             </Text>

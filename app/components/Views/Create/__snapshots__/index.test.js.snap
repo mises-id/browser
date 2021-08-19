@@ -2,7 +2,7 @@
 
 exports[`Create should render correctly 1`] = `
 <ScrollView
-  keyboardShouldPersistTaps={true}
+  keyboardShouldPersistTaps="always"
 >
   <View
     style={
