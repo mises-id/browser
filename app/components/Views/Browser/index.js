@@ -11,7 +11,6 @@ import {
   setActiveTab,
   updateTab,
 } from 'app/actions/browser';
-import {AppConstants} from 'app/constants/core';
 import {baseStyles} from 'app/styles/common';
 import Logger from 'app/util/Logger';
 import Device from 'app/util/Device';
@@ -149,7 +148,7 @@ class Browser extends Component {
   };
 
   newTab = url => {
-    this.props.createNewTab(url || AppConstants.HOMEPAGE_EMPTY_URL);
+    this.props.createNewTab(url);
     setTimeout(() => {
       const {tabs} = this.props;
       this.switchToTab(tabs[tabs.length - 1]);
@@ -257,7 +256,7 @@ class Browser extends Component {
       <BrowserTab
         id={tab.id}
         key={`tab_${tab.id}`}
-        initialUrl={tab.url || AppConstants.HOMEPAGE_EMPTY_URL}
+        initialUrl={tab.url}
         updateTabInfo={this.updateTabInfo}
         showTabs={this.showTabs}
         newTab={this.newTab}

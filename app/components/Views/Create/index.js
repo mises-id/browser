@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-19 00:12:06
+ * @LastEditTime: 2021-08-19 00:47:10
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -93,7 +93,7 @@ const Create = ({navigation = {}}) => {
     }
   };
   return (
-    <ScrollView keyboardShouldPersistTaps={true}>
+    <ScrollView keyboardShouldPersistTaps="always">
       <View style={styles.pageBox}>
         <View style={styles.titleBox}>
           <Text style={styles.title}>{strings('restore.title')}</Text>

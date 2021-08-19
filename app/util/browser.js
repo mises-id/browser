@@ -45,7 +45,7 @@ export default function onUrlSubmit(
  * @param {string} defaultProtocol - Protocol string to append to URLs that have none
  * @returns {string} - String corresponding to host
  */
-export function getHost(url, defaultProtocol = 'https://') {
+export function getHost(url = '', defaultProtocol = 'https://') {
   const hasProtocol = url && url.match(/^[a-z]*:\/\//);
   const urlObj = new URL(hasProtocol ? url : `${defaultProtocol}${url}`);
   const {hostname} = urlObj;

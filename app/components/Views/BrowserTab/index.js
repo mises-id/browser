@@ -58,8 +58,7 @@ import {attachment, createStatus} from 'app/api/user';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
-const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST, HOMEPAGE_EMPTY_URL} =
-  AppConstants;
+const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
 const ANIMATION_TIMING = 300;
@@ -520,6 +519,9 @@ export const BrowserTab = props => {
    */
   const go = useCallback(
     async (url, initialCall) => {
+      if (!url) {
+        return Promise.reject();
+      }
       const hasProtocol = url.match(/^[a-z]*:\/\//) || isHomepage(url);
       const sanitizedURL = hasProtocol ? url : `${props.defaultProtocol}${url}`;
       const {hostname} = new URL(sanitizedURL);
@@ -527,6 +529,7 @@ export const BrowserTab = props => {
       let urlToGo = sanitizedURL;
       const {current} = webviewRef;
       if (isAllowedUrl(hostname)) {
+        console.log(urlToGo, 'urlToGo');
         if (initialCall) {
           setInitialUrl(urlToGo);
           setFirstUrlLoaded(true);
@@ -620,8 +623,8 @@ export const BrowserTab = props => {
    * Set initial url, dapp scripts and engine. Similar to componentDidMount
    */
   useEffect(() => {
-    const init_url = props.initialUrl || HOMEPAGE_EMPTY_URL;
-    go(init_url, true);
+    const init_url = props.initialUrl;
+    go(init_url, true).catch(_err => {});
 
     // Specify how to clean up after this effect:
     return function cleanup() {};
@@ -776,13 +779,15 @@ export const BrowserTab = props => {
       ? new Promise(promiseResolver)
       : Promise.resolve(url.current);
 
-    promise.then(info => {
-      const {hostname: currentHostname} = new URL(url.current);
-      const {hostname} = new URL(nativeEvent.url);
-      if (info.url === nativeEvent.url && currentHostname === hostname) {
-        changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
-      }
-    });
+    promise
+      .then(info => {
+        const {hostname: currentHostname} = new URL(url.current);
+        const {hostname} = new URL(nativeEvent.url);
+        if (info.url === nativeEvent.url && currentHostname === hostname) {
+          changeUrl({...nativeEvent, icon: info.icon}, 'end-promise');
+        }
+      })
+      .catch(() => {});
     props.navigation.setParams({webviewRef});
   };
   const injectCallbackJavaScript = data => {
@@ -959,7 +964,8 @@ export const BrowserTab = props => {
     if (url.current === HOMEPAGE_URL) {
       return reload();
     }
-    await go(HOMEPAGE_URL);
+    const flag = !!initialUrl;
+    await go(HOMEPAGE_URL, !flag);
     Analytics.trackEvent(ANALYTICS_EVENT_OPTS.DAPP_HOME);
   };
 
@@ -1245,7 +1251,7 @@ export const BrowserTab = props => {
         //call page function
         toggleOptions();
         const activeUser = await sdk.getActiveUser();
-        if (props.navigation.state.params.error) {
+        if (props.navigation.state.params.error || !initialUrl) {
           Toast('Can’t forward this website page');
           return false;
         }

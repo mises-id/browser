@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 13:50:47
- * @LastEditTime: 2021-08-18 23:05:41
+ * @LastEditTime: 2021-08-19 23:43:37
  * @LastEditors: lmk
  * @Description: loginPage
  */
@@ -17,6 +17,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
@@ -112,6 +113,7 @@ const Login = ({navigation}) => {
       <View style={styles.btnBox}>
         <TouchableOpacity onPress={submit}>
           <View style={[styles.btnStyle, styles.success]}>
+            {loading && <ActivityIndicator color="#5D61FF" />}
             <Text style={styles.successBtnTxt}>
               {strings('password.success_button')}
             </Text>
