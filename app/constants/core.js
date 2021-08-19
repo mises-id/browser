@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 10:52:25
- * @LastEditTime: 2021-08-18 22:35:36
+ * @LastEditTime: 2021-08-19 23:44:47
  * @LastEditors: lmk
  * @Description:
  */
@@ -31,5 +31,5 @@ export const AppConstants = {
       'EthQuery - RPC Error - This service is not available in your country',
   },
   HOMEPAGE_HOST: 'www.mises.site',
-  HOMEPAGE_URL: 'https://www.mises.site/'
+  HOMEPAGE_URL: 'https://www.mises.site/',
 };
