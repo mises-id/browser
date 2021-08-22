@@ -18,6 +18,7 @@ import Device from 'app/util/Device';
 import Tabs from '../../UI/Tabs';
 import {getBrowserViewNavbarOptions} from '../../UI/Navbar';
 import BrowserTab from '../BrowserTab';
+import {AppConstants} from 'app/constants/core';
 
 const margin = 16;
 const THUMB_WIDTH = Dimensions.get('window').width / 2 - margin * 2;
@@ -69,7 +70,7 @@ class Browser extends Component {
     super(props);
 
     if (!props.tabs.length) {
-      this.newTab();
+      this.newTab(AppConstants.HOMEPAGE_URL);
     }
   }
   componentDidMount() {
@@ -148,7 +149,9 @@ class Browser extends Component {
   };
 
   newTab = url => {
-    this.props.createNewTab(url);
+    const tabUrl =
+      this.props.tabs.length === 0 ? AppConstants.HOMEPAGE_URL : url;
+    this.props.createNewTab(tabUrl);
     setTimeout(() => {
       const {tabs} = this.props;
       this.switchToTab(tabs[tabs.length - 1]);
@@ -252,16 +255,18 @@ class Browser extends Component {
     });
 
   renderBrowserTabs = () =>
-    this.props.tabs.map(tab => (
-      <BrowserTab
-        id={tab.id}
-        key={`tab_${tab.id}`}
-        initialUrl={tab.url}
-        updateTabInfo={this.updateTabInfo}
-        showTabs={this.showTabs}
-        newTab={this.newTab}
-      />
-    ));
+    this.props.tabs.map(tab => {
+      return (
+        <BrowserTab
+          id={tab.id}
+          key={`tab_${tab.id}`}
+          initialUrl={tab.url}
+          updateTabInfo={this.updateTabInfo}
+          showTabs={this.showTabs}
+          newTab={this.newTab}
+        />
+      );
+    });
 
   render() {
     return (
