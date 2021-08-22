@@ -137,11 +137,12 @@ const sdk = {
           '',
         );
         const session = await activeUser.setInfo(userInfo);
-        NotificationManager.showMisesNotification();
+        NotificationManager.showMisesNotification(true);
         return session;
       }
     } catch (error) {
       console.log(error, 'setUserInfo error');
+      NotificationManager.showMisesNotification(false);
       return Promise.reject(error);
     }
   },
@@ -171,12 +172,13 @@ const sdk = {
     try {
       Logger.log('follow ');
       const activeUser = await sdk.getActiveUser();
-      const session = activeUser.follow(misesId);
-
-      NotificationManager.showMisesNotification();
+      const session = await activeUser.follow(misesId);
+      console.log('follow done', session);
+      NotificationManager.showMisesNotification(true);
       return session;
     } catch (error) {
       console.log(error, 'follow error');
+      NotificationManager.showMisesNotification(false);
       return Promise.reject(error);
     }
   },
@@ -184,11 +186,12 @@ const sdk = {
     try {
       Logger.log('unfollow ');
       const activeUser = await sdk.getActiveUser();
-      const session = activeUser.unfollow(misesId);
-      NotificationManager.showMisesNotification();
+      const session = await activeUser.unfollow(misesId);
+      NotificationManager.showMisesNotification(true);
       return session;
     } catch (error) {
       console.log(error, 'unFollow error');
+      NotificationManager.showMisesNotification(false);
       return Promise.reject(error);
     }
   },

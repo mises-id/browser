@@ -444,7 +444,9 @@
 		"wc_description": "Go back to the browser",
 		
 		"mises_sent_tx_title": "Mises Network",
-		"mises_sent_tx_description": "Your social status has been succeessfully updated into the Decentralized Mises Network"
+		"mises_sent_tx_description": "Your social status has been succeessfully updated into the Decentralized Mises Network",
+		
+		"mises_sent_tx_fail_description": "Your social status was failed to sent to the Decentralized Mises Network"
 
 	}
 }

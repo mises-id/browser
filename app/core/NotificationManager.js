@@ -380,13 +380,17 @@ export default {
     return instance?.showSimpleNotification(data);
   },
 
-  showMisesNotification() {
+  showMisesNotification(success) {
     InteractionManager.runAfterInteractions(() => {
       instance?.showSimpleNotification({
-        status: 'simple_notification',
+        status: success
+          ? 'simple_notification'
+          : 'simple_notification_rejected',
         duration: 5000,
         title: strings('notifications.mises_sent_tx_title'),
-        description: strings('notifications.mises_sent_tx_description'),
+        description: success
+          ? strings('notifications.mises_sent_tx_description')
+          : strings('notifications.mises_sent_tx_fail_description'),
       });
     });
   },
