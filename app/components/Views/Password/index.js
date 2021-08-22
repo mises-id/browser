@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-19 23:43:51
+ * @LastEditTime: 2021-08-22 14:45:26
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -31,13 +31,13 @@ const Password = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const misesIdReducer = useSelector(state => state.misesId);
   useEffect(() => {
-    if (misesIdReducer.auth) {
-      const resetAction = CommonActions.reset({
-        index: 0,
-        routes: [{name: 'Main'}],
-      });
-      navigation.dispatch(resetAction);
-    }
+    // if (misesIdReducer.auth) {
+    //   const resetAction = CommonActions.reset({
+    //     index: 0,
+    //     routes: [{name: 'Main'}],
+    //   });
+    //   navigation.dispatch(resetAction);
+    // }
   }, [misesIdReducer.auth, navigation]);
   const submit = async () => {
     Toast(strings('create.operating'));
@@ -63,13 +63,20 @@ const Password = ({navigation}) => {
       await sdk.createUser(params.mnemonics.split(',').join(' '), pwd.value);
       await sdk.register();
       const auth = await sdk.getAuth();
-      setloading(false);
       const res = await signin({
         provider: 'mises',
         user_authz: {auth},
       });
       dispatch(setToken(res.token));
       dispatch(setMisesAuth(auth));
+      setTimeout(() => {
+        setloading(false);
+        const resetAction = CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Main'}],
+        });
+        navigation.dispatch(resetAction);
+      }, 500);
     } catch (error) {
       console.log(error, 'password error');
       setloading(false);

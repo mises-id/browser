@@ -46,7 +46,11 @@ const styles = StyleSheet.create({
   refresh: {
     position: 'absolute',
     right: 15,
-    top: 11,
+    top: 0,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   currentUrl: {
     ...fontStyles.normal,

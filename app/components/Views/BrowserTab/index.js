@@ -529,7 +529,6 @@ export const BrowserTab = props => {
       let urlToGo = sanitizedURL;
       const {current} = webviewRef;
       if (isAllowedUrl(hostname)) {
-        console.log(urlToGo, 'urlToGo');
         if (initialCall) {
           setInitialUrl(urlToGo);
           setFirstUrlLoaded(true);
@@ -802,7 +801,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-    Logger.log('onMessage', data);
+    // Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1001,7 +1000,8 @@ export const BrowserTab = props => {
       searchEngine,
       defaultProtocol,
     );
-    await go(sanitizedInput);
+    const flag = !!initialUrl;
+    await go(sanitizedInput, !flag);
     toggleUrlModal();
   };
 
@@ -1087,7 +1087,6 @@ export const BrowserTab = props => {
    * Handle error, for example, ssl certificate error
    */
   const onError = ({nativeEvent: errorInfo}) => {
-    Logger.log(errorInfo);
     props.navigation.setParams({
       error: true,
     });
@@ -1341,10 +1340,7 @@ export const BrowserTab = props => {
           };
           formData.append('file', file, filename);
           formData.append('file_type', 'image');
-
-          console.log(formData, 'fetch');
           const imageData = await attachment(formData);
-          console.log(imageData);
           attachment_id = imageData.id;
         }
 
@@ -1360,7 +1356,6 @@ export const BrowserTab = props => {
           status_type: 'link',
           form_type: 'status',
         };
-        console.log(obj, '传了图片');
         createStatus(obj)
           .then(res => {
             console.log(res);
@@ -1486,6 +1481,9 @@ export const BrowserTab = props => {
         ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
     }
   }
+  const tryAgain = () => {
+    go(initialUrl);
+  };
   return (
     <ErrorBoundary view="BrowserTab">
       <View
@@ -1496,7 +1494,7 @@ export const BrowserTab = props => {
             <WebView
               ref={webviewRef}
               renderError={() => (
-                <WebviewError error={error} onReload={() => null} />
+                <WebviewError error={error} onReload={tryAgain} />
               )}
               source={{uri: webviewUrl}}
               style={styles.webview}
