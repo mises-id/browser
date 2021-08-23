@@ -1,21 +1,33 @@
 const getWindowInformation = `
-  const shortcutIcon = window.document.querySelector('head > link[rel="shortcut icon"]');
-  const icon = shortcutIcon || Array.from(window.document.querySelectorAll('head > link[rel="icon"]')).find((icon) => Boolean(icon.href));
-
-  const siteName = document.querySelector('head > meta[property="og:site_name"]');
-  const ogTitle = document.querySelector('head > meta[property="og:title"]');
-  const twitterTitle = document.querySelector('head > meta[property="twitter:title"]');
-  const htmlTitle = document.querySelector('head > meta[name="title"]');
-  const docTitle = document.title;
-  const title = ogTitle || twitterTitle || htmlTitle || siteName;
-  const tagTitle = title ? title.content : '';
+  const __getFavicon = function(){
+    let favicon = undefined;
+    const nodeList = document.getElementsByTagName("link");
+    for (let i = 0; i < nodeList.length; i++)
+    {
+      const rel = nodeList[i].getAttribute("rel")
+      if (rel === "icon" || rel === "shortcut icon" || rel === "icon shortcut" || rel === "apple-touch-icon")
+      {
+        favicon = nodeList[i]
+      }
+    }
+    return favicon && favicon.href
+  }
+  const __extractMeta = function(props, defval) {
+    for (let i = 0; i < props.length; i++) {
+      const tag = window.document.querySelector('head > meta[property="' + props[i] + '"]');
+      if (tag) {
+        return tag.content;
+      }
+    }
+    return defval;
+  };
   window.ReactNativeWebView && window.ReactNativeWebView.postMessage(JSON.stringify(
     {
       type: 'GET_TITLE_FOR_BOOKMARK',
       payload: {
-        title: tagTitle || docTitle,
-        url: location.href,
-        icon: icon && icon.href
+        title: __extractMeta(['og:title', 'twitter:title', 'title'], document.title),
+        url: __extractMeta(['og:url', 'twitter:url'], location.href),
+        icon: __extractMeta(['og:image', 'twitter:image'], __getFavicon())
       }
     }
   ))
@@ -28,7 +40,7 @@ const getWebviewUrl = `
     for (let i = 0; i < nodeList.length; i++)
     {
       const rel = nodeList[i].getAttribute("rel")
-      if (rel === "icon" || rel === "shortcut icon")
+      if (rel === "icon" || rel === "shortcut icon" || rel === "icon shortcut" || rel === "apple-touch-icon")
       {
         favicon = nodeList[i]
       }
