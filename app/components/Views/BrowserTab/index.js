@@ -801,7 +801,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-     Logger.log('onMessage', data);
+    Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
