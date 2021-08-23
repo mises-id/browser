@@ -6210,9 +6210,9 @@ react-native-screens@^3.3.0:
   dependencies:
     warn-once "^0.1.0"
 
-"react-native-sdk-bridge@https://github.com/mises-id/react-native-sdk-bridge":
+"react-native-sdk-bridge@git+https://github.com/mises-id/react-native-sdk-bridge.git":
   version "1.0.5"
-  resolved "https://github.com/mises-id/react-native-sdk-bridge#8b8804d84de8403de248c3570b177c8487a497e1"
+  resolved "git+https://github.com/mises-id/react-native-sdk-bridge.git#ff8d96fc1598749083b8260c39aab8ecd1448ae0"
 
 react-native-search-api@^1.2.0:
   version "1.2.0"
@@ -6644,6 +6644,13 @@ rn-fetch-blob@^0.12.0:
   version "0.12.0"
   resolved "https://registry.npm.taobao.org/rn-fetch-blob/download/rn-fetch-blob-0.12.0.tgz#ec610d2f9b3f1065556b58ab9c106eeb256f3cba"
   integrity sha1-7GENL5s/EGVVa1irnBBu6yVvPLo=
+  dependencies:
+    base-64 "0.1.0"
+    glob "7.0.6"
+
+"rn-fetch-blob@git+https://github.com/joltup/rn-fetch-blob.git":
+  version "0.12.0"
+  resolved "git+https://github.com/joltup/rn-fetch-blob.git#dcbde6f7e12b666b9fe1c8c4a8e2cb04e0048326"
   dependencies:
     base-64 "0.1.0"
     glob "7.0.6"
