@@ -921,7 +921,7 @@ export const BrowserTab = props => {
               });
           })();
           break;
-        case 'unFollow':
+        case 'unfollow':
           (async () => {
             const activeUser = await sdk.getActiveUser();
             if (!activeUser) {
@@ -949,6 +949,11 @@ export const BrowserTab = props => {
               injectCallbackJavaScript({success: false});
             }
           })();
+          break;
+        case 'locationHref':
+          go(data.data).then(res => {
+            injectCallbackJavaScript({success: true});
+          });
           break;
       }
     } catch (e) {
@@ -1357,8 +1362,10 @@ export const BrowserTab = props => {
           status_type: 'link',
           form_type: 'status',
         };
+        forwardContent.onChange({nativeEvent: {text: ''}});
         createStatus(obj)
           .then(res => {
+            Toast('success');
             console.log(res);
           })
           .catch(err => {
