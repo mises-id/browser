@@ -348,7 +348,8 @@
 		"failed_to_resolve_ens_name": "We couldn't resolve that ENS name",
 		"remove_bookmark_title": "Remove favorite",
 		"remove_bookmark_msg": "Do you really want to remove this site from your favorites?",
-		"yes": "Yes"
+		"yes": "Yes",
+		"set_default": "Make Mises your default browser"
 	},
 	"add_favorite": {
 		"title": "Add Favorite",

@@ -6219,6 +6219,11 @@ react-native-search-api@^1.2.0:
   resolved "https://registry.nlark.com/react-native-search-api/download/react-native-search-api-1.2.0.tgz#824b49e1f9a40aa36ef81b95c528dc29d4b88454"
   integrity sha1-gktJ4fmkCqNu+BuVxSjcKdS4hFQ=
 
+react-native-send-intent@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-send-intent/-/react-native-send-intent-1.2.3.tgz#76ad08bb1d0c0e175735ab2bb77890774c785d8a"
+  integrity sha512-77Pv0ZEMsEQT/0N0fbvfQtO0Pqc1sgY1MyCHqPmGNZ1upICoHnxBNZ77QvDraWloTlw22coEZikzARcCZmmcVA==
+
 react-native-sensors@^7.2.0:
   version "7.3.2"
   resolved "https://registry.nlark.com/react-native-sensors/download/react-native-sensors-7.3.2.tgz#48f39ade4fc612701d0576b6dabc87988bf07add"

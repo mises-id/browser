@@ -47,6 +47,7 @@
     "react-native-screens": "^3.3.0",
     "react-native-sdk-bridge": "git+https://github.com/mises-id/react-native-sdk-bridge.git",
     "react-native-search-api": "^1.2.0",
+    "react-native-send-intent": "^1.2.3",
     "react-native-sensors": "^7.2.0",
     "react-native-shadow": "^1.2.2",
     "react-native-share": "^6.2.1",
