@@ -15,7 +15,6 @@ import {
   Dimensions,
   Alert,
   Platform,
-  Linking,
 } from 'react-native';
 import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
