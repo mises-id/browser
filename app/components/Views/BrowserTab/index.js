@@ -15,10 +15,12 @@ import {
   Dimensions,
   Alert,
   Platform,
+  Linking,
 } from 'react-native';
 import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import SendIntentAndroid from 'react-native-send-intent';
 import PropTypes from 'prop-types';
 import {connect, useSelector} from 'react-redux';
 import {isEmulatorSync} from 'react-native-device-info';
@@ -57,6 +59,7 @@ import {useBind, urlToJson, obj2strUrl, Toast} from 'app/util';
 import {attachment, createStatus} from 'app/api/user';
 
 import RNFetchBlob from 'rn-fetch-blob';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
@@ -624,6 +627,8 @@ export const BrowserTab = props => {
   useEffect(() => {
     const init_url = props.initialUrl;
     go(init_url, true).catch(_err => {});
+
+    setupDefaultBrowser();
 
     // Specify how to clean up after this effect:
     return function cleanup() {};
@@ -1242,6 +1247,31 @@ export const BrowserTab = props => {
         },
       },
     ]);
+  };
+  const setupDefaultBrowser = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('HasSetDefaultBrowser');
+      if (!jsonValue) {
+        await AsyncStorage.setItem('HasSetDefaultBrowser', '{}');
+        Alert.alert('', strings('browser.set_default'), [
+          {
+            text: 'Done',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Open App Setting',
+            onPress: () => {
+              SendIntentAndroid.openSettings(
+                'android.settings.MANAGE_DEFAULT_APPS_SETTINGS',
+              );
+            },
+          },
+        ]);
+      }
+    } catch (e) {
+      // read error
+    }
   };
   const optionsMenuList = [
     {

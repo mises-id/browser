@@ -85,11 +85,12 @@ const AppNavigator = createCompatNavigatorFactory(createStackNavigator)(
 
 class App extends PureComponent {
   unsubscribeFromBranch;
-
+  navigationRef = null;
   componentDidMount = () => {
     SharedDeeplinkManager.init({
       navigate: (routeName, opts) => {
-        this.navigator.dispatch(
+        Logger.log('Deeplink navigation: ', routeName);
+        this.navigationRef.dispatch(
           NavigationActions.navigate({routeName, params: opts}),
         );
       },
@@ -100,6 +101,7 @@ class App extends PureComponent {
   };
 
   handleDeeplinks = async ({error, params, uri}) => {
+    Logger.log('Deeplink: ', params, uri);
     if (error) {
       if (
         error ===
@@ -131,7 +133,7 @@ class App extends PureComponent {
 
   render() {
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={e => (this.navigationRef = e)}>
         <AppNavigator> </AppNavigator>
       </NavigationContainer>
     );

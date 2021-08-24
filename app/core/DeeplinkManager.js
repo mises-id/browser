@@ -18,7 +18,8 @@ class DeeplinkManager {
   expireDeeplink = () => (this.pendingDeeplink = null);
 
   handleBrowserUrl(url, callback) {
-    this.navigation.navigate('BrowserTabHome');
+    console.log('handleBrowserUrl ' + url);
+    //this.navigation.navigate('BrowserTabHome');
     InteractionManager.runAfterInteractions(() => {
       if (callback) {
         callback(url);
@@ -76,8 +77,6 @@ class DeeplinkManager {
           }
         } else {
           // Normal links (same as dapp)
-
-          handled();
           urlObj.set('protocol', 'https:');
           this.handleBrowserUrl(urlObj.href, browserCallBack);
         }

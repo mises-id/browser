@@ -1,10 +1,16 @@
 package com.misesbrowser;
 
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+
 import com.facebook.react.ReactActivity;
 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+
+import io.branch.rnbranch.RNBranchModule;
+
 public class MainActivity extends ReactActivity {
 
   /**
@@ -27,5 +33,20 @@ public class MainActivity extends ReactActivity {
        return new RNGestureHandlerEnabledRootView(MainActivity.this);
       }
     };
+  }
+
+
+  // Override onStart, onNewIntent:
+  @Override
+  protected void onStart() {
+    super.onStart();
+    RNBranchModule.initSession(getIntent().getData(), this);
+
+  }
+
+  @Override
+  public void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    RNBranchModule.onNewIntent(intent);
   }
 }
