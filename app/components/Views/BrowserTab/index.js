@@ -956,6 +956,7 @@ export const BrowserTab = props => {
           break;
         case 'locationHref':
           go(data.data).then(res => {
+            setInitialUrl(data.data);
             injectCallbackJavaScript({success: true});
           });
           break;
