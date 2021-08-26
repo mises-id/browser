@@ -15,6 +15,7 @@ import {
   Dimensions,
   Alert,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import {withNavigation} from '@react-navigation/compat';
 import {WebView} from 'react-native-webview';
@@ -801,7 +802,6 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
-    Logger.log('onMessage', data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1317,6 +1317,7 @@ export const BrowserTab = props => {
     }
   };
   const forwardContent = useBind('');
+  const [forwardLoading, setforwardLoading] = useState(false);
   const browserForward = async ({name, origin, link, icon}) => {
     /**
      * @description: 如果有token 直接用 如果返回token过期就登录
@@ -1364,12 +1365,15 @@ export const BrowserTab = props => {
           form_type: 'status',
         };
         forwardContent.onChange({nativeEvent: {text: ''}});
+        setforwardLoading(true);
         createStatus(obj)
           .then(res => {
+            setforwardLoading(false);
             Toast('success');
             console.log(res);
           })
           .catch(err => {
+            setforwardLoading(false);
             Toast(err);
           });
       } catch (error) {
@@ -1444,6 +1448,7 @@ export const BrowserTab = props => {
             <Button
               style={[styles.btnStyle, styles.addBtn]}
               onPress={() => browserForward(webviewParams)}>
+              {forwardLoading && <ActivityIndicator color="#5D61FF" />}
               <Text style={styles.addBtnTxt}>
                 {strings('forward.add_button')}
               </Text>
@@ -1485,9 +1490,11 @@ export const BrowserTab = props => {
     const hostname = getHost(webviewUrl);
     const isHomepage = hostname === getHost(HOMEPAGE_URL);
     if (isHomepage) {
-      webviewUrl =
-        webviewUrl +
-        ((webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
+      const isAuth = misesId.auth.indexOf('user_authz') === -1;
+      const query = isAuth
+        ? (webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`
+        : '';
+      webviewUrl = webviewUrl + query;
     }
   }
   const tryAgain = () => {
