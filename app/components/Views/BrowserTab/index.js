@@ -908,14 +908,18 @@ export const BrowserTab = props => {
           injectCallbackJavaScript({success: true});
           break;
         case 'follow':
-          const item = data.data;
-          if (!item.activeUser) {
-            misesIdModel();
-            injectCallbackJavaScript({success: false});
-            return false;
-          }
           sdk
-            .follow(item.misesid)
+            .follow(data.data)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
+              injectCallbackJavaScript({success: false});
+            });
+          break;
+        case 'unfollow':
+          sdk
+            .unFollow(data.data)
             .then(res => {
               injectCallbackJavaScript({success: true, data: res});
             })
@@ -930,22 +934,6 @@ export const BrowserTab = props => {
               injectCallbackJavaScript({success: true, data: res});
             })
             .catch(_ => {
-              injectCallbackJavaScript({success: false});
-            });
-          break;
-        case 'unfollow':
-          const a = data.data;
-          if (!a.activeUser) {
-            misesIdModel();
-            injectCallbackJavaScript({success: false});
-            return false;
-          }
-          sdk
-            .unFollow(a.misesid)
-            .then(res => {
-              injectCallbackJavaScript({success: true, data: res});
-            })
-            .catch(() => {
               injectCallbackJavaScript({success: false});
             });
           break;
