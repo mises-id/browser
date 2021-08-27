@@ -60,6 +60,7 @@ import {attachment, createStatus} from 'app/api/user';
 
 import RNFetchBlob from 'rn-fetch-blob';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ImageResizer from 'react-native-image-resizer';
 
 const {HOMEPAGE_URL, USER_AGENT, HOMEPAGE_HOST} = AppConstants;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
@@ -644,7 +645,6 @@ export const BrowserTab = props => {
         showUrlModal: toggleUrlModal,
         url: getMaskedUrl(url.current),
         icon: icon.current,
-        error,
       });
     }
 
@@ -1098,9 +1098,7 @@ export const BrowserTab = props => {
    * Handle error, for example, ssl certificate error
    */
   const onError = ({nativeEvent: errorInfo}) => {
-    props.navigation.setParams({
-      error: true,
-    });
+    console.log('onError', errorInfo);
     setError(errorInfo);
   };
 
@@ -1286,8 +1284,9 @@ export const BrowserTab = props => {
         //call page function
         toggleOptions();
         const activeUser = await sdk.getActiveUser();
-        if (props.navigation.state.params.error || !initialUrl) {
-          Toast('Can’t forward this website page');
+        if (error) {
+          console.log(error);
+          Toast('Can’t forward this website page, please refresh the page');
           return false;
         }
         if (activeUser) {
@@ -1346,7 +1345,13 @@ export const BrowserTab = props => {
     }
   };
   const forwardContent = useBind('');
+
+  const pathToUri = function (path) {
+    return Platform.OS === 'ios' ? path : 'file://' + path;
+  };
+
   const [forwardLoading, setforwardLoading] = useState(false);
+
   const browserForward = async ({name, origin, link, icon}) => {
     /**
      * @description: 如果有token 直接用 如果返回token过期就登录
@@ -1360,23 +1365,42 @@ export const BrowserTab = props => {
         if (icon) {
           const res = await RNFetchBlob.config({
             fileCache: true,
-            appendExt: 'ico',
           }).fetch('GET', icon);
+          console.log('fetch ', res);
+          var path = res.path();
           const blob = await res.blob();
-
-          const formData = new FormData();
-          const prefix =
+          var prefix =
             blob.type.indexOf('x-icon') > -1
               ? 'ico'
               : blob.type.replace('image/', '');
+          const stat = await RNFetchBlob.fs.stat(path);
+          var image_type = blob.type;
+          console.log('stat ', stat);
+          if (stat && stat.size > 1024000) {
+            //resize large file
+            const resize_resp = await ImageResizer.createResizedImage(
+              pathToUri(path),
+              500,
+              500,
+              'JPEG',
+              80,
+              0,
+            );
+            console.log('resize_resp ', resize_resp);
+            path = resize_resp.path;
+            prefix = 'jpeg';
+            image_type = 'image/jpeg';
+          }
           const filename = `websiteIcon${blob.cacheName}.${prefix}`;
+          const formData = new FormData();
           let file = {
-            uri: Platform.OS === 'ios' ? res.path() : 'file://' + res.path(),
+            uri: pathToUri(path),
             name: filename,
-            type: 'image/x-icon',
+            type: image_type,
           };
           formData.append('file', file, filename);
           formData.append('file_type', 'image');
+          console.log('start attachment');
           const imageData = await attachment(formData);
           attachment_id = imageData.id;
         }
@@ -1412,13 +1436,13 @@ export const BrowserTab = props => {
     }
     props.navigation.push('Login');
   };
-  const renderForwardModal = () => {
-    const {params = {}} = props.navigation.state;
-    const {origin, href, pathname} = new URL(params.url);
+
+  const removeAuthInUrl = url => {
+    const {origin, href, pathname} = new URL(url);
     const queryObj = urlToJson(href);
-    var link = params.url;
+    var link = url;
     if (
-      !isHomepage(href) &&
+      isHomepage(href) &&
       queryObj.mises_id &&
       queryObj.nonce &&
       queryObj.sig
@@ -1426,8 +1450,17 @@ export const BrowserTab = props => {
       delete queryObj.mises_id;
       delete queryObj.nonce;
       delete queryObj.sig;
-      link = `${origin}${pathname}?${obj2strUrl(queryObj)}`;
+      const query = obj2strUrl(queryObj);
+      link = `${origin}${pathname}`;
+      if (query) {
+        link += `?${query}`;
+      }
     }
+    return {link, origin};
+  };
+  const renderForwardModal = () => {
+    const {params = {}} = props.navigation.state;
+    var {link, origin} = removeAuthInUrl(params.url);
     const webviewParams = initialUrl ? {...params, link, origin} : {};
     return (
       <Modal isVisible={showForward}>
@@ -1519,11 +1552,9 @@ export const BrowserTab = props => {
     const hostname = getHost(webviewUrl);
     const isHomepage = hostname === getHost(HOMEPAGE_URL);
     if (isHomepage) {
-      const isAuth = misesId.auth.indexOf('user_authz') === -1;
-      const query = isAuth
-        ? (webviewUrl.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`
-        : '';
-      webviewUrl = webviewUrl + query;
+      const {link} = removeAuthInUrl(webviewUrl);
+      webviewUrl =
+        link + ((link.indexOf('?') === -1 ? '?' : '&') + `${misesId.auth}`);
     }
   }
   const tryAgain = () => {
