@@ -908,40 +908,46 @@ export const BrowserTab = props => {
           injectCallbackJavaScript({success: true});
           break;
         case 'follow':
-          (async () => {
-            const activeUser = await sdk.getActiveUser();
-            if (!activeUser) {
-              misesIdModel();
+          const item = data.data;
+          if (!item.activeUser) {
+            misesIdModel();
+            injectCallbackJavaScript({success: false});
+            return false;
+          }
+          sdk
+            .follow(item.misesid)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
               injectCallbackJavaScript({success: false});
-              return false;
-            }
-            sdk
-              .follow(data.data)
-              .then(res => {
-                injectCallbackJavaScript({success: true, data: res});
-              })
-              .catch(() => {
-                injectCallbackJavaScript({success: false});
-              });
-          })();
+            });
+          break;
+        case 'getActiveUser':
+          sdk
+            .getActiveUser()
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(_ => {
+              injectCallbackJavaScript({success: false});
+            });
           break;
         case 'unfollow':
-          (async () => {
-            const activeUser = await sdk.getActiveUser();
-            if (!activeUser) {
-              misesIdModel();
+          const a = data.data;
+          if (!a.activeUser) {
+            misesIdModel();
+            injectCallbackJavaScript({success: false});
+            return false;
+          }
+          sdk
+            .unFollow(a.misesid)
+            .then(res => {
+              injectCallbackJavaScript({success: true, data: res});
+            })
+            .catch(() => {
               injectCallbackJavaScript({success: false});
-              return false;
-            }
-            sdk
-              .unFollow(data.data)
-              .then(res => {
-                injectCallbackJavaScript({success: true, data: res});
-              })
-              .catch(() => {
-                injectCallbackJavaScript({success: false});
-              });
-          })();
+            });
           break;
         case 'getListUsersCount':
           (async () => {
