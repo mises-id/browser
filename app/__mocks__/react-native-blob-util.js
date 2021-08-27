@@ -1,7 +1,6 @@
 const noop = () => ({});
 
 export default {
-  DocumentDir: noop,
   fetch: noop,
   base64: noop,
   android: noop,
@@ -13,7 +12,6 @@ export default {
     exists: () => Promise.resolve(),
     dirs: {
       CacheDir: noop,
-      DocumentDir: noop,
     },
   },
   wrap: noop,
