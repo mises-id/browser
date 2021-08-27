@@ -1,4 +1,18 @@
 const getWindowInformation = `
+  const __getLargeImg = function(){
+    let img = undefined;
+    const nodeList = document.getElementsByTagName("img");
+    for (let i = 0; i < nodeList.length; i++)
+    {
+      const node = nodeList[i];
+      if (node.naturalHeight >= 300 && node.naturalWidth >= 300  )
+      {
+        img = nodeList[i];
+        break;
+      }
+    }
+    return img && img.src
+  }
   const __getFavicon = function(){
     let favicon = undefined;
     const nodeList = document.getElementsByTagName("link");
@@ -27,7 +41,7 @@ const getWindowInformation = `
       payload: {
         title: __extractMeta(['og:title', 'twitter:title', 'title'], document.title),
         url: __extractMeta(['og:url', 'twitter:url'], location.href),
-        icon: __extractMeta(['og:image', 'twitter:image'], __getFavicon())
+        icon: __extractMeta(['og:image', 'twitter:image'], __getLargeImg() || __getFavicon())
       }
     }
   ))

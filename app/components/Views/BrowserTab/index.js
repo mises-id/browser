@@ -58,7 +58,7 @@ import sdk from 'app/core/Sdk';
 import {useBind, urlToJson, obj2strUrl, Toast} from 'app/util';
 import {attachment, createStatus} from 'app/api/user';
 
-import RNFetchBlob from 'rn-fetch-blob';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageResizer from 'react-native-image-resizer';
 
@@ -1369,7 +1369,7 @@ export const BrowserTab = props => {
       try {
         var attachment_id = 0;
         if (icon) {
-          const res = await RNFetchBlob.config({
+          const res = await ReactNativeBlobUtil.config({
             fileCache: true,
           }).fetch('GET', icon);
           console.log('fetch ', res);
@@ -1379,7 +1379,7 @@ export const BrowserTab = props => {
             blob.type.indexOf('x-icon') > -1
               ? 'ico'
               : blob.type.replace('image/', '');
-          const stat = await RNFetchBlob.fs.stat(path);
+          const stat = await ReactNativeBlobUtil.fs.stat(path);
           var image_type = blob.type;
           console.log('stat ', stat);
           if (stat && stat.size > 1024000) {
