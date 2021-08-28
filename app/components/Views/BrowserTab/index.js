@@ -707,11 +707,9 @@ export const BrowserTab = props => {
    * Handles state changes for when the url changes
    */
   const changeUrl = (siteInfo, type) => {
-    // Logger.log('changeUrl ', siteInfo, type);
-
+    //Logger.log('changeUrl ', siteInfo, type);
     setBackEnabled(siteInfo.canGoBack);
     setForwardEnabled(siteInfo.canGoForward);
-
     url.current = siteInfo.url;
     title.current = siteInfo.title;
     if (siteInfo.icon) {
@@ -806,6 +804,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
+    //console.log(data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1562,6 +1561,7 @@ export const BrowserTab = props => {
         <View style={styles.webview}>
           {firstUrlLoaded && (
             <WebView
+              mixedContentMode={'compatibility'}
               ref={webviewRef}
               renderError={() => (
                 <WebviewError error={error} onReload={tryAgain} />
