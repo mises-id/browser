@@ -11,7 +11,7 @@ const getWindowInformation = `
         h = node.height;
         w = node.width;
       }
-      if (h >= 300 && w >= 300  )
+      if (h >= 200 && w >= 300  )
       {
         img = nodeList[i];
         break;
