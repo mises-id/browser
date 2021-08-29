@@ -49,8 +49,8 @@
 		"wrong_password_error_android": "Error: error:1e000065:Cipher functions:OPENSSL_internal:BAD_DECRYPT",
 		"vault_error": "Error: Cannot unlock without a previous vault.",
 		"clean_vault_error": "MisesBrowser encountered an error due to reaching a storage limit. The local data has been corrupted. Please reinstall MisesBrowser and restore with your Secret Recovery Phrase.",
-		"create_modal_content":"Go to register Mises ID",
-		"login_modal_content":"Go to Login Mises ID"
+		"create_modal_content":"Go to register Misesid",
+		"login_modal_content":"Go to Login Misesid"
 	},
 	"enter_password": {
 		"title": "Enter your password",
@@ -377,23 +377,23 @@
 		"placeholder":"Please enter the contents"
 	},
 	"menu":{
-		"create":"Create mises id",
-		"restore":"Restore mises id",
+		"create":"Create misesid",
+		"restore":"Restore misesid",
 		"forward":"Forward",
 		"new":"New post",
-		"login":"Login mises id"
+		"login":"Login misesid"
 	},
 	"forward":{
 		"add_button": "Forward"
 	},
 	"restore":{
 		"title":"Enter the mnemonic words in order",
-		"success_button":"Restore success"
+		"success_button":"Restore"
 	},
 	"create":{
 		"Step1Title":"The mnemonic word",
 		"desc":"Mnemonics are key to your misesid, please write mnemonics in paper sequecially, keep it safely, when you reinstall mises browser, you need to restore your misesid by inputing mnemonics.",
-		"step_btn":"Next step",
+		"step_btn":"Next",
 		"success_button":"create",
 		"back":"Back to previous step",
 		"operating":"Operating"
