@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-22 14:45:26
+ * @LastEditTime: 2021-08-29 23:21:01
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -31,16 +31,16 @@ const Password = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const misesIdReducer = useSelector(state => state.misesId);
   useEffect(() => {
-    // if (misesIdReducer.auth) {
-    //   const resetAction = CommonActions.reset({
-    //     index: 0,
-    //     routes: [{name: 'Main'}],
-    //   });
-    //   navigation.dispatch(resetAction);
-    // }
+    if (misesIdReducer.auth) {
+      const resetAction = CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Main'}],
+      });
+      navigation.dispatch(resetAction);
+    }
   }, [misesIdReducer.auth, navigation]);
   const submit = async () => {
-    Toast(strings('create.operating'));
+    //Toast(strings('create.operating'));
     if (loading) {
       Toast(strings('create.operating'));
       return false;

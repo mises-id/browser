@@ -3,48 +3,40 @@ import {TouchableOpacity, StyleSheet, Image} from 'react-native';
 import PropTypes from 'prop-types';
 import ElevatedView from 'react-native-elevated-view';
 
-import Device from 'app/util/Device';
 import {colors} from 'app/styles/common';
 
 import TabCountIcon from '../Tabs/TabCountIcon';
 
-const HOME_INDICATOR_HEIGHT = 18;
-const defaultBottomBarPadding = 0;
-
 const styles = StyleSheet.create({
   bottomBar: {
-    backgroundColor: Device.isAndroid() ? colors.white : colors.grey000,
+    backgroundColor: colors.white,
     flexDirection: 'row',
-    paddingBottom:
-      Device.isIphoneX() && Device.isIos()
-        ? defaultBottomBarPadding + HOME_INDICATOR_HEIGHT
-        : defaultBottomBarPadding,
+    paddingTop: 14,
+    paddingBottom: 14,
     flex: 0,
-    borderTopWidth: Device.isAndroid() ? 0 : StyleSheet.hairlineWidth,
-    borderColor: colors.grey200,
+    borderTopWidth: 0.5,
+    borderColor: '#eee',
     justifyContent: 'space-between',
   },
   iconButton: {
-    height: 24,
-    width: 24,
+    height: 22,
+    width: 22,
     justifyContent: 'space-around',
     alignItems: 'center',
     textAlign: 'center',
     flex: 1,
-    paddingTop: 30,
-    paddingBottom: 30,
   },
   tabIcon: {
     marginTop: 0,
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
   },
   disabledIcon: {
     color: colors.grey100,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
   },
 });
 
@@ -101,7 +93,7 @@ export default class BrowserBottomBar extends PureComponent {
     } = this.props;
 
     return (
-      <ElevatedView elevation={11} style={styles.bottomBar}>
+      <ElevatedView elevation={0} style={styles.bottomBar}>
         <TouchableOpacity
           onPress={goBack}
           style={styles.iconButton}

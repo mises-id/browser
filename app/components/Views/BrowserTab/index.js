@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     color: '#222',
+    paddingRight: 50,
   },
   websiteUrl: {
     fontSize: 10,
@@ -290,8 +291,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   btnStyle: {
-    width: 144,
-    height: 40,
+    width: 140,
+    height: 44,
     borderRadius: 22,
     marginLeft: 7,
     marginRight: 7,
