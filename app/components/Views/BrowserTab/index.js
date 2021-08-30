@@ -708,11 +708,9 @@ export const BrowserTab = props => {
    * Handles state changes for when the url changes
    */
   const changeUrl = (siteInfo, type) => {
-    // Logger.log('changeUrl ', siteInfo, type);
-
+    //Logger.log('changeUrl ', siteInfo, type);
     setBackEnabled(siteInfo.canGoBack);
     setForwardEnabled(siteInfo.canGoForward);
-
     url.current = siteInfo.url;
     title.current = siteInfo.title;
     if (siteInfo.icon) {
@@ -737,7 +735,8 @@ export const BrowserTab = props => {
   /**
    * Stops normal loading when it's ens, instead call go to be properly set up
    */
-  const onShouldStartLoadWithRequest = ({u}) => {
+  const onShouldStartLoadWithRequest = req => {
+    console.log('onShouldStartLoadWithRequest', req);
     return true;
   };
 
@@ -807,6 +806,7 @@ export const BrowserTab = props => {
    */
   const onMessage = ({nativeEvent}) => {
     let data = nativeEvent.data;
+    console.log(data);
     const {title} = nativeEvent;
     try {
       data = typeof data === 'string' ? JSON.parse(data) : data;
@@ -1417,15 +1417,16 @@ export const BrowserTab = props => {
         createStatus(obj)
           .then(res => {
             setforwardLoading(false);
-            Toast('success');
+            Toast('forward success');
             console.log(res);
           })
           .catch(err => {
             setforwardLoading(false);
-            Toast(err);
+            Toast('forward fail:' + err);
           });
       } catch (error) {
         console.log(error, '2222');
+        Toast('forward fail:' + error);
       }
       return false;
     }
@@ -1563,6 +1564,8 @@ export const BrowserTab = props => {
         <View style={styles.webview}>
           {firstUrlLoaded && (
             <WebView
+              mixedContentMode={'compatibility'}
+              setSupportMultipleWindows={false}
               ref={webviewRef}
               renderError={() => (
                 <WebviewError error={error} onReload={tryAgain} />
