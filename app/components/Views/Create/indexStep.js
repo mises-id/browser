@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-14 18:23:35
+ * @LastEditTime: 2021-08-31 01:17:15
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -36,8 +36,8 @@ const CreateStep = ({navigation}) => {
       <View style={styles.titleBox}>
         <Text style={styles.title}>{strings('create.Step1Title')}</Text>
       </View>
-      <View style={styles.desc}>
-        <Text style={styles.title}>{strings('create.desc')}</Text>
+      <View>
+        <Text style={styles.desc}>{strings('create.desc')}</Text>
       </View>
       <View style={styles.wordsContainer}>{data.map(word)}</View>
       <View style={styles.btnBox}>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   desc: {
     fontSize: 15,
     color: '#333',
-    marginBottom: 25,
+    marginBottom: 18,
   },
   wordsContainer: {
     borderColor: '#EEEEEE',

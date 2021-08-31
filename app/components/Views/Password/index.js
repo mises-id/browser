@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-19 12:17:48
- * @LastEditTime: 2021-08-22 14:45:26
+ * @LastEditTime: 2021-08-31 01:40:56
  * @LastEditors: lmk
  * @Description: Restore misesid
  */
@@ -40,7 +40,7 @@ const Password = ({navigation}) => {
     // }
   }, [misesIdReducer.auth, navigation]);
   const submit = async () => {
-    Toast(strings('create.operating'));
+    //Toast(strings('create.operating'));
     if (loading) {
       Toast(strings('create.operating'));
       return false;

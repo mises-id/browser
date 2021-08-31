@@ -10,11 +10,17 @@ const styles = StyleSheet.create({
   wrapper: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#EEEEEE',
     height: 40,
     position: 'relative',
     borderRadius: 20,
+    paddingRight: 15,
     flexDirection: 'row',
+  },
+  light: {
+    backgroundColor: '#EEEEEE',
+  },
+  dark: {
+    backgroundColor: '#2D2F33',
   },
   network: {
     flexDirection: 'row',
@@ -45,7 +51,7 @@ const styles = StyleSheet.create({
   },
   refresh: {
     position: 'absolute',
-    right: 15,
+    right: 3,
     top: 0,
     width: 40,
     height: 40,
@@ -54,8 +60,13 @@ const styles = StyleSheet.create({
   },
   currentUrl: {
     ...fontStyles.normal,
-    fontSize: 17,
+    fontSize: 19,
     textAlign: 'center',
+  },
+  darkUrl: {
+    color: '#999999',
+  },
+  lightUrl: {
     color: '#333',
   },
   currentUrlAndroid: {
@@ -109,6 +120,10 @@ class NavbarBrowserTitle extends PureComponent {
      * Website webviewRef
      */
     webviewRef: PropTypes.object,
+    /**
+     * website url Style
+     */
+    type: PropTypes.string,
   };
 
   onTitlePress = () => {
@@ -137,9 +152,15 @@ class NavbarBrowserTitle extends PureComponent {
     current && current.reload();
   };
   render = () => {
-    const {hostname} = this.props;
+    const {hostname, type} = this.props;
+    const styleWrapperType = styles[type];
+    const styleTxtType = styles[`${type}Url`];
+    const refresh = {
+      dark: require('app/images/refresh_dark.png'),
+      light: require('app/images/refresh_light.png'),
+    }[type];
     return (
-      <View style={styles.wrapper}>
+      <View style={[styles.wrapper, styleWrapperType]}>
         <TouchableOpacity onPress={this.onTitlePress} style={styles.flex1}>
           <View style={styles.currentUrlWrapper}>
             {/* {icon && <Image style={styles.siteIcon} source={{uri: icon}} />} */}
@@ -148,6 +169,7 @@ class NavbarBrowserTitle extends PureComponent {
               ellipsizeMode={'head'}
               style={[
                 styles.currentUrl,
+                styleTxtType,
                 Device.isAndroid() ? styles.currentUrlAndroid : {},
               ]}>
               {hostname}
@@ -158,10 +180,7 @@ class NavbarBrowserTitle extends PureComponent {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.reloadWebview} style={styles.refresh}>
-          <Image
-            source={require('app/images/refresh.png')}
-            style={styles.refreshIcon}
-          />
+          <Image source={refresh} style={styles.refreshIcon} />
         </TouchableOpacity>
         {/* <View style={styles.network}>
           <View

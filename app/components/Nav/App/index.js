@@ -61,17 +61,7 @@ const AppNavigator = createCompatNavigatorFactory(createStackNavigator)(
       screen: MenuToolTips,
       navigationOptions: current => {
         return {
-          opacity: current.progress,
-          cardStyleInterpolator: () => {
-            return {
-              cardStyle: {
-                backgroundColor: 'rgba(0,0,0,0)',
-              },
-              containerStyle: {
-                backgroundColor: 'rgba(0,0,0,0)',
-              },
-            };
-          },
+          elevation: 0,
         };
       },
     },

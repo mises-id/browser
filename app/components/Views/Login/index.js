@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-08-07 13:50:47
- * @LastEditTime: 2021-08-19 23:43:37
+ * @LastEditTime: 2021-08-31 10:09:34
  * @LastEditors: lmk
  * @Description: loginPage
  */
@@ -71,7 +71,7 @@ const Login = ({navigation}) => {
       if (!misesId) {
         return false;
       }
-      Toast(strings('create.operating'));
+      //Toast(strings('create.operating'));
       if (loading) {
         Toast(strings('create.operating'));
         return false;

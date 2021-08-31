@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
   tabAction: {
     flex: 1,
     alignContent: 'center',
-    alignSelf: 'flex-start',
     justifyContent: 'center',
+    marginTop: 10,
   },
 
   tabActionleft: {
@@ -58,9 +58,6 @@ const styles = StyleSheet.create({
   tabActionRight: {
     justifyContent: 'center',
     alignItems: 'flex-end',
-  },
-  tabActionDone: {
-    ...fontStyles.bold,
   },
   tabActionText: {
     color: '#CCCCCC',
@@ -80,17 +77,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   tabActions: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 26,
     flexDirection: 'row',
-    marginBottom: Device.isIphoneX() ? 0 : 0,
-    paddingTop: 17,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 15.0,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#2D2F33',
     height: Device.isIphoneX() ? 80 : 50,
   },
@@ -282,7 +272,6 @@ export default class Tabs extends Component {
           <Text
             style={[
               styles.tabActionText,
-              styles.tabActionDone,
               tabs.length === 0 ? styles.actionDisabled : null,
             ]}>
             {strings('browser.tabs_done')}

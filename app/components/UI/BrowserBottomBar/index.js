@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   },
   tabIcon: {
     marginTop: 0,
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
   },
   disabledIcon: {
     color: colors.grey100,
