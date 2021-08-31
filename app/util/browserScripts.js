@@ -5,7 +5,13 @@ const getWindowInformation = `
     for (let i = 0; i < nodeList.length; i++)
     {
       const node = nodeList[i];
-      if (node.naturalHeight >= 300 && node.naturalWidth >= 300  )
+      let h = node.naturalHeight;
+      let w = node.naturalWidth;
+      if (h == 0 || w == 0  ) {
+        h = node.height;
+        w = node.width;
+      }
+      if (h >= 200 && w >= 300  )
       {
         img = nodeList[i];
         break;

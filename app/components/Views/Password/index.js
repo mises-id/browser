@@ -31,13 +31,13 @@ const Password = ({navigation}) => {
   const [loading, setloading] = useState(false);
   const misesIdReducer = useSelector(state => state.misesId);
   useEffect(() => {
-    // if (misesIdReducer.auth) {
-    //   const resetAction = CommonActions.reset({
-    //     index: 0,
-    //     routes: [{name: 'Main'}],
-    //   });
-    //   navigation.dispatch(resetAction);
-    // }
+    if (misesIdReducer.auth) {
+      const resetAction = CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Main'}],
+      });
+      navigation.dispatch(resetAction);
+    }
   }, [misesIdReducer.auth, navigation]);
   const submit = async () => {
     //Toast(strings('create.operating'));

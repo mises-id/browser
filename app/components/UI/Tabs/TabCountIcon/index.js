@@ -1,7 +1,7 @@
 /*
  * @Author: lmk
  * @Date: 2021-07-05 10:09:07
- * @LastEditTime: 2021-08-14 18:22:23
+ * @LastEditTime: 2021-08-29 21:35:08
  * @LastEditors: lmk
  * @Description:
  */
@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {fontStyles} from 'app/styles/common';
-import Device from 'app/util/Device';
 
 const styles = StyleSheet.create({
   tabIcon: {
@@ -24,8 +23,8 @@ const styles = StyleSheet.create({
   tabCount: {
     color: '#333',
     flex: 0,
-    lineHeight: Device.isAndroid() ? 3 : 15,
-    fontSize: Device.isAndroid() ? 3 : 15,
+    lineHeight: 22,
+    fontSize: 12,
     textAlign: 'center',
     alignSelf: 'center',
     ...fontStyles.normal,
