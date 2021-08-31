@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   optionsWrapperBox: {
     position: 'absolute',
     zIndex: 99999999,
-    bottom: 25,
+    bottom: 55,
     right: 5,
   },
   option: {
@@ -225,7 +225,8 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     position: 'absolute',
-    bottom: -11,
+    bottom: 2,
+    zIndex: 99999999999,
     right: 24,
   },
   forwardBox: {
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
   forwardTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 17,
+    marginBottom: 14,
   },
   forwardInput: {
     height: 150,
@@ -245,7 +246,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlignVertical: 'top',
     justifyContent: 'flex-start',
-    padding: 17,
+    paddingTop: 8,
+    paddingLeft: 14,
+    paddingRight: 14,
     fontSize: 17,
   },
   websiteBox: {
@@ -294,17 +297,17 @@ const styles = StyleSheet.create({
     width: 140,
     height: 44,
     borderRadius: 22,
-    marginLeft: 7,
-    marginRight: 7,
   },
   cancelBtn: {
     backgroundColor: '#eee',
+    marginRight: 7,
   },
   cancelBtnTxt: {
     color: '#666',
   },
   addBtn: {
     backgroundColor: '#5D61FF',
+    marginLeft: 7,
   },
   addBtnTxt: {
     color: 'white',
@@ -631,7 +634,6 @@ export const BrowserTab = props => {
     go(init_url, true).catch(_err => {});
 
     setupDefaultBrowser();
-
     // Specify how to clean up after this effect:
     return function cleanup() {};
 
@@ -1308,7 +1310,7 @@ export const BrowserTab = props => {
     x: 0,
     color: '#ECECEC',
     width: 150,
-    height: 115,
+    height: 70,
     border: 15,
     radius: 15,
     y: 20,
@@ -1331,8 +1333,8 @@ export const BrowserTab = props => {
                     </TouchableOpacity>
                   );
                 })}
-                <View style={styles.arrow} />
               </BoxShadow>
+              <View style={styles.arrow} />
             </View>
           </View>
         </TouchableWithoutFeedback>

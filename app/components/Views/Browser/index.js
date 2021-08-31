@@ -125,6 +125,7 @@ class Browser extends Component {
     this.props.navigation.setParams({
       ...this.props.navigation.state.params,
       showTabs: true,
+      type: 'dark',
     });
   };
 
@@ -133,6 +134,7 @@ class Browser extends Component {
       ...this.props.navigation.state.params,
       showTabs: false,
       url,
+      type: 'light',
       silent: false,
     });
   };

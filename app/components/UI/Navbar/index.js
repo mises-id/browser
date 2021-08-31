@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     marginHorizontal: -5,
   },
   hamburgerButton: {
-    paddingLeft: Device.isAndroid() ? 22 : 18,
-    paddingRight: Device.isAndroid() ? 22 : 18,
+    paddingLeft: 15,
+    paddingRight: 15,
     paddingTop: Device.isAndroid() ? 14 : 10,
     paddingBottom: Device.isAndroid() ? 14 : 10,
   },
@@ -481,7 +481,8 @@ export function getSendFlowTitle(title, navigation, screenProps) {
  */
 import light from 'app/images/menu_light.png';
 import dark from 'app/images/menu_dark.png';
-export function getBrowserViewNavbarOptions(navigation, type = 'light') {
+export function getBrowserViewNavbarOptions(navigation) {
+  const type = navigation.getParam('type', 'light');
   const url = navigation.getParam('url', '');
   const webviewRef = navigation.getParam('webviewRef', {});
   let hostname = null;
@@ -506,7 +507,12 @@ export function getBrowserViewNavbarOptions(navigation, type = 'light') {
   }
   return {
     headerStyle: {
-      backgroundColor: type === 'dark' ? '#161B1D' : '#fff',
+      backgroundColor: type === 'light' ? '#fff' : '#161B1D',
+      borderBottomWidth: 0,
+      elevation: 0,
+    },
+    headerTitleContainerStyle: {
+      marginLeft: -20,
     },
     headerLeft: () => (
       <TouchableOpacity
@@ -523,6 +529,7 @@ export function getBrowserViewNavbarOptions(navigation, type = 'light') {
         icon={url && !isHomepage(url) ? icon : null}
         navigation={navigation}
         url={url}
+        type={type}
         hostname={hostname}
         https={isHttps}
         webviewRef={webviewRef}

@@ -86,13 +86,8 @@ const styles = StyleSheet.create({
     borderColor: '#5D61FF',
   },
   closeTabIcon: {
-    paddingHorizontal: 10,
-    paddingTop: 3,
-    fontSize: 32,
+    fontSize: 26,
     color: '#333',
-    right: 0,
-    marginTop: -7,
-    position: 'absolute',
   },
   titleButton: {
     backgroundColor: colors.transparent,
@@ -101,10 +96,8 @@ const styles = StyleSheet.create({
     marginRight: 40,
   },
   closeTabButton: {
-    backgroundColor: colors.transparent,
-    width: Device.isIos() ? 30 : 45,
+    width: 24,
     height: 24,
-    marginRight: -5,
   },
 });
 
