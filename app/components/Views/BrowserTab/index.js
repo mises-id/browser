@@ -1547,7 +1547,7 @@ export const BrowserTab = props => {
   let webviewUrl = initialUrl;
   if (misesId.auth) {
     const hostname = getHost(webviewUrl);
-    const isHomepage = true; //hostname === getHost(HOMEPAGE_URL);
+    const isHomepage = hostname === getHost(HOMEPAGE_URL);
     if (isHomepage) {
       const {link} = removeAuthInUrl(webviewUrl);
       webviewUrl =

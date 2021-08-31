@@ -96,7 +96,7 @@ exports[`MenuToolTips should render correctly 1`] = `
                 }
               }
             >
-              Create mises id
+              Create misesid
             </Text>
           </TouchableOpacity>
         </View>
@@ -135,7 +135,7 @@ exports[`MenuToolTips should render correctly 1`] = `
                 }
               }
             >
-              Restore mises id
+              Restore misesid
             </Text>
           </TouchableOpacity>
         </View>

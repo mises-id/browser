@@ -726,7 +726,7 @@ exports[`Create should render correctly 1`] = `
               }
             }
           >
-            create
+            Create
           </Text>
         </View>
       </TouchableOpacity>

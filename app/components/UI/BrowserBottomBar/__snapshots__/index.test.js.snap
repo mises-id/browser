@@ -126,9 +126,9 @@ exports[`BrowserBottomBar should render correctly 1`] = `
     <Connect(TabCountIcon)
       style={
         Object {
-          "height": 24,
+          "height": 22,
           "marginTop": 0,
-          "width": 24,
+          "width": 22,
         }
       }
     />

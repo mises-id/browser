@@ -86,7 +86,7 @@ exports[`Restore should render correctly 1`] = `
             }
           }
         >
-          Restore success
+          Restore
         </Text>
       </View>
     </TouchableOpacity>
