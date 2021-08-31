@@ -14,7 +14,9 @@ const getWindowInformation = `
       if (h >= 200 && w >= 300  )
       {
         img = nodeList[i];
-        break;
+        if (img && img.src && img.src.toLowerCase().startsWith("http")) {
+          break;
+        }
       }
     }
     return img && img.src
